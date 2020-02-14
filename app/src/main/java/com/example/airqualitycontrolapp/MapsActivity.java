@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,40 +22,45 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends AppCompatActivity {
 
-    private Button btn1, btn2;
+
+    private static final int NUM_PAGES = 2;
+    private ViewPager mPager;
+    private PagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn2 = (Button) findViewById(R.id.btn2);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragment(new OneFragment(), false, "one");
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragment(new MapFragment(), false, "one");
-            }
-        });
+        mPager = (ViewPager) findViewById(R.id.pager);
+        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(pagerAdapter);
 
     }
 
-    public void addFragment(Fragment fragment, boolean addToBackStack, String tag) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
 
-        if (addToBackStack) {
-            ft.addToBackStack(tag);
+    @Override
+    public void onBackPressed() {
+        if (mPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
-        ft.replace(R.id.container_frame_back, fragment, tag);
-        ft.commitAllowingStateLoss();
+    }
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return new ScreenSlideFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
     }
 }
