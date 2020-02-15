@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item
+        android:id="@+id/app_bar_add_place"
+        android:icon="@drawable/ic_bar_add_place"
+        android:title="Add place"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/app_bar_list"
+        android:icon="@drawable/ic_bar_list"
+        android:title="List"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/app_bar_statistics"
+        android:icon="@drawable/ic_bar_statistics"
+        android:title="Statistics"
+        app:showAsAction="never"/>
+
+</menu>
