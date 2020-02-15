@@ -1,5 +1,6 @@
 package com.example.airqualitycontrolapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.tabs.TabLayout;
 
 public class MapsActivity extends AppCompatActivity {
@@ -22,6 +25,7 @@ public class MapsActivity extends AppCompatActivity {
     private ViewPager mPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
+    private BottomNavigationView navigationMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,32 +37,28 @@ public class MapsActivity extends AppCompatActivity {
         mPager.setAdapter(pagerAdapter);
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mPager);
+        navigationMenu = findViewById(R.id.bottomNavigation);
+
+
+        navigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.app_bar_add_place:
+                        Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.app_bar_list:
+                        Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.app_bar_statistics:
+                        Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.bottom_appbar_menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.app_bar_fav:
-//                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.app_bar_search:
-//                Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.app_bar_settings:
-//                Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
 
     @Override
