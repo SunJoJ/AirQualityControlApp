@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,34 +22,57 @@ import com.google.android.material.tabs.TabLayout;
 public class MapsActivity extends AppCompatActivity {
 
 
-    private static final int NUM_PAGES = 2;
-    private ViewPager mPager;
-    private PagerAdapter pagerAdapter;
-    private TabLayout tabLayout;
     private BottomNavigationView navigationMenu;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(pagerAdapter);
-        tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(mPager);
-        navigationMenu = findViewById(R.id.bottomNavigation);
 
+
+        if (findViewById(R.id.fragment_container) != null) {
+
+            if (savedInstanceState != null) {
+                return;
+            }
+            ScreenMapFragment firstFragment = new ScreenMapFragment();
+            firstFragment.setArguments(getIntent().getExtras());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, firstFragment).commit();
+        }
+
+        navigationMenu = findViewById(R.id.bottomNavigation);
 
         navigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.app_bar_add_place:
-                        Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
+                        ScreenMapFragment screenMapFragment = new ScreenMapFragment();
+                        Bundle argsPlace = new Bundle();
+
+                        screenMapFragment.setArguments(argsPlace);
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                        transaction.replace(R.id.fragment_container, screenMapFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
                         return true;
                     case R.id.app_bar_list:
-                        Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_SHORT).show();
+                        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+                        Bundle argsList = new Bundle();
+                        //args.putInt(ViewPagerFragment.ARG_POSITION, position);
+                        viewPagerFragment.setArguments(argsList);
+
+                        FragmentTransaction pagerTransaction = getSupportFragmentManager().beginTransaction();
+
+                        pagerTransaction.replace(R.id.fragment_container, viewPagerFragment);
+                        pagerTransaction.addToBackStack(null);
+
+                        pagerTransaction.commit();
+
                         return true;
                     case R.id.app_bar_statistics:
                         Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
@@ -60,38 +84,4 @@ public class MapsActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            super.onBackPressed();
-        } else {
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
-    }
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if(position == 0) {
-                return new ScreenMapFragment();
-            } else {
-                return new ScreenInfoFragment();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Page " + (position + 1);
-        }
-    }
 }
