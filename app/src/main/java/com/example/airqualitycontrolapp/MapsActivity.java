@@ -18,18 +18,26 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.internal.NavigationMenu;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends AppCompatActivity {
 
-
     private BottomNavigationView navigationMenu;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
+//        Sensor sensor = new Sensor();
+//        sensor.setLatitude(52.232855);
+//        sensor.setLongitude(20.9211133);
+//        sensor.setCountry("Poland");
+//        sensor.setCity("Warszawa");
+//        dbRef = FirebaseDatabase.getInstance().getReference().child("Sensor");
+//        dbRef.push().setValue(sensor);
 
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -41,6 +49,9 @@ public class MapsActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
         }
+
+
+
 
         navigationMenu = findViewById(R.id.bottomNavigation);
 
@@ -76,11 +87,22 @@ public class MapsActivity extends AppCompatActivity {
                         return true;
                     case R.id.app_bar_statistics:
                         Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+                        Sensor sensor = new Sensor();
+                        sensor.setLatitude(52.232855);
+                        sensor.setLongitude(20.9211133);
+                        sensor.setCountry("Poland");
+                        sensor.setCity("Warszawa");
+                        dbRef = FirebaseDatabase.getInstance().getReference().child("Sensor");
+                        dbRef.push().setValue(sensor);
+
+
                         return true;
                 }
                 return false;
             }
         });
+
+
 
     }
 
