@@ -25,6 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
     private List<Sensor> sensors;
     private GoogleMap map;
     private SupportMapFragment mapFragment;
+    private ArrayList<Station> stationArrayList;
 
 
     @Override
@@ -46,35 +50,13 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
 
-        sensors = GetSensors();
-
+        stationArrayList = (ArrayList<Station>) getArguments().getSerializable("listOfStations");
+        if(stationArrayList != null) {
+            System.out.println("size of array " + stationArrayList.size());
+        }
 
 
         return rootView;
-    }
-
-    private List<Sensor> GetSensors() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference ref = database.child("Sensor");
-        final ArrayList<Sensor> sensorsRes = new ArrayList<>();
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
-                        Sensor sensor = singleSnapshot.getValue(Sensor.class);
-                        sensorsRes.add(sensor);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return sensorsRes;
-
     }
 
     @Override
@@ -87,8 +69,12 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 //            map.addMarker(new MarkerOptions().position(pp).title(sensors.get(i).getCountry()+ ", " + sensors.get(i).getCity() ));
 //        }
 
-        LatLng pp = new LatLng(44.783878,10.879663);
-        map.addMarker(new MarkerOptions().position(pp).title("Carpi").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_red_circle)));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
+        for(int i = 0; i < stationArrayList.size(); i++) {
+            Station station = stationArrayList.get(i);
+            LatLng pp = new LatLng(station.getLatitude(), station.getLongitude());
+            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_red_circle)));
+        }
+
+        //map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
     }
 }

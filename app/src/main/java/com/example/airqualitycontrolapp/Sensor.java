@@ -2,71 +2,37 @@ package com.example.airqualitycontrolapp;
 
 public class Sensor {
 
-    private double latitude;
-    private double longitude;
-    private String country;
-    private String city;
-    private String street;
-    private String number;
+    private int id;
+    private int stationId;
+    private Parameter parameter;
 
-
-    public double getLatitude() {
-        return latitude;
+    public Sensor(int id, int stationId, Parameter parameter) {
+        this.id = id;
+        this.stationId = stationId;
+        this.parameter = parameter;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public int getId() {
+        return id;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public int getStationId() {
+        return stationId;
     }
 
-    public String getCountry() {
-        return country;
+    public void setStationId(int stationId) {
+        this.stationId = stationId;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public Parameter getParameter() {
+        return parameter;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    @Override
-    public String toString() {
-        return "Sensor{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", number='" + number + '\'' +
-                '}';
+    public void setParameter(Parameter parameter) {
+        this.parameter = parameter;
     }
 }
