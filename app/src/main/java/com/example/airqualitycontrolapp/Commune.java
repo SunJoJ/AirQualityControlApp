@@ -3,7 +3,9 @@ package com.example.airqualitycontrolapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Commune  {
+import java.io.Serializable;
+
+public class Commune implements Serializable {
 
     private String communeName;
     private String districtName;

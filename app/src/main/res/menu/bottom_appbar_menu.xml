@@ -4,19 +4,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_add_place"
-        android:icon="@drawable/ic_bar_add_place"
-        android:title="Add place"
+        android:id="@+id/app_bar_home_button"
+        android:icon="@drawable/ic_home_button"
+        android:title="Home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/app_bar_list"
-        android:icon="@drawable/ic_bar_list"
-        android:title="List"
+        android:id="@+id/app_bar_map_button"
+        android:icon="@drawable/ic_map_button"
+        android:title="Map"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/app_bar_statistics"
-        android:icon="@drawable/ic_bar_statistics"
+        android:id="@+id/app_bar_me"
+        android:icon="@drawable/ic_account_circle"
+        android:title="Me"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/app_bar_statistics_button"
+        android:icon="@drawable/ic_list_button"
         android:title="Statistics"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/app_bar_settings_button"
+        android:icon="@drawable/ic_settings_button"
+        android:title="Settings"
         app:showAsAction="never"/>
 
 </menu>

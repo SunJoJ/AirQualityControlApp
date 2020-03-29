@@ -7,12 +7,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
-import com.google.gson.JsonArray;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -22,10 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class MapsActivity extends AppCompatActivity {
 
@@ -50,7 +45,7 @@ public class MapsActivity extends AppCompatActivity {
 
         client = new OkHttpClient();
 
-        getAllStations();
+        sendRequest("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
 
         Bundle bundle1 = new Bundle();
         bundle1.putSerializable("listOfStations", stationArrayList);
@@ -76,7 +71,10 @@ public class MapsActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.app_bar_add_place:
+                    case R.id.app_bar_home_button:
+
+                        return true;
+                    case R.id.app_bar_map_button:
                         try {
                             stationArrayList = (ArrayList<Station>) JSONParser.parseStationJsonArray(jsonArray);
                         } catch (JSONException e) {
@@ -94,7 +92,11 @@ public class MapsActivity extends AppCompatActivity {
                         trans.commit();
 
                         return true;
-                    case R.id.app_bar_list:
+                    case R.id.app_bar_me:
+                        //Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+
+                        return true;
+                    case R.id.app_bar_statistics_button:
                         ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
                         Bundle argsList = new Bundle();
                         //args.putInt(ViewPagerFragment.ARG_POSITION, position);
@@ -108,12 +110,10 @@ public class MapsActivity extends AppCompatActivity {
                         pagerTransaction.commit();
 
                         return true;
-                    case R.id.app_bar_statistics:
-                        //Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
-
-
+                    case R.id.app_bar_settings_button:
 
                         return true;
+
                 }
                 return false;
             }
@@ -123,8 +123,8 @@ public class MapsActivity extends AppCompatActivity {
     }
 
 
-    private void getAllStations() {
-        final Request request = new Request.Builder().url("http://api.gios.gov.pl/pjp-api/rest/station/findAll").build();
+    private void sendRequest(String url) {
+        final Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
