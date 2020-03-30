@@ -1,9 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light">
         <item name="android:windowNoTitle">true</item>
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
-
 
 </resources>
