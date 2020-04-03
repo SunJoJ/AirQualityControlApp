@@ -6,10 +6,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
@@ -31,9 +32,10 @@ public class MapsActivity extends AppCompatActivity {
     private BottomNavigationView navigationMenu;
     private DatabaseReference dbRef;
     private JSONArray jsonArray;
-    private ArrayList<Station> stationArrayList;
 
+    private ArrayList<Station> stationArrayList;
     private OkHttpClient client;
+    private String response;
 
 
 
@@ -47,13 +49,15 @@ public class MapsActivity extends AppCompatActivity {
 
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-
         client = new OkHttpClient();
 
-        sendRequest("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
 
-        Bundle bundle1 = new Bundle();
-        bundle1.putSerializable("listOfStations", stationArrayList);
+        loadContent("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
+
+
+
+//        Bundle bundle1 = new Bundle();
+//        bundle1.putSerializable("listOfStations", stationArrayList);
 
 //        if (findViewById(R.id.fragment_container) != null) {
 //            if (savedInstanceState != null) {
@@ -78,9 +82,11 @@ public class MapsActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.app_bar_home_button:
 
+
                         return true;
                     case R.id.app_bar_map_button:
                         try {
+
                             stationArrayList = (ArrayList<Station>) JSONParser.parseStationJsonArray(jsonArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -127,8 +133,33 @@ public class MapsActivity extends AppCompatActivity {
 
     }
 
+    private void loadContent(final String url) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    response = GIOSDataLoader.GET(client, url);
+                    //Parse the response string here
+                    Log.d("Response", response);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return response;
+            }
 
-    private void sendRequest(String url) {
+            @Override
+            protected void onPostExecute(String result) {
+                try {
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
+
+    }
+
+    public void sendRequest(String url) {
         final Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override

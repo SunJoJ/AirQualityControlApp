@@ -1,5 +1,6 @@
 package com.example.airqualitycontrolapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,8 @@ public class ViewPagerFragment extends Fragment {
         pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(pagerAdapter);
         tabLayout = rootView.findViewById(R.id.tab_layout);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
+        tabLayout.setTabTextColors(Color.parseColor("#6ec6ff"), Color.parseColor("#ffffff"));
         tabLayout.setupWithViewPager(mPager);
 
         return rootView;

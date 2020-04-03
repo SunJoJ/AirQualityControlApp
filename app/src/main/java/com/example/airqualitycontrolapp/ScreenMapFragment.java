@@ -53,9 +53,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
 
         stationArrayList = (ArrayList<Station>) getArguments().getSerializable("listOfStations");
-        if(stationArrayList != null) {
-            System.out.println("size of array " + stationArrayList.size());
-        }
+
 
 
         return rootView;
@@ -63,20 +61,18 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
         this.map = googleMap;
 
-//        for(int i = 0; i < sensors.size(); i++) {
-//            LatLng pp = new LatLng(sensors.get(i).getLatitude(), sensors.get(i).getLongitude());
-//            map.addMarker(new MarkerOptions().position(pp).title(sensors.get(i).getCountry()+ ", " + sensors.get(i).getCity() ));
-//        }
 
         for(int i = 0; i < stationArrayList.size(); i++) {
             Station station = stationArrayList.get(i);
             LatLng pp = new LatLng(station.getLatitude(), station.getLongitude());
-            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_red_circle)));
+            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getAddressStreet()));
         }
-
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
     }
+
+
+
+
 }
