@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -88,7 +89,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             Station station = stationArrayList.get(i);
 
             LatLng pp = new LatLng(station.getLatitude(), station.getLongitude());
-            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getAddressStreet()));
+            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId() + " " + station.getAddressStreet()));
         }
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
 
@@ -98,7 +99,14 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             public boolean onMarkerClick(Marker marker) {
 
                 MarkerDetailsFragment markerDetailsFragment = new MarkerDetailsFragment();
+                String id = marker.getSnippet().split(" ")[0];
+                loadSensorsData("http://api.gios.gov.pl/pjp-api/rest/station/sensors/" + id);
 
+                Bundle bundle = new Bundle();
+                bundle.putString("Data", response);
+                //List<Sensor> sensorList = JSONParser.parseSensorsJsonArray(jsonArray);
+
+                markerDetailsFragment.setArguments(bundle);
                 FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
 
                 trans.add(R.id.fragment_container, markerDetailsFragment);
@@ -114,30 +122,36 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
 
 
-    private  void loadSensorsData(final String url) {
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected String doInBackground(String... params) {
-                try {
-                    response = GIOSDataLoader.GET(client, url);
-                    //Parse the response string here
-                    Log.d("Response", response);
-                } catch (IOException e) {
-                    e.printStackTrace();
+    private void loadSensorsData(final String url) {
+        try {
+            new AsyncTask<String, Void, String>() {
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        response = GIOSDataLoader.GET(client, url);
+                        //Parse the response string here
+                        Log.d("Response", response);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return response;
                 }
-                return response;
-            }
 
-            @Override
-            protected void onPostExecute(String result) {
-                try {
-                    //if(response!=null)
+                @Override
+                protected void onPostExecute(String result) {
+                    try {
+                        jsonArray = new JSONArray(response);
                         jsonArrayList.add(new JSONArray(response));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }.execute();
+            }.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
