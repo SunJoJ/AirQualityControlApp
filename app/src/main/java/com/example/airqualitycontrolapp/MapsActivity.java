@@ -51,8 +51,7 @@ public class MapsActivity extends AppCompatActivity {
         mActivity = MapsActivity.this;
         client = new OkHttpClient();
 
-
-        loadContent("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
+        loadStationsData("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
 
 
 
@@ -133,7 +132,7 @@ public class MapsActivity extends AppCompatActivity {
 
     }
 
-    private void loadContent(final String url) {
+    private  void loadStationsData(final String url) {
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... params) {

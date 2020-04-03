@@ -1,5 +1,6 @@
 package com.example.airqualitycontrolapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,10 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +46,10 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private SupportMapFragment mapFragment;
     private ArrayList<Station> stationArrayList;
+    private String response;
+    private OkHttpClient client;
+    private JSONArray jsonArray;
+    private List<JSONArray> jsonArrayList;
 
 
     @Override
@@ -51,9 +61,19 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
+        client = new OkHttpClient();
+        jsonArrayList = new ArrayList<>();
 
         stationArrayList = (ArrayList<Station>) getArguments().getSerializable("listOfStations");
 
+//        for(int i = 0; i < stationArrayList.size(); i++) {
+//            Station station = stationArrayList.get(i);
+//            loadSensorsData("http://api.gios.gov.pl/pjp-api/rest/station/sensors/" + station.getId());
+//
+//        }
+//        for(int i = 0; i < jsonArrayList.size(); i++) {
+//            List<Sensor> sensorList = JSONParser.parseSensorsJsonArray(jsonArrayList.get(i));
+//        }
 
 
         return rootView;
@@ -66,13 +86,60 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
         for(int i = 0; i < stationArrayList.size(); i++) {
             Station station = stationArrayList.get(i);
+
             LatLng pp = new LatLng(station.getLatitude(), station.getLongitude());
             map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getAddressStreet()));
         }
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
+
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                MarkerDetailsFragment markerDetailsFragment = new MarkerDetailsFragment();
+
+                FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+
+                trans.add(R.id.fragment_container, markerDetailsFragment);
+                trans.addToBackStack(null);
+                trans.commit();
+
+
+                return false;
+            }
+        });
+
     }
 
 
+
+    private  void loadSensorsData(final String url) {
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    response = GIOSDataLoader.GET(client, url);
+                    //Parse the response string here
+                    Log.d("Response", response);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return response;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                try {
+                    //if(response!=null)
+                        jsonArrayList.add(new JSONArray(response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute();
+
+    }
 
 
 }
