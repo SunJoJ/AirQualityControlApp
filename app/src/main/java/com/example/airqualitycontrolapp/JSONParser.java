@@ -69,4 +69,41 @@ public class JSONParser {
         return  sensorList;
     }
 
+
+    public static List parseMeasurementsJsonArray(JSONArray jsonArray){
+        List<Measurement> measurementList = new ArrayList<>();
+
+        for(int i = 0; i < 2; i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String key = jsonObject.getString("key");
+                JSONArray jsonArray1 = jsonObject.getJSONArray("values");
+                List<Value> values = new ArrayList<>();
+                for(int j = 0; j < jsonArray1.length(); j++) {
+                    double value;
+                    JSONObject jsonObject1 = jsonArray1.getJSONObject(j);
+                    if(jsonObject1.get("value") == null){
+                        value = 0.0;
+                    } else {
+                        value = jsonObject1.getDouble("value");
+                    }
+
+                    String date = jsonObject1.getString("date");
+                    Value value1 = new Value(value, date);
+                    values.add(value1);
+                }
+                Measurement measurement = new Measurement(key, values);
+                measurementList.add(measurement);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        return measurementList;
+    }
+
 }

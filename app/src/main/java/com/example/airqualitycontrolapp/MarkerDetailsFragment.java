@@ -1,6 +1,8 @@
 package com.example.airqualitycontrolapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
@@ -14,20 +16,29 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.JsonArray;
+import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MarkerDetailsFragment extends Fragment {
 
     private List<Sensor> sensorList;
+
+    private String response;
+    private OkHttpClient client;
+    private JSONArray jsonArray;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_marker_details, container, false);
+
+        client = new OkHttpClient();
 
         Bundle bundle = this.getArguments();
 
@@ -39,12 +50,31 @@ public class MarkerDetailsFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+
         String sensorData = "";
 
         for(int i = 0; i < sensorList.size(); i++) {
             Sensor sensor = sensorList.get(i);
             Parameter parameter = sensor.getParameter();
-            sensorData += parameter.getParamName() + " " + parameter.getParamFormula() + " \n";
+
+            loadMeasurementData("http://api.gios.gov.pl/pjp-api/rest/data/getData/" + sensor.getId());
+
+            List<Measurement> measurementList = JSONParser.parseMeasurementsJsonArray(jsonArray);
+
+            sensorData += parameter.getParamName() + ": ";
+
+            for(int j = 0; j < measurementList.size(); j++) {
+                Measurement measurement = measurementList.get(j);
+                List<Value> values =  measurement.getValues();
+                for(int k = 0; k < values.size(); k++) {
+                    Value value = values.get(k);
+                    sensorData += value.getValue() + " " + value.getDate() + "\n";
+                }
+
+            }
+            sensorData += " \n ";
+
         }
 
         TextView textView = rootView.findViewById(R.id.detailsTextView);
@@ -66,6 +96,38 @@ public class MarkerDetailsFragment extends Fragment {
 
         return rootView;
     }
+
+
+    private void loadMeasurementData(final String url) {
+        try {
+            new AsyncTask<String, Void, String>() {
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        response = GIOSDataLoader.GET(client, url);
+                        //Parse the response string here
+                        Log.d("Response", response);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return response;
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    try {
+                        jsonArray = new JSONArray(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 
 }

@@ -147,9 +147,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 }
             }.execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
