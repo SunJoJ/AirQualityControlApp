@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:paddingBottom="70dp"
     android:paddingLeft="30dp"
@@ -21,7 +22,21 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Test"
-            android:textSize="14dp" />
+            android:textSize="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            app:icon="@drawable/ic_close"
+            android:background="@color/primaryLightColor"
+
+
+            />
+
+
 
 
     </RelativeLayout>

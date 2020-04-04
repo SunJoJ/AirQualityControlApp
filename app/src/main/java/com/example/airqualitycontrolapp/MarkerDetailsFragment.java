@@ -5,9 +5,13 @@ import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.JsonArray;
 
@@ -45,6 +49,20 @@ public class MarkerDetailsFragment extends Fragment {
 
         TextView textView = rootView.findViewById(R.id.detailsTextView);
         textView.setText(sensorData);
+
+
+        Button button = rootView.findViewById(R.id.closeButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            }
+        });
+
+
 
         return rootView;
     }
