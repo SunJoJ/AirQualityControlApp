@@ -6,34 +6,38 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class MapsActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MapsActivity extends AppCompatActivity{
 
     private Context mContext;
     private Activity mActivity;
     private BottomNavigationView navigationMenu;
     private DatabaseReference dbRef;
     private JSONArray jsonArray;
-
-    private ArrayList<Station> stationArrayList;
+    private ArrayList<StationGIOS> stationGIOSArrayList;
     private OkHttpClient client;
     private String response;
 
@@ -51,10 +55,6 @@ public class MapsActivity extends AppCompatActivity {
         mActivity = MapsActivity.this;
         client = new OkHttpClient();
 
-        loadStationsData("http://api.gios.gov.pl/pjp-api/rest/station/findAll");
-
-
-
 //        Bundle bundle1 = new Bundle();
 //        bundle1.putSerializable("listOfStations", stationArrayList);
 
@@ -70,6 +70,21 @@ public class MapsActivity extends AppCompatActivity {
 //        }
 
 
+        RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+        Call<ArrayList<StationGIOS>> call = service.getAllStations();
+
+        call.enqueue(new Callback<ArrayList<StationGIOS>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
+                Log.d("Response", String.valueOf(response.body().size()));
+                stationGIOSArrayList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<StationGIOS>> call, Throwable t) {
+                Log.d("Response", t.getLocalizedMessage());
+            }
+        });
 
 
 
@@ -84,16 +99,9 @@ public class MapsActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.app_bar_map_button:
-                        try {
-
-                            stationArrayList = (ArrayList<Station>) JSONParser.parseStationJsonArray(jsonArray);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
                         ScreenMapFragment mapFragment = new ScreenMapFragment();
                         Bundle bundle1 = new Bundle();
-                        bundle1.putSerializable("listOfStations", stationArrayList);
+                        bundle1.putSerializable("listOfStations", stationGIOSArrayList);
                         mapFragment.setArguments(bundle1);
                         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 
@@ -122,68 +130,14 @@ public class MapsActivity extends AppCompatActivity {
                         return true;
                     case R.id.app_bar_settings_button:
 
-                        return true;
+                        Log.d("resp", String.valueOf(stationGIOSArrayList.size()));
 
+                        return true;
                 }
                 return false;
             }
         });
-
-
     }
 
-    private  void loadStationsData(final String url) {
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected String doInBackground(String... params) {
-                try {
-                    response = GIOSDataLoader.GET(client, url);
-                    //Parse the response string here
-                    Log.d("Response", response);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return response;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                try {
-                    jsonArray = new JSONArray(response);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute();
-
-    }
-
-    public void sendRequest(String url) {
-        final Request request = new Request.Builder().url(url).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-//                try{
-//                    Log.d("api_response", response.body().string());
-//                } catch (Exception e){
-//                    Log.d("resp_error", response.message());
-//                }
-
-                try {
-                    jsonArray = new JSONArray(response.body().string());
-                    //stationArrayList = (ArrayList<Station>) JSONParser.parseStationJsonArray(jsonArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-        });
-    }
 
 }

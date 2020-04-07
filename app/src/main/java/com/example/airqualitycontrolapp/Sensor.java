@@ -1,9 +1,16 @@
 package com.example.airqualitycontrolapp;
 
-public class Sensor {
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
+public class Sensor implements Serializable {
+
+    @SerializedName("id")
     private int id;
+    @SerializedName("stationId")
     private int stationId;
+    @SerializedName("param")
     private Parameter parameter;
 
     public Sensor(int id, int stationId, Parameter parameter) {

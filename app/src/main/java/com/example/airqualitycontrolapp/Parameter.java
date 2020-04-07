@@ -1,10 +1,18 @@
 package com.example.airqualitycontrolapp;
 
-public class Parameter {
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
+public class Parameter implements Serializable {
+
+    @SerializedName("paramName")
     private String paramName;
+    @SerializedName("paramFormula")
     private String paramFormula;
+    @SerializedName("paramCode")
     private String paramCode;
+    @SerializedName("idParam")
     private int idParam;
 
     public Parameter(String paramName, String paramFormula, String paramCode, int idParam) {

@@ -1,8 +1,14 @@
 package com.example.airqualitycontrolapp;
 
-public class Value {
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
+public class Value implements Serializable {
+
+    @SerializedName("value")
     private double value;
+    @SerializedName("date")
     private String date;
 
     public Value(Double value, String date) {

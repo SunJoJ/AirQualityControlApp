@@ -1,10 +1,15 @@
 package com.example.airqualitycontrolapp;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Measurement {
+public class Measurement implements Serializable {
 
+    @SerializedName("key")
     private String key;
+    @SerializedName("values")
     private List<Value> values;
 
     public Measurement(String key, List<Value> values) {

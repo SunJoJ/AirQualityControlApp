@@ -1,5 +1,6 @@
 package com.example.airqualitycontrolapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,9 +37,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -46,11 +52,14 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
     private List<Sensor> sensors;
     private GoogleMap map;
     private SupportMapFragment mapFragment;
-    private ArrayList<Station> stationArrayList;
+    private ArrayList<StationGIOS> stationGIOSArrayList;
     private String response;
     private OkHttpClient client;
     private JSONArray jsonArray;
     private List<JSONArray> jsonArrayList;
+    private ArrayList<Sensor> sensorArrayList;
+    private Map<Integer, ArrayList<Sensor>> stringArrayListMap;
+    private Integer id;
 
 
     @Override
@@ -65,16 +74,30 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
         client = new OkHttpClient();
         jsonArrayList = new ArrayList<>();
 
-        stationArrayList = (ArrayList<Station>) getArguments().getSerializable("listOfStations");
+        stationGIOSArrayList = (ArrayList<StationGIOS>) getArguments().getSerializable("listOfStations");
 
-//        for(int i = 0; i < stationArrayList.size(); i++) {
-//            Station station = stationArrayList.get(i);
-//            loadSensorsData("http://api.gios.gov.pl/pjp-api/rest/station/sensors/" + station.getId());
-//
-//        }
-//        for(int i = 0; i < jsonArrayList.size(); i++) {
-//            List<Sensor> sensorList = JSONParser.parseSensorsJsonArray(jsonArrayList.get(i));
-//        }
+        stringArrayListMap= new HashMap<>();
+
+       for(int i = 0; i < stationGIOSArrayList.size(); i++) {
+            RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+            id = stationGIOSArrayList.get(i).getId();
+            Call<ArrayList<Sensor>> call = service.getSensorsByStationId(id);
+
+            call.enqueue(new Callback<ArrayList<Sensor>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Sensor>> call, Response<ArrayList<Sensor>> response) {
+                    //sensorArrayList = response.body();
+                    Log.d("resp", String.valueOf(response.body()));
+                    stringArrayListMap.put(id, response.body());
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Sensor>> call, Throwable t) {
+                    Log.d("resp", t.getMessage());
+                }
+            });
+        }
+
 
 
         return rootView;
@@ -84,14 +107,12 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
 
+        for(int i = 0; i < stationGIOSArrayList.size(); i++) {
+            StationGIOS station = stationGIOSArrayList.get(i);
 
-        for(int i = 0; i < stationArrayList.size(); i++) {
-            Station station = stationArrayList.get(i);
-
-            LatLng pp = new LatLng(station.getLatitude(), station.getLongitude());
+            LatLng pp = new LatLng(Double.parseDouble(station.getLatitude()), Double.parseDouble(station.getLongitude()));
             map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId() + " " + station.getAddressStreet()));
         }
-        //map.animateCamera(CameraUpdateFactory.newLatLngZoom(pp, 8));
 
 
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -99,12 +120,13 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             public boolean onMarkerClick(Marker marker) {
 
                 MarkerDetailsFragment markerDetailsFragment = new MarkerDetailsFragment();
-                String id = marker.getSnippet().split(" ")[0];
-                loadSensorsData("http://api.gios.gov.pl/pjp-api/rest/station/sensors/" + id);
+                String curId = marker.getSnippet().split(" ")[0];
+
+
+                ArrayList<Sensor> sensorArrayList1 = stringArrayListMap.get(Integer.parseInt(curId));
 
                 Bundle bundle = new Bundle();
-                bundle.putString("Data", response);
-                //List<Sensor> sensorList = JSONParser.parseSensorsJsonArray(jsonArray);
+                bundle.putSerializable("Data", sensorArrayList1);
 
                 markerDetailsFragment.setArguments(bundle);
                 FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
@@ -117,39 +139,6 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             }
         });
-
-    }
-
-
-
-    private void loadSensorsData(final String url) {
-        try {
-            new AsyncTask<String, Void, String>() {
-                @Override
-                protected String doInBackground(String... params) {
-                    try {
-                        response = GIOSDataLoader.GET(client, url);
-                        //Parse the response string here
-                        Log.d("Response", response);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return response;
-                }
-
-                @Override
-                protected void onPostExecute(String result) {
-                    try {
-                        jsonArray = new JSONArray(response);
-                        jsonArrayList.add(new JSONArray(response));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.execute().get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 

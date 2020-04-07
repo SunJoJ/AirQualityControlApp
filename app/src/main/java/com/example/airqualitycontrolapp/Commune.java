@@ -3,12 +3,17 @@ package com.example.airqualitycontrolapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Commune implements Serializable {
 
+    @SerializedName("communeName")
     private String communeName;
+    @SerializedName("districtName")
     private String districtName;
+    @SerializedName("provinceName")
     private String provinceName;
 
     public Commune(String communeName, String districtName, String provinceName) {
