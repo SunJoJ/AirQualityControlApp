@@ -75,4 +75,18 @@ public class StationGIOS implements Serializable {
     public void setAddressStreet(String addressStreet) {
         this.addressStreet = addressStreet;
     }
+
+    @Override
+    public String toString() {
+        return "StationGIOS{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", city=" + city +
+                ", addressStreet='" + addressStreet + '\'' +
+                '}';
+    }
+
+
 }

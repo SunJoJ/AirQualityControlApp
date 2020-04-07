@@ -76,7 +76,6 @@ public class MapsActivity extends AppCompatActivity{
         call.enqueue(new Callback<ArrayList<StationGIOS>>() {
             @Override
             public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
-                Log.d("Response", String.valueOf(response.body().size()));
                 stationGIOSArrayList = response.body();
             }
 

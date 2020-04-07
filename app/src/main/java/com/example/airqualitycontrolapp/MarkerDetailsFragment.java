@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import retrofit2.Call;
 import retrofit2.Retrofit;
 
 public class MarkerDetailsFragment extends Fragment {
@@ -51,41 +52,19 @@ public class MarkerDetailsFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_marker_details, container, false);
 
-        client = new OkHttpClient();
+        QualityIndex qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
+        Log.d("resp", qualityIndex.toString());
 
-        Bundle bundle = this.getArguments();
-
-        if(bundle!=null) {
-            sensorList = (ArrayList<Sensor>) bundle.getSerializable("Data");
-            Log.d("resp", String.valueOf(sensorList.size()));
-        }
         Map<Integer, List<Measurement>> mapOfMeasurements = new HashMap<>();
 
-        String sensorData = "";
+        String index = qualityIndex.getIndexLevel().getIndexLevelName();
 
-//        for(int i = 0; i < sensorList.size(); i++) {
-//            Sensor sensor = sensorList.get(i);
-//            Parameter parameter = sensor.getParameter();
-//
-//            List<Measurement> measurementList = mapOfMeasurements.get(sensor.getId());
-//
-//            sensorData += parameter.getParamName() + ": ";
-//
-//            for(int j = 0; j < measurementList.size(); j++) {
-//                Measurement measurement = measurementList.get(j);
-//                List<Value> values =  measurement.getValues();
-//                for(int k = 0; k < values.size(); k++) {
-//                    Value value = values.get(k);
-//                    sensorData += measurement.getKey() + " " + value.getValue() + " " + value.getDate() + "\n";
-//                }
-//
-//            }
-//            sensorData += " \n ";
-//
-//        }
+        RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+        //Call<ArrayList<Measurement>> call = service.getMeasurementsDataBySensorId();
+
 
         TextView textView = rootView.findViewById(R.id.detailsTextView);
-        textView.setText(sensorData);
+        textView.setText(index);
 
 
         Button button = rootView.findViewById(R.id.closeButton);
@@ -98,8 +77,6 @@ public class MarkerDetailsFragment extends Fragment {
 
             }
         });
-
-
 
         return rootView;
     }

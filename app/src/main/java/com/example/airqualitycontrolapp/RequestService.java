@@ -14,5 +14,11 @@ public interface RequestService {
     @GET("station/sensors/{stationId}")
     Call<ArrayList<Sensor>> getSensorsByStationId(@Path("stationId") Integer stationId);
 
+    @GET("data/getData/{sensorId}")
+    Call<ArrayList<Measurement>> getMeasurementsDataBySensorId(@Path("sensorId") Integer sensorId);
+
+    @GET("aqindex/getIndex/{stationId}")
+    Call<QualityIndex> getQualityIndexByStationId(@Path("stationId") Integer stationId);
+
 
 }
