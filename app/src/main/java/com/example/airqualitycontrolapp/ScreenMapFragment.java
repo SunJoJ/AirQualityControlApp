@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,7 +61,9 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             StationGIOS station = stationGIOSArrayList.get(i);
 
             LatLng pp = new LatLng(Double.parseDouble(station.getLatitude()), Double.parseDouble(station.getLongitude()));
-            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId() + " " + station.getAddressStreet()));
+            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId()
+                                                                                                                                + " " + station.getAddressStreet()
+                                                                                                                                + ", " + station.getCity().getName()));
         }
 
 
@@ -69,7 +72,8 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             public boolean onMarkerClick(Marker marker) {
 
                 final MarkerDetailsFragment markerDetailsFragment = new MarkerDetailsFragment();
-                String curId = marker.getSnippet().split(" ")[0];
+                final String curId = marker.getSnippet().split(" ")[0];
+                final String address = marker.getSnippet().substring(marker.getSnippet().indexOf(" ") + 1);
 
                 RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
                 Call<QualityIndex> call = service.getQualityIndexByStationId(Integer.valueOf(curId));
@@ -80,12 +84,13 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                         QualityIndex qualityIndex = response.body();
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("Index", qualityIndex);
+                        bundle.putString("Address", address);
 
                         markerDetailsFragment.setArguments(bundle);
                         FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
 
-                        trans.add(R.id.fragment_container, markerDetailsFragment);
-                        trans.addToBackStack(null);
+                        trans.add(R.id.fragment_container, markerDetailsFragment, "markerDetailsFragment");
+                        trans.addToBackStack("markerDetailsFragment");
                         trans.commit();
                     }
 
@@ -96,10 +101,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                 });
 
 
-
-
-
-                return false;
+                return true;
             }
         });
 

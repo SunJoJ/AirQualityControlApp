@@ -12,29 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
-        android:padding="10dp"
-        android:paddingTop="10dp">
+
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/rounded_corner">
+
 
         <TextView
             android:id="@+id/detailsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="40dp"
+            android:text="Test"
+            android:textSize="26dp"
+            android:textAlignment="center"
+            android:padding="30dp"/>
+
+        <TextView
+            android:id="@+id/addressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:paddingTop="40dp"
             android:text="Test"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:textAlignment="center"
+            />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/closeButton"
+            android:id="@+id/chooseButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-            app:icon="@drawable/ic_close"
+            app:icon="@drawable/ic_grade_24px"
             android:background="@color/primaryLightColor"
-
-
             />
+
 
 
 

@@ -2,6 +2,8 @@ package com.example.airqualitycontrolapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
@@ -12,19 +14,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,13 +32,7 @@ public class MapsActivity extends AppCompatActivity{
     private Context mContext;
     private Activity mActivity;
     private BottomNavigationView navigationMenu;
-    private DatabaseReference dbRef;
-    private JSONArray jsonArray;
     private ArrayList<StationGIOS> stationGIOSArrayList;
-    private OkHttpClient client;
-    private String response;
-
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -50,10 +41,11 @@ public class MapsActivity extends AppCompatActivity{
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_maps);
+        FrameLayout frameLayout = findViewById(R.id.fragment_container);
+        CoordinatorLayout coordinatorLayout = findViewById(R.id.mainCoordinatorLayout);
 
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-        client = new OkHttpClient();
 
 //        Bundle bundle1 = new Bundle();
 //        bundle1.putSerializable("listOfStations", stationArrayList);
@@ -136,7 +128,21 @@ public class MapsActivity extends AppCompatActivity{
                 return false;
             }
         });
+
+
+
+        coordinatorLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        });
+
     }
+
+
 
 
 }

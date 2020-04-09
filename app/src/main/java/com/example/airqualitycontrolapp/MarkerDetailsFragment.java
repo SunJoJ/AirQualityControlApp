@@ -1,5 +1,7 @@
 package com.example.airqualitycontrolapp;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -45,7 +47,6 @@ public class MarkerDetailsFragment extends Fragment {
     private JSONArray jsonArray;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MarkerDetailsFragment extends Fragment {
                 R.layout.fragment_marker_details, container, false);
 
         QualityIndex qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
+        String address = getArguments().getString("Address");
         Log.d("resp", qualityIndex.toString());
 
         Map<Integer, List<Measurement>> mapOfMeasurements = new HashMap<>();
@@ -63,17 +65,50 @@ public class MarkerDetailsFragment extends Fragment {
         //Call<ArrayList<Measurement>> call = service.getMeasurementsDataBySensorId();
 
 
-        TextView textView = rootView.findViewById(R.id.detailsTextView);
-        textView.setText(index);
+        TextView detailsTextView = rootView.findViewById(R.id.detailsTextView);
+        TextView addressTextView = rootView.findViewById(R.id.addressTextView);
+        detailsTextView.setText(index);
+        switch (index) {
+            case "Bardzo dobry":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_dark_green);
+                break;
+            case "Dobry":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_green);
+                break;
+            case "Umiarkowany":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_yellow);
+                break;
+            case "Dostateczny":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_orange);
+                break;
+            case "Zły":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_red);
+                break;
+            case "Bardzo zły":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_dark_red);
+                break;
+            case "Brak indeksu":
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
+                break;
+            default:
+                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
+                break;
+        }
+
+        addressTextView.setText(address);
 
 
-        Button button = rootView.findViewById(R.id.closeButton);
+        Button button = rootView.findViewById(R.id.chooseButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                //FragmentManager fragmentManager = getFragmentManager();
+                //fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
 
             }
         });
