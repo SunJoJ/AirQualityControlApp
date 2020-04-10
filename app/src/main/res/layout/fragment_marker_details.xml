@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
@@ -25,10 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="0dp"
             android:layout_marginTop="40dp"
             android:text="Test"
-            android:textSize="26dp"
+            android:textSize="28dp"
             android:textAlignment="center"
             android:padding="30dp"/>
 
@@ -48,9 +46,18 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:insetBottom="0dp"
+            android:insetTop="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
             app:icon="@drawable/ic_grade_24px"
-            android:background="@color/primaryLightColor"
+            app:borderWidth="0dp"
+            android:stateListAnimator="@null"
+            app:iconTint="@color/primaryTextColor"
+            app:backgroundTint="#00FFFFFF"
             />
 
 
