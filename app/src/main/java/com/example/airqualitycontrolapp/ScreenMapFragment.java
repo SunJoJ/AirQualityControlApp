@@ -85,6 +85,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("Index", qualityIndex);
                         bundle.putString("Address", address);
+                        bundle.putString("StationId", curId);
 
                         markerDetailsFragment.setArguments(bundle);
                         FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();

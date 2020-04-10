@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:paddingBottom="70dp"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp">
+    android:padding="10dp"
+    android:background="@color/lightGray">
 
     <RelativeLayout
-        android:id="@+id/markerDetailsFragmentLayout"
+        android:id="@+id/fragmentRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/rounded_corner">
 
-
         <TextView
-            android:id="@+id/detailsTextView"
+            android:id="@+id/indexTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -30,21 +28,21 @@
             android:textSize="28dp"
             android:textAlignment="center"
             android:textColor="@color/primaryTextColor"
-            android:padding="30dp"/>
+            android:paddingTop="25dp"/>
 
         <TextView
             android:id="@+id/addressTextView"
-            android:layout_width="260dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:text="Test"
             android:textColor="@color/primaryTextColor"
-            android:textSize="12dp" />
+            android:textSize="12dp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/chooseButton"
+
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
@@ -56,38 +54,44 @@
             android:minWidth="48dp"
             android:minHeight="48dp"
             app:icon="@drawable/ic_grade_24px"
-            android:layout_marginRight="30dp"
             app:borderWidth="0dp"
             android:stateListAnimator="@null"
             app:iconTint="@color/primaryTextColor"
             app:backgroundTint="#00FFFFFF"
             />
+    </RelativeLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/closeButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:insetBottom="0dp"
-            android:insetTop="0dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:minWidth="40dp"
-            android:minHeight="40dp"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:layout_marginTop="160dp">
 
-            app:icon="@drawable/ic_close_black"
-            app:borderWidth="0dp"
-            android:stateListAnimator="@null"
-            app:iconTint="@color/primaryTextColor"
-            app:backgroundTint="#00FFFFFF"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:background="@drawable/rounded_corner_unknown"
+            android:text="Pollution components"
 
+            android:textAlignment="center"
+            android:textSize="18dp"/>
 
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listOfPollutionComponents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp">
+
+        </ListView>
 
 
     </RelativeLayout>
-
 
 </RelativeLayout>
