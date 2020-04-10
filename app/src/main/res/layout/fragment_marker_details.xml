@@ -28,18 +28,19 @@
             android:text="Test"
             android:textSize="28dp"
             android:textAlignment="center"
+            android:textColor="@color/primaryTextColor"
             android:padding="30dp"/>
 
         <TextView
             android:id="@+id/addressTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:paddingTop="40dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
             android:text="Test"
-            android:textSize="12dp"
-            android:textAlignment="center"
-            />
+            android:textColor="@color/primaryTextColor"
+            android:textSize="12dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chooseButton"
@@ -54,6 +55,27 @@
             android:minWidth="48dp"
             android:minHeight="48dp"
             app:icon="@drawable/ic_grade_24px"
+            android:layout_marginRight="30dp"
+            app:borderWidth="0dp"
+            android:stateListAnimator="@null"
+            app:iconTint="@color/primaryTextColor"
+            app:backgroundTint="#00FFFFFF"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:insetBottom="0dp"
+            android:insetTop="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+
+            app:icon="@drawable/ic_close_black"
             app:borderWidth="0dp"
             android:stateListAnimator="@null"
             app:iconTint="@color/primaryTextColor"

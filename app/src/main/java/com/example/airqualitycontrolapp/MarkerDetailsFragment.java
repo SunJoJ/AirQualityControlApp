@@ -2,12 +2,14 @@ package com.example.airqualitycontrolapp;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,7 @@ public class MarkerDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_marker_details, container, false);
 
         QualityIndex qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
@@ -98,20 +100,26 @@ public class MarkerDetailsFragment extends Fragment {
         addressTextView.setText(address);
 
 
-        Button button = rootView.findViewById(R.id.chooseButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button chooseButton = rootView.findViewById(R.id.chooseButton);
+        chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //FragmentManager fragmentManager = getFragmentManager();
-                //fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
-                if(fragment != null)
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
 
             }
         });
+
+        Button closeButton = rootView.findViewById(R.id.closeButton);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        });
+
 
         return rootView;
     }

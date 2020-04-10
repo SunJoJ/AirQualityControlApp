@@ -131,14 +131,7 @@ public class MapsActivity extends AppCompatActivity{
 
 
 
-        coordinatorLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag("markerDetailsFragment");
-                if(fragment != null)
-                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-        });
+
 
     }
 
