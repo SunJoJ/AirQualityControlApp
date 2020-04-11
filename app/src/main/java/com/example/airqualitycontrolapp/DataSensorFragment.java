@@ -1,15 +1,26 @@
 package com.example.airqualitycontrolapp;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.internal.NavigationMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +32,7 @@ public class DataSensorFragment extends Fragment {
     private QualityIndex qualityIndex;
     private String stationId;
     private String address;
+    private NavigationMenu navigationMenu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +54,7 @@ public class DataSensorFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, params);
-       listView.setAdapter(adapter);
+        listView.setAdapter(adapter);
 
 
         TextView indexTextView = rootView.findViewById(R.id.indexTextView);
@@ -78,8 +90,35 @@ public class DataSensorFragment extends Fragment {
                 break;
         }
 
+        MaterialToolbar materialToolbar = rootView.findViewById(R.id.topAppBar);
+        materialToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.closeButton:
+                        Fragment fragment = getFragmentManager().findFragmentByTag("dataSensorFragment");
+                        if(fragment != null)
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+
+
         return rootView;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+
+
 
 
 }

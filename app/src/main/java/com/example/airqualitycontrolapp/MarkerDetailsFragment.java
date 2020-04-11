@@ -144,7 +144,7 @@ public class MarkerDetailsFragment extends Fragment {
                 bundle.putString("StationId", stationId);
 
                 dataSensorFragment.setArguments(bundle);
-                trans.replace(R.id.fragment_container, dataSensorFragment, "dataSensorFragment");
+                trans.add(R.id.fragment_container, dataSensorFragment, "dataSensorFragment");
                 trans.addToBackStack("dataSensorFragment");
                 trans.commit();
             }

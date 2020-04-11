@@ -1,97 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:background="@color/lightGray">
 
-    <RelativeLayout
-        android:id="@+id/fragmentRelativeLayout"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_appbar_menu_close"
+            android:background="@color/primaryColor"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/fragmentRelativeLayout"
         android:layout_alignParentTop="true"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:background="@drawable/rounded_corner">
 
-        <TextView
-            android:id="@+id/indexTextView"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/coordinator"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="40dp"
-            android:text="Test"
-            android:textSize="28dp"
-            android:textAlignment="center"
-            android:textColor="@color/primaryTextColor"
-            android:paddingTop="25dp"/>
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <TextView
-            android:id="@+id/addressTextView"
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:text="Test"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="12dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
-        <com.google.android.material.button.MaterialButton
+                <TextView
+                    android:id="@+id/indexTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="40dp"
+                    android:text="Test"
+                    android:textSize="28dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:padding="10dp"/>
 
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:insetBottom="0dp"
-            android:insetTop="0dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            app:icon="@drawable/ic_grade_24px"
-            app:borderWidth="0dp"
-            android:stateListAnimator="@null"
-            app:iconTint="@color/primaryTextColor"
-            app:backgroundTint="#00FFFFFF"
-            />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/addressTextView"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:text="Test"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="12dp"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner"
-        android:layout_marginTop="160dp">
+                <com.google.android.material.button.MaterialButton
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:background="@drawable/rounded_corner_unknown"
-            android:text="Pollution components"
-
-            android:textAlignment="center"
-            android:textSize="18dp"/>
-
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/listOfPollutionComponents"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp">
-
-        </ListView>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:insetBottom="0dp"
+                    android:insetTop="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    app:icon="@drawable/ic_grade_24px"
+                    app:borderWidth="0dp"
+                    android:stateListAnimator="@null"
+                    app:iconTint="@color/primaryTextColor"
+                    app:backgroundTint="#00FFFFFF" />
+            </RelativeLayout>
 
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/pollutionComponents"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:padding="5dp"
+                    android:background="@drawable/rounded_corner_unknown"
+                    android:text="Pollution components"
+                    android:textAlignment="center"
+                    android:textSize="18dp"/>
+
+
+                <ListView
+                    android:id="@+id/listOfPollutionComponents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/rounded_corner">
+
+                </ListView>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
