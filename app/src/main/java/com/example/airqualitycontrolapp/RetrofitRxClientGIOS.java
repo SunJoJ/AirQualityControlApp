@@ -1,40 +1,33 @@
 package com.example.airqualitycontrolapp;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.ResultReceiver;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class RetrofitClientGIOS {
+public class RetrofitRxClientGIOS {
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "http://api.gios.gov.pl/pjp-api/rest/";
 
-    public static Retrofit getRetrofitInstance() {
+
+    public static Retrofit getRxRetrofitInstance() {
         if (retrofit == null) {
-            retrofit = new retrofit2.Retrofit.Builder()
+            retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
         return retrofit;
     }
-
-
 
 
 }

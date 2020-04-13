@@ -1,45 +1,28 @@
 package com.example.airqualitycontrolapp;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.gson.JsonArray;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MarkerDetailsFragment extends Fragment {
 
@@ -48,6 +31,7 @@ public class MarkerDetailsFragment extends Fragment {
     private String address;
     private String stationId;
     private ArrayList<Sensor> sensorArrayList;
+    private ArrayList<Measurement> measurementArrayList;
 
 
     @Override
@@ -143,10 +127,65 @@ public class MarkerDetailsFragment extends Fragment {
                 bundle.putSerializable("Index", qualityIndex);
                 bundle.putString("StationId", stationId);
 
-                dataSensorFragment.setArguments(bundle);
-                trans.add(R.id.fragment_container, dataSensorFragment, "dataSensorFragment");
-                trans.addToBackStack("dataSensorFragment");
-                trans.commit();
+//                RequestService service = RetrofitRxClientGIOS.getRxRetrofitInstance().create(RequestService.class);
+//                List<Observable<?>> requests = new ArrayList<>();
+//                for(int i = 0; i < sensorArrayList.size(); i++) {
+//                    requests.add(service.getObsMeasurementsDataBySensorId(sensorArrayList.get(i).getId()));
+//                }
+//                final List<Measurement>[] measurementList = new List[]{new ArrayList<>()};
+//                Observable.zip(requests, new Function<Object[], Measurement[]>() {
+//                    @Override
+//                    public Measurement[] apply(Object[] objects) throws Exception {
+//                        //Log.d("resp", objects.toString());
+//                        Measurement[] measurements = new Measurement[objects.length];
+//                        for(int i = 0; i < objects.length; i++) {
+//                            measurements[i] = (Measurement) objects[i];
+//                        }
+//                        return measurements;
+//                    }
+//                }).subscribe(measurements -> measurementList[0] = Arrays.asList(measurements));
+//                Log.d("resp", measurementList[0].toString());
+
+                measurementArrayList = new ArrayList<>();
+
+                RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+                for(int i = 0; i < sensorArrayList.size(); i++) {
+                    Call<Measurement> call = service.getMeasurementsDataBySensorId(sensorArrayList.get(i).getId());
+
+                    if(i == sensorArrayList.size()-1) {
+                        call.enqueue(new Callback<Measurement>() {
+                            @Override
+                            public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                measurementArrayList.add(response.body());
+                                Log.d("resp", response.body().toString());
+                                bundle.putSerializable("measurementArrayList", measurementArrayList);
+                                dataSensorFragment.setArguments(bundle);
+                                trans.add(R.id.fragment_container, dataSensorFragment, "dataSensorFragment");
+                                trans.addToBackStack("dataSensorFragment");
+                                trans.commit();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Measurement> call, Throwable t) {
+                            }
+                        });
+                    } else {
+                        call.enqueue(new Callback<Measurement>() {
+                            @Override
+                            public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                measurementArrayList.add(response.body());
+                                Log.d("resp", response.body().toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Measurement> call, Throwable t) {
+                            }
+                        });
+                    }
+                }
+
+
+
             }
         });
 

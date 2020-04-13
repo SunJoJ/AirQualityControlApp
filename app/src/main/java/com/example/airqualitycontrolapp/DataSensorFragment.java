@@ -1,6 +1,7 @@
 package com.example.airqualitycontrolapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ public class DataSensorFragment extends Fragment {
     private String stationId;
     private String address;
     private NavigationMenu navigationMenu;
+    private ArrayList<Measurement> measurementArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,11 +47,14 @@ public class DataSensorFragment extends Fragment {
         qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
         address = getArguments().getString("Address");
         stationId = getArguments().getString("StationId");
+        measurementArrayList = (ArrayList<Measurement>) getArguments().getSerializable("measurementArrayList");
 
         ListView listView = rootView.findViewById(R.id.listOfPollutionComponents);
         List<String> params = new ArrayList<>();
-        for(int i = 0; i < sensorArrayList.size(); i++) {
-            params.add(sensorArrayList.get(i).getParameter().getParamName());
+        for(int i = 0; i < measurementArrayList.size(); i++) {
+            List<Value> values = measurementArrayList.get(i).getValues();
+            String lastValue = String.valueOf(values.get(0).getValue());
+            params.add(measurementArrayList.get(i).getKey()+ ": " + lastValue + " µg/m3");
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),

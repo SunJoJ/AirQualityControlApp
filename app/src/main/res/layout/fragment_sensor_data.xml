@@ -34,7 +34,7 @@
         <LinearLayout
             android:id="@+id/coordinator"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="35dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="Test"
@@ -60,7 +60,7 @@
 
                 <TextView
                     android:id="@+id/addressTextView"
-                    android:layout_width="350dp"
+                    android:layout_width="330dp"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
@@ -90,7 +90,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
 
                 android:elevation="2dp"
                 android:background="@drawable/rounded_corner">
@@ -109,10 +109,8 @@
                 <ListView
                     android:id="@+id/listOfPollutionComponents"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
-                    >
-
+                    android:layout_height="250dp"
+                    android:layout_marginTop="35dp">
                 </ListView>
 
             </RelativeLayout>

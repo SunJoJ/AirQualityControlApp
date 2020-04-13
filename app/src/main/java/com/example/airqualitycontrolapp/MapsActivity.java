@@ -60,24 +60,7 @@ public class MapsActivity extends AppCompatActivity{
 //            getSupportFragmentManager().beginTransaction()
 //                    .add(R.id.fragment_container, firstFragment).commit();
 //        }
-
-
-        RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
-        Call<ArrayList<StationGIOS>> call = service.getAllStations();
-
-        call.enqueue(new Callback<ArrayList<StationGIOS>>() {
-            @Override
-            public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
-                stationGIOSArrayList = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<StationGIOS>> call, Throwable t) {
-                Log.d("Response", t.getLocalizedMessage());
-            }
-        });
-
-
+        
 
         navigationMenu = findViewById(R.id.bottomNavigation);
 
@@ -90,15 +73,29 @@ public class MapsActivity extends AppCompatActivity{
 
                         return true;
                     case R.id.app_bar_map_button:
-                        ScreenMapFragment mapFragment = new ScreenMapFragment();
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putSerializable("listOfStations", stationGIOSArrayList);
-                        mapFragment.setArguments(bundle1);
-                        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                        RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+                        Call<ArrayList<StationGIOS>> call = service.getAllStations();
 
-                        trans.replace(R.id.fragment_container, mapFragment);
-                        trans.addToBackStack(null);
-                        trans.commit();
+                        call.enqueue(new Callback<ArrayList<StationGIOS>>() {
+                            @Override
+                            public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
+                                stationGIOSArrayList = response.body();
+                                ScreenMapFragment mapFragment = new ScreenMapFragment();
+                                Bundle bundle1 = new Bundle();
+                                bundle1.putSerializable("listOfStations", stationGIOSArrayList);
+                                mapFragment.setArguments(bundle1);
+                                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+
+                                trans.replace(R.id.fragment_container, mapFragment);
+                                trans.addToBackStack(null);
+                                trans.commit();
+                            }
+
+                            @Override
+                            public void onFailure(Call<ArrayList<StationGIOS>> call, Throwable t) {
+                                Log.d("Response", t.getLocalizedMessage());
+                            }
+                        });
 
                         return true;
                     case R.id.app_bar_me:
@@ -120,7 +117,6 @@ public class MapsActivity extends AppCompatActivity{
 
                         return true;
                     case R.id.app_bar_settings_button:
-
                         Log.d("resp", String.valueOf(stationGIOSArrayList.size()));
 
                         return true;
