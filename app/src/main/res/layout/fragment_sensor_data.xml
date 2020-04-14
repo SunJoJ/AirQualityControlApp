@@ -99,9 +99,9 @@
                     android:id="@+id/pollutionComponents"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:background="@color/primaryColor"
+                    android:background="@color/lightGray"
                     android:padding="5dp"
-                    android:text="Pollution components"
+                    android:text="Czynniki zanieczyszczenia"
                     android:textAlignment="center"
                     android:textSize="18dp" />
 

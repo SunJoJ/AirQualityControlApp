@@ -33,6 +33,7 @@ public class MapsActivity extends AppCompatActivity{
     private Activity mActivity;
     private BottomNavigationView navigationMenu;
     private ArrayList<StationGIOS> stationGIOSArrayList;
+    private ArrayList<QualityIndex> qualityIndexArrayList;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -47,20 +48,6 @@ public class MapsActivity extends AppCompatActivity{
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
 
-//        Bundle bundle1 = new Bundle();
-//        bundle1.putSerializable("listOfStations", stationArrayList);
-
-//        if (findViewById(R.id.fragment_container) != null) {
-//            if (savedInstanceState != null) {
-//                return;
-//            }
-//            ScreenMapFragment firstFragment = new ScreenMapFragment();
-//            firstFragment.setArguments(getIntent().getExtras());
-//            firstFragment.setArguments(bundle1);
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.fragment_container, firstFragment).commit();
-//        }
-        
 
         navigationMenu = findViewById(R.id.bottomNavigation);
 
@@ -80,6 +67,8 @@ public class MapsActivity extends AppCompatActivity{
                             @Override
                             public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
                                 stationGIOSArrayList = response.body();
+                                qualityIndexArrayList = new ArrayList<>();
+
                                 ScreenMapFragment mapFragment = new ScreenMapFragment();
                                 Bundle bundle1 = new Bundle();
                                 bundle1.putSerializable("listOfStations", stationGIOSArrayList);
@@ -89,6 +78,7 @@ public class MapsActivity extends AppCompatActivity{
                                 trans.replace(R.id.fragment_container, mapFragment);
                                 trans.addToBackStack(null);
                                 trans.commit();
+
                             }
 
                             @Override

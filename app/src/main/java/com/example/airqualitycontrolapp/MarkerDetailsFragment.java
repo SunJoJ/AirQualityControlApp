@@ -87,9 +87,6 @@ public class MarkerDetailsFragment extends Fragment {
             case "Bardzo zły":
                 detailsTextView.setBackgroundResource(R.drawable.rounded_corner_dark_red);
                 break;
-            case "Brak indeksu":
-                detailsTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
-                break;
             default:
                 detailsTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
                 break;

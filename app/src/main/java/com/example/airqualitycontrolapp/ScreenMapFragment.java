@@ -35,9 +35,8 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private ArrayList<StationGIOS> stationGIOSArrayList;
     private ArrayList<Sensor> sensorArrayList;
-
-
-
+    private ArrayList<QualityIndex> qualityIndexArrayList;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,11 +58,55 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
         for(int i = 0; i < stationGIOSArrayList.size(); i++) {
             StationGIOS station = stationGIOSArrayList.get(i);
-
             LatLng pp = new LatLng(Double.parseDouble(station.getLatitude()), Double.parseDouble(station.getLongitude()));
-            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId()
-                                                                                                                                + " " + station.getAddressStreet()
-                                                                                                                                + ", " + station.getCity().getName()));
+//            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId()
+//                    + " " + station.getAddressStreet()
+//                    + ", " + station.getCity().getName()));
+
+            RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+            Call<QualityIndex> call = service.getQualityIndexByStationId(stationGIOSArrayList.get(i).getId());
+
+            call.enqueue(new Callback<QualityIndex>() {
+                @Override
+                public void onResponse(Call<QualityIndex> call, Response<QualityIndex> response) {
+                    QualityIndex qualityIndex =  response.body();
+
+                    switch (qualityIndex.getIndexLevel().getIndexLevelName()) {
+                        case "Bardzo dobry":
+                        case "Dobry":
+                            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId()
+                                    + " " + station.getAddressStreet()
+                                    + ", " + station.getCity().getName()));
+                            break;
+                        case "Umiarkowany":
+                        case "Dostateczny":
+                            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_yellow_marker)).snippet(station.getId()
+                                    + " " + station.getAddressStreet()
+                                    + ", " + station.getCity().getName()));
+                            break;
+                        case "Zły":
+                        case "Bardzo zły":
+                            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_red_marker)).snippet(station.getId()
+                                    + " " + station.getAddressStreet()
+                                    + ", " + station.getCity().getName()));
+                            break;
+                        default:
+                            map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_yellow_marker)).snippet(station.getId()
+                                    + " " + station.getAddressStreet()
+                                    + ", " + station.getCity().getName()));
+                            break;
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<QualityIndex> call, Throwable t) {
+
+                }
+            });
+
+
         }
 
 

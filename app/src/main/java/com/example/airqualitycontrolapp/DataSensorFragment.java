@@ -87,9 +87,6 @@ public class DataSensorFragment extends Fragment {
             case "Bardzo zły":
                 indexTextView.setBackgroundResource(R.drawable.rounded_corner_dark_red);
                 break;
-            case "Brak indeksu":
-                indexTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
-                break;
             default:
                 indexTextView.setBackgroundResource(R.drawable.rounded_corner_unknown);
                 break;
