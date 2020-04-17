@@ -34,6 +34,7 @@ public class MapsActivity extends AppCompatActivity{
     private BottomNavigationView navigationMenu;
     private ArrayList<StationGIOS> stationGIOSArrayList;
     private ArrayList<QualityIndex> qualityIndexArrayList;
+    private DataAirVisual dataAirVisual;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -57,6 +58,20 @@ public class MapsActivity extends AppCompatActivity{
                 switch (item.getItemId()) {
                     case R.id.app_bar_home_button:
 
+                        RequestService requestService = RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
+                        Call<DataAirVisual> dataAirVisualCall = requestService.getAirVisualNearestCityData("51.0961279","17.0483568");
+                        dataAirVisualCall.enqueue(new Callback<DataAirVisual>() {
+                            @Override
+                            public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
+                                dataAirVisual = response.body();
+                                Log.d("resp", dataAirVisual.getCityData().getCity());
+                            }
+
+                            @Override
+                            public void onFailure(Call<DataAirVisual> call, Throwable t) {
+                                Log.d("resp", t.getMessage());
+                            }
+                        });
 
                         return true;
                     case R.id.app_bar_map_button:
@@ -107,7 +122,6 @@ public class MapsActivity extends AppCompatActivity{
 
                         return true;
                     case R.id.app_bar_settings_button:
-                        Log.d("resp", String.valueOf(stationGIOSArrayList.size()));
 
                         return true;
                 }
