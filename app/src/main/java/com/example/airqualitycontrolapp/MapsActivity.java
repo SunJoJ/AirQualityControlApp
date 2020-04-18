@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +37,7 @@ public class MapsActivity extends AppCompatActivity{
     private ArrayList<StationGIOS> stationGIOSArrayList;
     private ArrayList<QualityIndex> qualityIndexArrayList;
     private DataAirVisual dataAirVisual;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class MapsActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.app_bar_home_button:
+
 
                         RequestService requestService = RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
                         Call<DataAirVisual> dataAirVisualCall = requestService.getAirVisualNearestCityData("51.0961279","17.0483568");
