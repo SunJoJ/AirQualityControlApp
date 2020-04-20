@@ -61,11 +61,10 @@ public class DataSensorFragment extends Fragment {
         stationId = getArguments().getString("StationId");
         measurementArrayList = (ArrayList<Measurement>) getArguments().getSerializable("measurementArrayList");
 
-
         TextView indexTextView = rootView.findViewById(R.id.indexTextView);
         TextView addressTextView = rootView.findViewById(R.id.addressTextView);
         String index = qualityIndex.getIndexLevel().getIndexLevelName();
-        indexTextView.setText(index);
+        indexTextView.setText("Indeks jakości - " + index.toLowerCase());
         addressTextView.setText(address);
 
         switch (index) {
@@ -112,8 +111,10 @@ public class DataSensorFragment extends Fragment {
         List<String> params = new ArrayList<>();
         for(int i = 0; i < measurementArrayList.size(); i++) {
             List<Value> values = measurementArrayList.get(i).getValues();
-            String lastValue = String.valueOf(values.get(1).getValue());
-            params.add(measurementArrayList.get(i).getKey()+ ": " + lastValue + " µg/m3");
+            if(values.size() != 0) {
+                String lastValue = String.valueOf(values.get(0).getValue());
+                params.add(measurementArrayList.get(i).getKey() + ": " + lastValue + " µg/m3");
+            }
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
@@ -127,7 +128,7 @@ public class DataSensorFragment extends Fragment {
         ArrayList<BarEntry> entries = new ArrayList<>();
         final String[] months = new String[values.size()];
         for(int i = values.size()-1, j = 0; i > 0; i--, j++) {
-            entries.add(new BarEntry(j,(float) values.get(i).getValue()));
+            entries.add(new BarEntry(j, (float) values.get(i).getValue()));
             months[j] = values.get(i).getDate().split(" ")[1];
         }
 
@@ -140,6 +141,7 @@ public class DataSensorFragment extends Fragment {
         BarData data = new BarData(bardataset);
         barChart.setData(data);
         bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+        //bardataset.setColor(R.color.primaryColor);
         barChart.animateY(5000);
 
 
@@ -164,6 +166,7 @@ public class DataSensorFragment extends Fragment {
                 BarData data = new BarData(bardataset);
                 barChart.setData(data);
                 bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+                //bardataset.setColor(R.color.primaryColor);
                 barChart.animateY(5000);
             }
         });

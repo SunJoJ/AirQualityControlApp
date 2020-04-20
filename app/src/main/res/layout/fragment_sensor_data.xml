@@ -13,13 +13,14 @@
         android:id="@+id/coordinator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
@@ -28,13 +29,16 @@
                 app:menu="@menu/top_appbar_menu_close"
                 android:background="@color/primaryColor"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                />
+                style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
             android:elevation="2dp"
             android:background="@drawable/rounded_corner"
             android:padding="10dp">
@@ -42,18 +46,21 @@
             <TextView
                 android:id="@+id/indexTextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="80dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="35dp"
-                android:padding="30dp"
-                android:text="Test"
-                android:textAlignment="center"
+                android:text="Indeks jakosci - \ndobry"
+                android:textSize="18dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
+                android:firstBaselineToTopHeight="0dp"
+                android:lineSpacingExtra="0dp"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="28dp" />
+                android:includeFontPadding="false"
+                />
 
             <TextView
                 android:id="@+id/addressTextView"
-                android:layout_width="370dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
@@ -63,27 +70,16 @@
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12dp" />
 
-            <com.google.android.material.button.MaterialButton
 
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp"
-                android:stateListAnimator="@null"
-                app:backgroundTint="#00FFFFFF"
-                app:borderWidth="0dp"
-                app:icon="@drawable/ic_grade_24px"
-                app:iconTint="@color/primaryTextColor" />
         </RelativeLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
             android:elevation="2dp"
             android:background="@drawable/rounded_corner">
 
@@ -110,6 +106,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
             android:elevation="2dp"
             android:background="@drawable/rounded_corner">
 

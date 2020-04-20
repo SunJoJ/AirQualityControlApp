@@ -5,32 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:paddingBottom="70dp"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp">
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
     <RelativeLayout
         android:id="@+id/markerDetailsFragmentLayout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:layout_alignParentBottom="true"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:background="@drawable/rounded_corner">
-
-
-        <TextView
-            android:id="@+id/detailsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="35dp"
-            android:text="Test"
-            android:textSize="28dp"
-            android:textAlignment="center"
-            android:textColor="@color/primaryTextColor"
-            android:padding="30dp"/>
 
         <TextView
             android:id="@+id/addressTextView"
@@ -43,11 +30,26 @@
             android:textColor="@color/primaryTextColor"
             android:textSize="12dp" />
 
+        <TextView
+            android:id="@+id/detailsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:text="Indeks jakosci - \ndobry"
+            android:textSize="18dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:firstBaselineToTopHeight="0dp"
+            android:lineSpacingExtra="0dp"
+            android:textColor="@color/primaryTextColor"
+            android:includeFontPadding="false"
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/chooseButton"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:insetBottom="0dp"
             android:insetTop="0dp"
@@ -56,11 +58,12 @@
             android:minWidth="48dp"
             android:minHeight="48dp"
             app:icon="@drawable/ic_grade_24px"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             app:borderWidth="0dp"
             android:stateListAnimator="@null"
             app:iconTint="@color/primaryTextColor"
             app:backgroundTint="#00FFFFFF"
+            app:itemIconTint="@color/primaryTextColor"
             />
 
         <com.google.android.material.button.MaterialButton
@@ -75,15 +78,13 @@
             android:paddingRight="0dp"
             android:minWidth="40dp"
             android:minHeight="40dp"
-
             app:icon="@drawable/ic_close_black"
             app:borderWidth="0dp"
             android:stateListAnimator="@null"
             app:iconTint="@color/primaryTextColor"
             app:backgroundTint="#00FFFFFF"
+            app:itemIconTint="@color/primaryTextColor"
             />
-
-
 
 
 

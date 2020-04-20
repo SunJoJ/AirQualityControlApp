@@ -4,6 +4,8 @@
   <color name="primaryLightColor">#6ec6ff</color>
   <color name="primaryDarkColor">#0069c0</color>
   <color name="primaryTextColor">#000000</color>
+  <color name="darkGray">#828282</color>
+  <color name="gray">#BDBDBD</color>
   <color name="lightGray">#E0E0E0</color>
   <color name="white">#ffffff</color>
   <color name="yellow">#FFEB3B</color>

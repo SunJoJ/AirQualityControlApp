@@ -5,5 +5,8 @@
         android:id="@+id/closeButton"
         android:icon="@drawable/ic_close_black"
         android:title="Map"
+        app:iconTint="@color/white"
+        app:backgroundTint="#00FFFFFF"
+        app:itemIconTint="@color/white"
         app:showAsAction="ifRoom"/>
 </menu>

@@ -67,7 +67,7 @@ public class MarkerDetailsFragment extends Fragment {
 
         TextView detailsTextView = rootView.findViewById(R.id.detailsTextView);
         TextView addressTextView = rootView.findViewById(R.id.addressTextView);
-        detailsTextView.setText(index);
+        detailsTextView.setText("Indeks jakości - " + index.toLowerCase());
         switch (index) {
             case "Bardzo dobry":
                 detailsTextView.setBackgroundResource(R.drawable.rounded_corner_dark_green);
