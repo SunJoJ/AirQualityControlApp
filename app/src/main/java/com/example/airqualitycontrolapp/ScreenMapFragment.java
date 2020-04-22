@@ -59,13 +59,14 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
         for(int i = 0; i < stationGIOSArrayList.size(); i++) {
             StationGIOS station = stationGIOSArrayList.get(i);
             LatLng pp = new LatLng(Double.parseDouble(station.getLatitude()), Double.parseDouble(station.getLongitude()));
+
             map.addMarker(new MarkerOptions().position(pp).title(station.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker)).snippet(station.getId()
                     + " " + station.getAddressStreet()
                     + ", " + station.getCity().getName()));
 
-            RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
-            Call<QualityIndex> call = service.getQualityIndexByStationId(stationGIOSArrayList.get(i).getId());
-
+//            RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+//            Call<QualityIndex> call = service.getQualityIndexByStationId(stationGIOSArrayList.get(i).getId());
+//
 //            call.enqueue(new Callback<QualityIndex>() {
 //                @Override
 //                public void onResponse(Call<QualityIndex> call, Response<QualityIndex> response) {

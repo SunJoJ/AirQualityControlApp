@@ -47,6 +47,7 @@
                 android:id="@+id/indexTextView"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:padding="30dp"
                 android:layout_alignParentBottom="true"
                 android:text="Indeks jakosci - \ndobry"
                 android:textSize="18dp"

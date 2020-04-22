@@ -69,6 +69,18 @@ public class MapsActivity extends AppCompatActivity{
                             public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
                                 dataAirVisual = response.body();
                                 Log.d("resp", dataAirVisual.getCityData().getCity());
+
+                                NearestCityFragment nearestCityFragment = new NearestCityFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("dataAirVisual", dataAirVisual);
+                                nearestCityFragment.setArguments(bundle);
+
+                                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+
+                                trans.replace(R.id.fragment_container, nearestCityFragment);
+                                trans.addToBackStack(null);
+                                trans.commit();
+
                             }
 
                             @Override

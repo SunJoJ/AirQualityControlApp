@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textAlignment="center"
+        android:text="Test"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="20dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/quality"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="10dp"
+        android:elevation="2dp"
+        android:background="@drawable/rounded_corner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/primaryTextColor"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/qualityIndex"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:paddingTop="20dp"
+                android:text="10"
+                android:textSize="18dp"/>
+
+            <TextView
+                android:id="@+id/qualityText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:layout_gravity="center_vertical"
+                android:firstBaselineToTopHeight="0dp"
+                android:gravity="center_horizontal"
+                android:lineSpacingExtra="0dp"
+                android:text="Indeks jakosci - dobry"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="2dp"
+        android:background="@drawable/rounded_corner">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/primaryTextColor"
+            android:orientation="horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/weatherIcon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/a01d"
+                android:scaleX="0.8"
+                android:scaleY="0.8"/>
+            <TextView
+                android:id="@+id/tempText"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:text="8"
+                android:textSize="13dp"
+                android:textAlignment="center"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:src="@drawable/water_droplet_icon"/>
+            <TextView
+                android:id="@+id/humidityText"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:text="8"
+                android:textSize="13dp"
+                android:textAlignment="center"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/wind_icon"
+                android:scaleX="0.8"
+                android:scaleY="0.8"/>
+            <TextView
+                android:id="@+id/windSpeedText"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:text="10"
+                android:textSize="12dp"
+                android:textAlignment="center"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
