@@ -48,12 +48,12 @@
                 android:id="@+id/qualityText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
+                android:paddingTop="10dp"
                 android:layout_gravity="center_vertical"
                 android:firstBaselineToTopHeight="0dp"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="0dp"
-                android:text="Indeks jakosci - dobry"
+                android:text="Indeks jakosci - bardzo dobry"
                 android:textSize="18dp" />
 
         </LinearLayout>
@@ -89,7 +89,7 @@
                 android:id="@+id/tempText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
+                android:paddingTop="25dp"
                 android:text="8"
                 android:textSize="13dp"
                 android:textAlignment="center"/>
@@ -103,7 +103,7 @@
                 android:id="@+id/humidityText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
+                android:paddingTop="25dp"
                 android:text="8"
                 android:textSize="13dp"
                 android:textAlignment="center"/>
@@ -117,7 +117,7 @@
                 android:id="@+id/windSpeedText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
+                android:paddingTop="25dp"
                 android:text="10"
                 android:textSize="12dp"
                 android:textAlignment="center"
