@@ -31,6 +31,7 @@ public class NearestCityFragment extends Fragment {
         TextView windSpeedText = rootView.findViewById(R.id.windSpeedText);
         RelativeLayout quality = rootView.findViewById(R.id.quality);
         ImageView weatherIcon = rootView.findViewById(R.id.weatherIcon);
+        TextView timeStamp = rootView.findViewById(R.id.timeStamp);
 
         String addressText = dataAirVisual.getCityData().getCity() + ",\n" + dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
         address.setText(addressText);
@@ -42,6 +43,7 @@ public class NearestCityFragment extends Fragment {
         humidityText.setText(humidStr);
         String windSpeedStr = dataAirVisual.getCityData().getCurrent().getWeather().getWindSpeed() + " km/g";
         windSpeedText.setText(windSpeedStr);
+        timeStamp.setText(dataAirVisual.getCityData().getCurrent().getPollution().getTimeStamp());
 
         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
         if (isBetween(aqiIndex, 0, 25)) {
