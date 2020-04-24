@@ -101,15 +101,6 @@ public class MarkerDetailsFragment extends Fragment {
             }
         });
 
-        Button closeButton = rootView.findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
-                if(fragment != null)
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-        });
 
 
         RelativeLayout relativeLayout = rootView.findViewById(R.id.markerDetailsFragmentLayout);

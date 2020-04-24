@@ -88,7 +88,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                         markerDetailsFragment.setArguments(bundle);
                         FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
 
-                        trans.add(R.id.fragment_container, markerDetailsFragment, "markerDetailsFragment");
+                        trans.add(R.id.marker_details, markerDetailsFragment, "markerDetailsFragment");
                         trans.addToBackStack("markerDetailsFragment");
                         trans.commit();
                     }
@@ -101,6 +101,24 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
 
                 return true;
+            }
+        });
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        });
+
+        map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
             }
         });
 

@@ -49,13 +49,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:paddingBottom="10dp"
                 android:firstBaselineToTopHeight="0dp"
                 android:lineSpacingExtra="0dp"
                 android:text="Indeks jakosci - bardzo dobry"
-                android:textSize="16dp" />
+                android:textSize="15dp" />
 
         </LinearLayout>
     </RelativeLayout>

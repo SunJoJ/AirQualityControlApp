@@ -55,6 +55,10 @@ public class DataSensorFragment extends Fragment {
                 R.layout.fragment_sensor_data, container, false);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+        if(fragment != null)
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+
         sensorArrayList = (ArrayList<Sensor>) getArguments().getSerializable("sensorsList");
         qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
         address = getArguments().getString("Address");
