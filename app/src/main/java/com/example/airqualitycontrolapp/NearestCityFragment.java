@@ -24,6 +24,7 @@ public class NearestCityFragment extends Fragment {
         dataAirVisual = (DataAirVisual) getArguments().getSerializable("dataAirVisual");
 
         TextView address = rootView.findViewById(R.id.addressText);
+        TextView cityName = rootView.findViewById(R.id.cityNameText);
         TextView qualityIndex = rootView.findViewById(R.id.qualityIndex);
         TextView qualityText = rootView.findViewById(R.id.qualityText);
         TextView tempText = rootView.findViewById(R.id.tempText);
@@ -33,8 +34,9 @@ public class NearestCityFragment extends Fragment {
         ImageView weatherIcon = rootView.findViewById(R.id.weatherIcon);
         TextView timeStamp = rootView.findViewById(R.id.timeStamp);
 
-        String addressText = dataAirVisual.getCityData().getCity() + ",\n" + dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
+        String addressText =  dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
         address.setText(addressText);
+        cityName.setText(dataAirVisual.getCityData().getCity());
         String qualityIndexStr = dataAirVisual.getCityData().getCurrent().getPollution().getAqius() + " AQI";
         qualityIndex.setText(qualityIndexStr);
         String tempStr = dataAirVisual.getCityData().getCurrent().getWeather().getTemperature() + " °C";

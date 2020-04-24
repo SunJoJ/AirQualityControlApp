@@ -53,9 +53,7 @@ public class MapsActivity extends AppCompatActivity{
     private Activity mActivity;
     private BottomNavigationView navigationMenu;
     private ArrayList<StationGIOS> stationGIOSArrayList;
-    private ArrayList<QualityIndex> qualityIndexArrayList;
     private DataAirVisual dataAirVisual;
-    private LocationManager locationManager;
     private FusedLocationProviderClient fusedLocationClient;
     private double longitude;
     private double latitude;
@@ -89,25 +87,23 @@ public class MapsActivity extends AppCompatActivity{
                 switch (item.getItemId()) {
                     case R.id.app_bar_home_button:
 
-                        RequestService requestService = RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
-                        Call<DataAirVisual> dataAirVisualCall = requestService.getAirVisualNearestCityData(String.valueOf(latitude),String.valueOf(longitude));
-                        dataAirVisualCall.enqueue(new Callback<DataAirVisual>() {
+                        RequestService service1= RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
+                        Call<DataAirVisual> call1 = service1.getAirVisualNearestCityData(String.valueOf(latitude), String.valueOf(longitude));
+                        call1.enqueue(new Callback<DataAirVisual>() {
                             @Override
                             public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
                                 dataAirVisual = response.body();
                                 Log.d("resp", dataAirVisual.getCityData().getCity());
 
-                                NearestCityFragment nearestCityFragment = new NearestCityFragment();
+                                ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("dataAirVisual", dataAirVisual);
-                                nearestCityFragment.setArguments(bundle);
+                                viewPagerFragment.setArguments(bundle);
 
                                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-
-                                trans.replace(R.id.fragment_container, nearestCityFragment);
+                                trans.replace(R.id.fragment_container, viewPagerFragment);
                                 trans.addToBackStack(null);
                                 trans.commit();
-
                             }
 
                             @Override
@@ -125,7 +121,6 @@ public class MapsActivity extends AppCompatActivity{
                             @Override
                             public void onResponse(Call<ArrayList<StationGIOS>> call, Response<ArrayList<StationGIOS>> response) {
                                 stationGIOSArrayList = response.body();
-                                qualityIndexArrayList = new ArrayList<>();
 
                                 ScreenMapFragment mapFragment = new ScreenMapFragment();
                                 Bundle bundle1 = new Bundle();
@@ -151,17 +146,19 @@ public class MapsActivity extends AppCompatActivity{
 
                         return true;
                     case R.id.app_bar_statistics_button:
-                        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
-                        Bundle argsList = new Bundle();
-                        //args.putInt(ViewPagerFragment.ARG_POSITION, position);
-                        viewPagerFragment.setArguments(argsList);
 
-                        FragmentTransaction pagerTransaction = getSupportFragmentManager().beginTransaction();
 
-                        pagerTransaction.replace(R.id.fragment_container, viewPagerFragment);
-                        pagerTransaction.addToBackStack(null);
-
-                        pagerTransaction.commit();
+//                        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+//                        Bundle argsList = new Bundle();
+//                        args.putInt(ViewPagerFragment.ARG_POSITION, position);
+//                        viewPagerFragment.setArguments(argsList);
+//
+//                        FragmentTransaction pagerTransaction = getSupportFragmentManager().beginTransaction();
+//
+//                        pagerTransaction.replace(R.id.fragment_container, viewPagerFragment);
+//                        pagerTransaction.addToBackStack(null);
+//
+//                        pagerTransaction.commit();
 
                         return true;
                     case R.id.app_bar_settings_button:

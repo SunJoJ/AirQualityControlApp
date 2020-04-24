@@ -20,6 +20,7 @@ public class ViewPagerFragment extends Fragment {
     private ViewPager mPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
+    private DataAirVisual dataAirVisual;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +37,9 @@ public class ViewPagerFragment extends Fragment {
         tabLayout.setTabTextColors(Color.parseColor("#6ec6ff"), Color.parseColor("#ffffff"));
         tabLayout.setupWithViewPager(mPager);
 
+        dataAirVisual = (DataAirVisual) getArguments().getSerializable("dataAirVisual");
+
+
         return rootView;
     }
 
@@ -48,7 +52,11 @@ public class ViewPagerFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if(position == 0) {
-                return new ScreenInfoFragment();
+                NearestCityFragment nearestCityFragment = new NearestCityFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dataAirVisual", dataAirVisual);
+                nearestCityFragment.setArguments(bundle);
+                return nearestCityFragment;
             } else {
                 return new ScreenInfoFragment();
             }
@@ -61,7 +69,10 @@ public class ViewPagerFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Page " + (position + 1);
+            if(position == 0)
+                return "Najbliższe";
+            else
+                return "Wybrane";
         }
     }
 }
