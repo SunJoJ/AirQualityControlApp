@@ -128,24 +128,9 @@ public class DataSensorFragment extends Fragment {
 
         BarChart barChart = rootView.findViewById(R.id.barChart);
         List<Value> values = measurementArrayList.get(0).getValues();
-
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        final String[] months = new String[values.size()];
-        for(int i = values.size()-1, j = 0; i > 0; i--, j++) {
-            entries.add(new BarEntry(j, (float) values.get(i).getValue()));
-            months[j] = values.get(i).getDate().split(" ")[1];
-        }
-
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        BarDataSet bardataset = new BarDataSet(entries, measurementArrayList.get(0).getKey());
-        IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(months);
-        xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(formatter);
-        BarData data = new BarData(bardataset);
+        BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
         barChart.setData(data);
-        bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-        //bardataset.setColor(R.color.primaryColor);
+
         barChart.animateY(5000);
 
 
@@ -153,24 +138,8 @@ public class DataSensorFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<Value> values = measurementArrayList.get(position).getValues();
-                ArrayList<BarEntry> entries = new ArrayList<>();
-                final String[] months = new String[values.size()];
-                for(int i = values.size()-1, j = 0; i > 0; i--, j++) {
-                    entries.add(new BarEntry(j,(float) values.get(i).getValue()));
-                    months[j] = values.get(i).getDate().split(" ")[1];
-                }
-
-                XAxis xAxis = barChart.getXAxis();
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-                BarDataSet bardataset = new BarDataSet(entries, measurementArrayList.get(position).getKey());
-                IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(months);
-                xAxis.setGranularity(1f);
-                xAxis.setValueFormatter(formatter);
-                BarData data = new BarData(bardataset);
+                BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
                 barChart.setData(data);
-                bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-                //bardataset.setColor(R.color.primaryColor);
                 barChart.animateY(5000);
             }
         });
