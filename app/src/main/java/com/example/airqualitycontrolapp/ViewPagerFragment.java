@@ -1,7 +1,10 @@
 package com.example.airqualitycontrolapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewPagerFragment extends Fragment {
 
@@ -21,6 +36,7 @@ public class ViewPagerFragment extends Fragment {
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private DataAirVisual dataAirVisual;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +74,9 @@ public class ViewPagerFragment extends Fragment {
                 nearestCityFragment.setArguments(bundle);
                 return nearestCityFragment;
             } else {
-                return new ScreenInfoFragment();
+                SelectedSensorsFragment selectedSensorsFragment = new SelectedSensorsFragment();
+
+                return selectedSensorsFragment;
             }
         }
 

@@ -1,5 +1,7 @@
 package com.example.airqualitycontrolapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +14,16 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -44,8 +51,6 @@ public class MarkerDetailsFragment extends Fragment {
         address = getArguments().getString("Address");
         stationId = getArguments().getString("StationId");
 
-
-        Map<Integer, List<Measurement>> mapOfMeasurements = new HashMap<>();
 
         final String index = qualityIndex.getIndexLevel().getIndexLevelName();
 
@@ -97,6 +102,26 @@ public class MarkerDetailsFragment extends Fragment {
         chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Map<String, String> sensorsMap = new HashMap<>();
+                String jsonString = new Gson().toJson(sensorsMap);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                    String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+
+                    TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                    HashMap<String,String> retrievedMap = new Gson().fromJson(mapJson, token.getType());
+                    retrievedMap.put(stationId, address);
+                    String json = new Gson().toJson(retrievedMap);
+                    editor.putString("MAP_OF_SENSORS", json);
+
+                } else {
+                    sensorsMap.put(stationId, address);
+                    String json = new Gson().toJson(sensorsMap);
+                    editor.putString("MAP_OF_SENSORS", json);
+                }
+                editor.apply();
 
             }
         });
