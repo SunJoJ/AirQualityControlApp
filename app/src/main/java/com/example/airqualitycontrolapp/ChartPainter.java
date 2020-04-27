@@ -318,7 +318,6 @@ public class ChartPainter {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-
         IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(time);
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(formatter);

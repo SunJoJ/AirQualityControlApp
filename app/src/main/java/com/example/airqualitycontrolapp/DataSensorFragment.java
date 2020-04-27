@@ -130,8 +130,10 @@ public class DataSensorFragment extends Fragment {
         List<Value> values = measurementArrayList.get(0).getValues();
         BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
         barChart.setData(data);
-
-        barChart.animateY(5000);
+        barChart.getAxisRight().setEnabled(false);
+        barChart.getDescription().setEnabled(false);
+        barChart.getLegend().setEnabled(false);
+        barChart.animateY(2000);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,7 +142,7 @@ public class DataSensorFragment extends Fragment {
                 List<Value> values = measurementArrayList.get(position).getValues();
                 BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
                 barChart.setData(data);
-                barChart.animateY(5000);
+                barChart.animateY(2000);
             }
         });
 

@@ -59,8 +59,8 @@
                     android:id="@+id/qualityText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-
+                    android:paddingTop="25dp"
+                    android:textAlignment="center"
                     android:firstBaselineToTopHeight="0dp"
                     android:lineSpacingExtra="0dp"
                     android:text="Indeks jakosci - bardzo dobry"
@@ -88,7 +88,7 @@
             android:textColor="@color/primaryTextColor"
             android:orientation="horizontal"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp">
+            android:paddingLeft="10dp">
 
             <ImageView
                 android:id="@+id/weatherIcon"
@@ -116,7 +116,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:paddingTop="25dp"
-                android:paddingLeft="5dp"
+
                 android:text="8"
                 android:textSize="13dp" />
             <ImageView

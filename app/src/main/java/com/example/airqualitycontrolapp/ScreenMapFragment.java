@@ -69,6 +69,10 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public boolean onClusterItemClick(ItemMarker item) {
 
+                Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+                if(fragment != null)
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
+
                 final MarkerDetailsFragment markerDetailsFragment = new MarkerDetailsFragment();
                 final String curId = item.getSnippet().split(" ")[0];
                 final String address = item.getSnippet().substring(item.getSnippet().indexOf(" ") + 1);
