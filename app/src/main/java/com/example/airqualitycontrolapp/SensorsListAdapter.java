@@ -1,6 +1,7 @@
 package com.example.airqualitycontrolapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.icu.text.ListFormatter;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,8 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.ListFragment;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +50,7 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
         TextView addressTextView;
         TextView detailsTextView;
         RelativeLayout markerDetailsFragmentLayout;
+        Button chooseButton;
     }
 
 
@@ -62,6 +70,7 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
             viewHolder.addressTextView = convertView.findViewById(R.id.addressTextView);
             viewHolder.detailsTextView = convertView.findViewById(R.id.detailsTextView);
             viewHolder.markerDetailsFragmentLayout = convertView.findViewById(R.id.markerDetailsFragmentLayout);
+            viewHolder.chooseButton = convertView.findViewById(R.id.chooseButton);
 
             result = convertView;
 
@@ -97,6 +106,25 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
                 break;
         }
 
+
+        viewHolder.chooseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, String> sensorsMap = new HashMap<>();
+                String jsonString = new Gson().toJson(sensorsMap);
+                SharedPreferences sharedPreferences = ((AppCompatActivity) mContext).getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                    String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+                    TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                    sensorsMap = new Gson().fromJson(mapJson, token.getType());
+                    sensorsMap.remove(sensorsListDataModel.getStationId());
+                    String json = new Gson().toJson(sensorsMap);
+                    editor.putString("MAP_OF_SENSORS", json);
+                }
+                editor.apply();
+            }
+        });
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
