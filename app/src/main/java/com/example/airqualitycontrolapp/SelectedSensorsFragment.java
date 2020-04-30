@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +31,8 @@ public class SelectedSensorsFragment extends Fragment {
     private ArrayList<SensorsListDataModel> sensorsListDataModels;
     private static SensorsListAdapter sensorsListAdapter;
     private ListView listView;
+    private ArrayList<Sensor> sensorArrayList;
+    private ArrayList<Measurement> measurementArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,16 +79,11 @@ public class SelectedSensorsFragment extends Fragment {
         }
 
 
+
+
+
         sensorsListAdapter = new SensorsListAdapter(sensorsListDataModels, getContext());
         listView.setAdapter(sensorsListAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SensorsListDataModel sensorsListDataModel = sensorsListDataModels.get(position);
-
-            }
-        });
 
         return rootView;
     }
