@@ -75,7 +75,7 @@ public class MapsActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-
+        Notification notification = new Notification(this, 12,0,0);
         getLastLocation();
 
 
@@ -208,6 +208,8 @@ public class MapsActivity extends AppCompatActivity {
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
         );
+
+
 
     }
 
