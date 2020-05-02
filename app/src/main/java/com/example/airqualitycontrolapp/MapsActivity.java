@@ -89,26 +89,32 @@ public class MapsActivity extends AppCompatActivity {
         mActivity = MapsActivity.this;
 
         getLastLocation();
-
+        
         createNotificationChannel();
-
         Intent intent = new Intent(MapsActivity.this, QualityNotificationBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MapsActivity.this, 0, intent, 0);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MapsActivity.this, 10, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Calendar mfiringCal  = Calendar.getInstance();
-        Calendar mcurrentCal = Calendar.getInstance();
+        Calendar firingCal  = Calendar.getInstance();
+        Calendar currentCal = Calendar.getInstance();
 
-        mfiringCal.set(Calendar.HOUR_OF_DAY, 14);
-        mfiringCal.set(Calendar.MINUTE, 30);
-        mfiringCal.set(Calendar.SECOND, 0);
+        firingCal.set(Calendar.HOUR_OF_DAY, 18);
+        firingCal.set(Calendar.MINUTE, 31);
+        firingCal.set(Calendar.SECOND, 0);
 
-        long intendedTime = mfiringCal.getTimeInMillis();
-        long currentTime  = mcurrentCal.getTimeInMillis();
+        long intendedTime = firingCal.getTimeInMillis();
+        long currentTime  = currentCal.getTimeInMillis();
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mfiringCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        if(intendedTime >= currentTime) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, firingCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        }else{
+            firingCal.add(Calendar.DAY_OF_MONTH, 1);
+            intendedTime = firingCal.getTimeInMillis();
 
-
+            alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent);
+        }
 
 
 
@@ -198,16 +204,12 @@ public class MapsActivity extends AppCompatActivity {
     }
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Air quality";
             String description = "Air quality notification";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("Air_quality_notification", name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
