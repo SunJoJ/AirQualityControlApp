@@ -69,7 +69,7 @@ public class MapsActivity extends AppCompatActivity{
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-
+        Notification notification = new Notification(this, 3,43,0);
         getLastLocation();
 
 //        SharedPreferences googleBug = getSharedPreferences("google_bug", Context.MODE_PRIVATE);
@@ -217,6 +217,8 @@ public class MapsActivity extends AppCompatActivity{
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
         );
+
+
 
     }
 
