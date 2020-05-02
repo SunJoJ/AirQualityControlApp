@@ -4,12 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +25,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
@@ -43,6 +52,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,6 +73,8 @@ public class MapsActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private double longitude;
     private double latitude;
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
 
 
     @Override
@@ -75,8 +87,29 @@ public class MapsActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-        Notification notification = new Notification(this, 12,0,0);
+
         getLastLocation();
+
+        createNotificationChannel();
+
+        Intent intent = new Intent(MapsActivity.this, QualityNotificationBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MapsActivity.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Calendar mfiringCal  = Calendar.getInstance();
+        Calendar mcurrentCal = Calendar.getInstance();
+
+        mfiringCal.set(Calendar.HOUR_OF_DAY, 14);
+        mfiringCal.set(Calendar.MINUTE, 30);
+        mfiringCal.set(Calendar.SECOND, 0);
+
+        long intendedTime = mfiringCal.getTimeInMillis();
+        long currentTime  = mcurrentCal.getTimeInMillis();
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mfiringCal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+
+
 
 
         navigationMenu = findViewById(R.id.bottomNavigation);
@@ -164,6 +197,21 @@ public class MapsActivity extends AppCompatActivity {
 
     }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Air quality";
+            String description = "Air quality notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("Air_quality_notification", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 
     @SuppressLint("MissingPermission")

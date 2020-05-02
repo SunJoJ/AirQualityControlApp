@@ -40,7 +40,7 @@
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
         </activity>
-        <receiver android:name=".Notification">
+        <receiver android:name=".QualityNotificationBroadcast">
             <intent-filter>
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION"/>
                 <category android:name="android.intent.category.DEFAULT"/>
