@@ -10,6 +10,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,8 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.felhr.usbserial.UsbSerialDevice;
+import com.felhr.usbserial.UsbSerialInterface;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -38,15 +41,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MapsActivity extends AppCompatActivity{
+public class MapsActivity extends AppCompatActivity {
 
     private static final int PERMISSION_ID = 44;
     private Context mContext;
@@ -71,13 +77,6 @@ public class MapsActivity extends AppCompatActivity{
         mActivity = MapsActivity.this;
 
         getLastLocation();
-
-//        SharedPreferences googleBug = getSharedPreferences("google_bug", Context.MODE_PRIVATE);
-//        if (!googleBug.contains("fixed")) {
-//            File corruptedZoomTables = new File(getFilesDir(), "ZoomTables.data");
-//            corruptedZoomTables.delete();
-//            googleBug.edit().putBoolean("fixed", true).apply();
-//        }
 
 
         navigationMenu = findViewById(R.id.bottomNavigation);
@@ -142,23 +141,16 @@ public class MapsActivity extends AppCompatActivity{
 
                         return true;
                     case R.id.app_bar_me:
-                        //Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_SHORT).show();
+                        ScreenInfoFragment screenInfoFragment = new ScreenInfoFragment();
+
+                        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+
+                        trans.replace(R.id.fragment_container, screenInfoFragment);
+                        trans.addToBackStack(null);
+                        trans.commit();
 
                         return true;
                     case R.id.app_bar_statistics_button:
-
-
-//                        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
-//                        Bundle argsList = new Bundle();
-//                        args.putInt(ViewPagerFragment.ARG_POSITION, position);
-//                        viewPagerFragment.setArguments(argsList);
-//
-//                        FragmentTransaction pagerTransaction = getSupportFragmentManager().beginTransaction();
-//
-//                        pagerTransaction.replace(R.id.fragment_container, viewPagerFragment);
-//                        pagerTransaction.addToBackStack(null);
-//
-//                        pagerTransaction.commit();
 
                         return true;
                     case R.id.app_bar_settings_button:
@@ -170,10 +162,9 @@ public class MapsActivity extends AppCompatActivity{
         });
 
 
-
-
-
     }
+
+
 
     @SuppressLint("MissingPermission")
     private void getLastLocation(){
