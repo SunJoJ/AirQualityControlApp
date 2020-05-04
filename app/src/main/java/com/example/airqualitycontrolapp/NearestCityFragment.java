@@ -33,6 +33,10 @@ public class NearestCityFragment extends Fragment {
         RelativeLayout quality = rootView.findViewById(R.id.quality);
         ImageView weatherIcon = rootView.findViewById(R.id.weatherIcon);
         TextView timeStamp = rootView.findViewById(R.id.timeStamp);
+        TextView adviceText = rootView.findViewById(R.id.adviceText);
+        RelativeLayout firstAdviceIcon = rootView.findViewById(R.id.firstAdviceIcon);
+        RelativeLayout secondAdviceIcon = rootView.findViewById(R.id.secondAdviceIcon);
+        RelativeLayout adviceBackground = rootView.findViewById(R.id.adviceBackground);
 
         String addressText =  dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
         address.setText(addressText);
@@ -47,26 +51,64 @@ public class NearestCityFragment extends Fragment {
         windSpeedText.setText(windSpeedStr);
         timeStamp.setText(dataAirVisual.getCityData().getCurrent().getPollution().getTimeStamp());
 
+
         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
         if (isBetween(aqiIndex, 0, 25)) {
             qualityText.setText("Jakość powietrza - bardzo dobra");
             quality.setBackgroundResource(R.drawable.rounded_corner_dark_green);
+            adviceText.setText(R.string.advice_for_good_aqi1);
+
         } else if (isBetween(aqiIndex, 26, 50)) {
             qualityText.setText("Jakość powietrza - dobra");
             quality.setBackgroundResource(R.drawable.rounded_corner_green);
+            adviceText.setText(R.string.advice_for_good_aqi1);
         } else if (isBetween(aqiIndex, 51, 100)) {
             qualityText.setText("Jakość powietrza - umiarkowana");
             quality.setBackgroundResource(R.drawable.rounded_corner_yellow);
+            adviceText.setText(R.string.advice_for_bad_aqi1);
         } else if (isBetween(aqiIndex, 101, 150)) {
             qualityText.setText("Jakość powietrza - niezdrowa");
             quality.setBackgroundResource(R.drawable.rounded_corner_orange);
+            adviceText.setText(R.string.advice_for_bad_aqi1);
         } else if (isBetween(aqiIndex, 151, 200)) {
             qualityText.setText("Jakość powietrza - zła");
             quality.setBackgroundResource(R.drawable.rounded_corner_red);
+            adviceText.setText(R.string.advice_for_bad_aqi1);
         }   else if (isBetween(aqiIndex, 201, 500)) {
             qualityText.setText("Jakość powietrza - bardzo zła");
+            adviceText.setText(R.string.advice_for_bad_aqi1);
             quality.setBackgroundResource(R.drawable.rounded_corner_dark_red);
         }
+
+        if (isBetween(aqiIndex, 0, 100)) {
+//            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+//            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+        } else {
+
+        }
+
+        firstAdviceIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBetween(aqiIndex, 0, 100)) {
+                    adviceText.setText(R.string.advice_for_good_aqi1);
+                } else {
+                    adviceText.setText(R.string.advice_for_bad_aqi1);
+                }
+            }
+        });
+
+        secondAdviceIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isBetween(aqiIndex, 0, 100)) {
+                    adviceText.setText(R.string.advice_for_good_aqi2);
+                } else {
+                    adviceText.setText(R.string.advice_for_bad_aqi2);
+                }
+            }
+        });
 
         String iconWeather = dataAirVisual.getCityData().getCurrent().getWeather().getIc();
         switch (iconWeather) {

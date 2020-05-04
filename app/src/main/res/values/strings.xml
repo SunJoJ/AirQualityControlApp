@@ -6,4 +6,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="devices">Devices</string>
+    <string name="advice_for_good_aqi1">Otwórz okno, aby przewietrzyć pomieszczenie</string>
+    <string name="advice_for_good_aqi2">Ciesz się aktywnościami na świeżym powietrzu</string>
+    <string name="advice_for_bad_aqi1">Lepiej zamknij okno</string>
+    <string name="advice_for_bad_aqi2">Ogranicz swoję przemieszczenie na dworze </string>
 </resources>

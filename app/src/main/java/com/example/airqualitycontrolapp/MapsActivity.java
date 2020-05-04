@@ -116,8 +116,6 @@ public class MapsActivity extends AppCompatActivity {
             alarmManager.setRepeating(AlarmManager.RTC, intendedTime, AlarmManager.INTERVAL_DAY, pendingIntent);
         }
 
-
-
         navigationMenu = findViewById(R.id.bottomNavigation);
         navigationMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -181,9 +179,7 @@ public class MapsActivity extends AppCompatActivity {
                         return true;
                     case R.id.app_bar_me:
                         ScreenInfoFragment screenInfoFragment = new ScreenInfoFragment();
-
                         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-
                         trans.replace(R.id.fragment_container, screenInfoFragment);
                         trans.addToBackStack(null);
                         trans.commit();
