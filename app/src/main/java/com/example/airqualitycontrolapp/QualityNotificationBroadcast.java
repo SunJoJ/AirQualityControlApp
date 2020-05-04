@@ -15,6 +15,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import io.opencensus.resource.Resource;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,12 +33,11 @@ public class QualityNotificationBroadcast extends BroadcastReceiver {
 
         View view = View.inflate(context, R.layout.notification_layout_collapsed, null);
 
-
-        TextView addressNotification = view.findViewById(R.id.addressNotification);
-
         double latitude = intent.getExtras().getDouble("latitude");
         double longitude = intent.getExtras().getDouble("longitude");
 
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
 
         RequestService service1= RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
         Call<DataAirVisual> call1 = service1.getAirVisualNearestCityData(String.valueOf(latitude), String.valueOf(longitude));
@@ -48,27 +50,28 @@ public class QualityNotificationBroadcast extends BroadcastReceiver {
                 collapsedView.setTextViewText(R.id.aqiNumberNotification, aqiIndex + " AQI");
                 if (isBetween(aqiIndex, 0, 25)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - bardzo dobra");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_dark_green);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_dark_green);
                 } else if (isBetween(aqiIndex, 26, 50)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - dobra");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_green);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_green);
                 } else if (isBetween(aqiIndex, 51, 100)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - umiarkowana");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_yellow);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_yellow);
                 } else if (isBetween(aqiIndex, 101, 150)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - niezdrowa");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_orange);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_orange);
                 } else if (isBetween(aqiIndex, 151, 200)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - zła");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_red);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_red);
                 }   else if (isBetween(aqiIndex, 201, 500)) {
                     collapsedView.setTextViewText(R.id.detailsNotification, "Jakość powietrza - bardzo zła");
-                    collapsedView.setInt(R.id.notificationDetails, "setBackgroundResource", R.drawable.rounded_corner_dark_red);
+                    collapsedView.setInt(R.id.aqiNumberNotification, "setBackgroundResource", R.drawable.rounded_corner_left_dark_red);
                 }
 
                 String address = dataAirVisual.getCityData().getCity() + ", " + dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
                 collapsedView.setTextViewText(R.id.addressNotification, address);
-                addressNotification.setText(address);
+                collapsedView.setTextViewText(R.id.notificationTime, dtf.format(now));
+
                 Notification notification = new NotificationCompat.Builder(context, "Air_quality_notification")
                         .setSmallIcon(R.drawable.wind_icon)
                         .setCustomContentView(collapsedView)
@@ -77,8 +80,6 @@ public class QualityNotificationBroadcast extends BroadcastReceiver {
 
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
                 notificationManagerCompat.notify(10, notification);
-
-
             }
 
             @Override
@@ -86,7 +87,6 @@ public class QualityNotificationBroadcast extends BroadcastReceiver {
                 Log.d("resp", t.getMessage());
             }
         });
-
 
     }
 

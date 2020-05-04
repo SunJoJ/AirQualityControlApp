@@ -89,7 +89,7 @@ public class MapsActivity extends AppCompatActivity {
         mActivity = MapsActivity.this;
 
         getLastLocation();
-        
+
         createNotificationChannel();
         Intent intent = new Intent(MapsActivity.this, QualityNotificationBroadcast.class);
         intent.putExtra("latitude", latitude);
@@ -100,8 +100,8 @@ public class MapsActivity extends AppCompatActivity {
         Calendar firingCal  = Calendar.getInstance();
         Calendar currentCal = Calendar.getInstance();
 
-        firingCal.set(Calendar.HOUR_OF_DAY, 18);
-        firingCal.set(Calendar.MINUTE, 31);
+        firingCal.set(Calendar.HOUR_OF_DAY, 13);
+        firingCal.set(Calendar.MINUTE, 5);
         firingCal.set(Calendar.SECOND, 0);
 
         long intendedTime = firingCal.getTimeInMillis();
