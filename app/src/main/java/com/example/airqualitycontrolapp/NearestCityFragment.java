@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NearestCityFragment extends Fragment {
 
     private DataAirVisual dataAirVisual;
@@ -49,7 +54,12 @@ public class NearestCityFragment extends Fragment {
         humidityText.setText(humidStr);
         String windSpeedStr = dataAirVisual.getCityData().getCurrent().getWeather().getWindSpeed() + " km/g";
         windSpeedText.setText(windSpeedStr);
-        timeStamp.setText(dataAirVisual.getCityData().getCurrent().getPollution().getTimeStamp());
+
+        String timestamp = dataAirVisual.getCityData().getCurrent().getPollution().getTimeStamp();
+        String time = timestamp.split("T")[1].substring(0, 5);
+        String date = timestamp.split("T")[0];
+        timeStamp.setText(date + " " + time);
+
 
 
         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();

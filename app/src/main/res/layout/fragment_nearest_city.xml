@@ -25,59 +25,60 @@
         android:textSize="15dp"
         android:elevation="5dp"/>
 
-
     <RelativeLayout
-        android:id="@+id/quality"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="5dp"
-        android:elevation="2dp"
+        android:layout_height="150dp"
         android:background="@drawable/rounded_corner">
+
 
         <RelativeLayout
+            android:id="@+id/quality"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="5dp">
+            android:layout_height="80dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/rounded_corner">
 
-            <LinearLayout
+            <RelativeLayout
+
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/primaryTextColor"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/qualityIndex"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="10"
-                    android:textSize="16dp"/>
-
-                <TextView
-                    android:id="@+id/qualityText"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:firstBaselineToTopHeight="0dp"
-                    android:lineSpacingExtra="0dp"
-                    android:text="Indeks jakosci - bardzo dobry"
-                    android:textSize="15dp" />
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:textColor="@color/primaryTextColor">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/qualityIndex"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="10"
+                        android:textSize="18dp" />
 
+                    <TextView
+                        android:id="@+id/qualityText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:firstBaselineToTopHeight="0dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="0dp"
+                        android:text="Indeks jakosci - bardzo dobry"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginBottom="4dp"
-        android:elevation="2dp"
-        android:background="@drawable/rounded_corner">
-
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +100,7 @@
                 android:id="@+id/tempText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="25dp"
+                android:gravity="center_vertical"
                 android:text="8"
                 android:textSize="13dp"
                 />
@@ -113,26 +114,27 @@
                 android:id="@+id/humidityText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="25dp"
+                android:gravity="center_vertical"
                 android:text="8"
                 android:textSize="13dp" />
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/wind_icon"
+                android:src="@drawable/wind_icon_new"
                 android:scaleX="0.7"
-                android:scaleY="0.8"/>
+                android:scaleY="0.5"/>
             <TextView
                 android:id="@+id/windSpeedText"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:paddingTop="25dp"
+                android:gravity="center_vertical"
                 android:text="10"
                 android:textSize="12dp"
                 />
 
         </LinearLayout>
 
+    </RelativeLayout>
     </RelativeLayout>
 
     <TextView
