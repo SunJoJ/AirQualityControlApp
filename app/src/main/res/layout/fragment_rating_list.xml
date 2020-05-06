@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="Miasto"
-            android:paddingStart="5dp"
+            android:paddingStart="10dp"
             android:layout_toStartOf="@+id/aqiIndex"
             android:layout_toEndOf="@+id/position"/>
 

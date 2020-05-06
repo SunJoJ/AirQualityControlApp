@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.opencensus.resource.Resource;
+
 public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
 
     private ArrayList<RatingListDataModel> ratingListDataModels;
@@ -57,6 +59,9 @@ public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
         viewHolder.addressTextView.setText(ratingListDataModel.getAddress());
         viewHolder.indexTextView.setText(Integer.toString(ratingListDataModel.getAqiIndex()));
         viewHolder.positionTextView.setText(Integer.toString(position+1));
+        String country = ratingListDataModel.getAddress().split(",")[1].trim().toLowerCase();
+        Integer resource = convertView.getResources().getIdentifier(country, "drawable", context.getPackageName());
+        viewHolder.flagImageView.setImageResource(resource);
 
 
         return convertView;
