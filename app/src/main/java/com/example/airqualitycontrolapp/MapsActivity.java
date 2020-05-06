@@ -169,8 +169,12 @@ public class MapsActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.app_bar_statistics_button:
-                        
 
+                        RatingListFragment ratingListFragment = new RatingListFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, ratingListFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
 
                         return true;
                     case R.id.app_bar_settings_button:

@@ -13,6 +13,39 @@
         android:gravity="center"
         android:textSize="20dp"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="50dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="#"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/nameOfCity"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Miasto"
+            android:paddingStart="5dp"
+            android:layout_toStartOf="@+id/aqiIndex"
+            android:layout_toEndOf="@+id/position"/>
+
+        <TextView
+            android:id="@+id/aqiIndex"
+            android:layout_width="50dp"
+            android:gravity="center"
+            android:text="AQI"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/ratingList"
         android:layout_width="match_parent"
