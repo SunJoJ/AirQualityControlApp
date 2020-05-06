@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Rating"
+        android:background="@color/primaryColor"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <ListView
+        android:id="@+id/ratingList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:padding="5dp"
+        android:scrollbars="none"
+        android:layout_marginBottom="50dp"
+        android:clickable="true"
+        />
+
+</LinearLayout>
