@@ -59,9 +59,11 @@ public class RatingListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
                         DataAirVisual dataAirVisual = response.body();
-                        String address = dataAirVisual.getCityData().getCity() + ", " + dataAirVisual.getCityData().getCountry();
+                        String city = dataAirVisual.getCityData().getCity();
+                        String country = dataAirVisual.getCityData().getCountry();
+                        String state = dataAirVisual.getCityData().getCountry();
                         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
-                        RatingListDataModel ratingListDataModel = new RatingListDataModel(address, aqiIndex);
+                        RatingListDataModel ratingListDataModel = new RatingListDataModel(country, state, city, aqiIndex);
                         ratingListDataModels.add(ratingListDataModel);
 
                         ratingListDataModels.sort((o1, o2) -> o1.getAqiIndex().compareTo(o2.getAqiIndex()));
@@ -83,9 +85,11 @@ public class RatingListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
                         DataAirVisual dataAirVisual = response.body();
-                        String address = dataAirVisual.getCityData().getCity() + ", " + dataAirVisual.getCityData().getCountry();
+                        String city = dataAirVisual.getCityData().getCity();
+                        String country = dataAirVisual.getCityData().getCountry();
+                        String state = dataAirVisual.getCityData().getCountry();
                         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
-                        RatingListDataModel ratingListDataModel = new RatingListDataModel(address, aqiIndex);
+                        RatingListDataModel ratingListDataModel = new RatingListDataModel(country, state, city, aqiIndex);
                         ratingListDataModels.add(ratingListDataModel);
 
                     }

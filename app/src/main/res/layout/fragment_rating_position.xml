@@ -26,17 +26,32 @@
             android:id="@+id/nameOfCity"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingStart="5dp"
             android:layout_toStartOf="@+id/aqiIndex"
-            android:layout_toEndOf="@+id/flag"/>
+            android:layout_toEndOf="@+id/flag"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp" />
+
+        <RelativeLayout
+
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:layout_alignParentEnd="true">
+
+            <RelativeLayout
+                android:id="@+id/indexColor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corner_yellow"/>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/aqiIndex"
             android:layout_width="50dp"
             android:gravity="center"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 
