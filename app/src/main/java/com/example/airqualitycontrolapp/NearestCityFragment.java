@@ -61,47 +61,56 @@ public class NearestCityFragment extends Fragment {
         timeStamp.setText(date + " " + time);
 
 
-
         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
         if (isBetween(aqiIndex, 0, 25)) {
             qualityText.setText("Jakość powietrza - bardzo dobra");
             quality.setBackgroundResource(R.drawable.rounded_corner_dark_green);
             adviceText.setText(R.string.advice_for_good_aqi1);
-
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_green);
         } else if (isBetween(aqiIndex, 26, 50)) {
             qualityText.setText("Jakość powietrza - dobra");
             quality.setBackgroundResource(R.drawable.rounded_corner_green);
             adviceText.setText(R.string.advice_for_good_aqi1);
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_green);
         } else if (isBetween(aqiIndex, 51, 100)) {
             qualityText.setText("Jakość powietrza - umiarkowana");
             quality.setBackgroundResource(R.drawable.rounded_corner_yellow);
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_yellow);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_yellow);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_yellow);
             adviceText.setText(R.string.advice_for_bad_aqi1);
         } else if (isBetween(aqiIndex, 101, 150)) {
             qualityText.setText("Jakość powietrza - niezdrowa");
             quality.setBackgroundResource(R.drawable.rounded_corner_orange);
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_orange);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_orange);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_orange);
             adviceText.setText(R.string.advice_for_bad_aqi1);
         } else if (isBetween(aqiIndex, 151, 200)) {
             qualityText.setText("Jakość powietrza - zła");
             quality.setBackgroundResource(R.drawable.rounded_corner_red);
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_red_fade);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_red_fade);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_red_fade);
             adviceText.setText(R.string.advice_for_bad_aqi1);
         }   else if (isBetween(aqiIndex, 201, 500)) {
             qualityText.setText("Jakość powietrza - bardzo zła");
             adviceText.setText(R.string.advice_for_bad_aqi1);
+            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_red_fade);
+            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_red_fade);
+            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_red_fade);
             quality.setBackgroundResource(R.drawable.rounded_corner_dark_red);
         }
 
-        if (isBetween(aqiIndex, 0, 100)) {
-//            firstAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
-//            secondAdviceIcon.setBackgroundResource(R.drawable.rounded_corner_fade_green);
-            adviceBackground.setBackgroundResource(R.drawable.rounded_corner_fade_green);
-        } else {
-
-        }
 
         firstAdviceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isBetween(aqiIndex, 0, 100)) {
+                if (isBetween(aqiIndex, 0, 50)) {
                     adviceText.setText(R.string.advice_for_good_aqi1);
                 } else {
                     adviceText.setText(R.string.advice_for_bad_aqi1);
@@ -112,7 +121,7 @@ public class NearestCityFragment extends Fragment {
         secondAdviceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isBetween(aqiIndex, 0, 100)) {
+                if (isBetween(aqiIndex, 0, 50)) {
                     adviceText.setText(R.string.advice_for_good_aqi2);
                 } else {
                     adviceText.setText(R.string.advice_for_bad_aqi2);
