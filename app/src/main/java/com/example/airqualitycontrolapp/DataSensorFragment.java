@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,9 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -47,7 +52,6 @@ public class DataSensorFragment extends Fragment {
     private NavigationMenu navigationMenu;
     private ArrayList<Measurement> measurementArrayList;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,6 +71,7 @@ public class DataSensorFragment extends Fragment {
 
         TextView indexTextView = rootView.findViewById(R.id.indexTextView);
         TextView addressTextView = rootView.findViewById(R.id.addressTextView);
+        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
         String index = qualityIndex.getIndexLevel().getIndexLevelName();
         indexTextView.setText("Indeks jakości - " + index.toLowerCase());
         addressTextView.setText(address);
@@ -111,19 +116,25 @@ public class DataSensorFragment extends Fragment {
             }
         });
 
-        ListView listView = rootView.findViewById(R.id.listOfPollutionComponents);
         List<String> params = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
+        ParametersAdapter parametersAdapter = new ParametersAdapter(keys, getContext());
         for(int i = 0; i < measurementArrayList.size(); i++) {
             List<Value> values = measurementArrayList.get(i).getValues();
             if(values.size() != 0) {
                 String lastValue = String.valueOf(values.get(0).getValue());
                 params.add(measurementArrayList.get(i).getKey() + ": " + lastValue + " µg/m3");
+                keys.add(measurementArrayList.get(i).getKey());
+                parametersAdapter.notifyDataSetChanged();
             }
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(getContext(),
-                android.R.layout.simple_list_item_1, params);
-        listView.setAdapter(adapter);
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(parametersAdapter);
+        parametersAdapter.notifyDataSetChanged();
 
 
         BarChart barChart = rootView.findViewById(R.id.barChart);
@@ -136,15 +147,17 @@ public class DataSensorFragment extends Fragment {
         barChart.animateY(2000);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                List<Value> values = measurementArrayList.get(position).getValues();
-                BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
-                barChart.setData(data);
-                barChart.animateY(2000);
-            }
-        });
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        List<Value> values = measurementArrayList.get(position).getValues();
+                        BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
+                        barChart.setData(data);
+                        barChart.animateY(2000);
+                    }
+                }
+        );
 
 
         return rootView;

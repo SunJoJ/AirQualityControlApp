@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:1.0.2'
     implementation 'com.github.mik3y:usb-serial-for-android:2.2.2'
     implementation 'com.github.felHR85:UsbSerial:6.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

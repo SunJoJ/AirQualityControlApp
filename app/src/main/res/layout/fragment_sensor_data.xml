@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:orientation="vertical"
+    android:layout_marginBottom="50dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -55,8 +55,7 @@
                 android:firstBaselineToTopHeight="0dp"
                 android:lineSpacingExtra="0dp"
                 android:textColor="@color/primaryTextColor"
-                android:includeFontPadding="false"
-                />
+                android:includeFontPadding="false" />
 
             <TextView
                 android:id="@+id/addressTextView"
@@ -65,12 +64,9 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-
                 android:text="Test"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="12dp" />
-
-
         </RelativeLayout>
 
 
@@ -79,7 +75,27 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
+            android:elevation="2dp"
+            android:background="@drawable/rounded_corner">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:elevation="2dp"
             android:background="@drawable/rounded_corner">
 
@@ -94,32 +110,13 @@
                 android:textSize="18dp" />
 
 
-            <ListView
-                android:id="@+id/listOfPollutionComponents"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="35dp">
-            </ListView>
-
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="5dp"
-            android:elevation="2dp"
-            android:background="@drawable/rounded_corner">
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-
-        </RelativeLayout>
 
     </LinearLayout>
 
 
+
 </ScrollView>
+
+
