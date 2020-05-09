@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:layout_marginBottom="50dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:background="@color/white">
 
@@ -93,7 +93,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:elevation="2dp"
@@ -109,9 +109,14 @@
                 android:textAlignment="center"
                 android:textSize="18dp" />
 
-
         </RelativeLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gridRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/pollutionComponents"
+            />
 
     </LinearLayout>
 

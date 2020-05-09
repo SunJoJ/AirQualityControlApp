@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +73,7 @@ public class DataSensorFragment extends Fragment {
         TextView indexTextView = rootView.findViewById(R.id.indexTextView);
         TextView addressTextView = rootView.findViewById(R.id.addressTextView);
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView);
+        RecyclerView gridRecyclerView = rootView.findViewById(R.id.gridRecyclerView);
         String index = qualityIndex.getIndexLevel().getIndexLevelName();
         indexTextView.setText("Indeks jakości - " + index.toLowerCase());
         addressTextView.setText(address);
@@ -119,16 +121,23 @@ public class DataSensorFragment extends Fragment {
         List<String> params = new ArrayList<>();
         List<String> keys = new ArrayList<>();
         ParametersAdapter parametersAdapter = new ParametersAdapter(keys, getContext());
+        ParameterGridAdapter parameterGridAdapter = new ParameterGridAdapter(params, getContext());
         for(int i = 0; i < measurementArrayList.size(); i++) {
             List<Value> values = measurementArrayList.get(i).getValues();
             if(values.size() != 0) {
-                String lastValue = String.valueOf(values.get(0).getValue());
-                params.add(measurementArrayList.get(i).getKey() + ": " + lastValue + " µg/m3");
+                String lastValue = String.valueOf(values.get(1).getValue());
+                params.add(measurementArrayList.get(i).getKey() + ": " + lastValue);
                 keys.add(measurementArrayList.get(i).getKey());
                 parametersAdapter.notifyDataSetChanged();
+                parameterGridAdapter.notifyDataSetChanged();
             }
         }
 
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridRecyclerView.setLayoutManager(gridLayoutManager);
+        gridRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        gridRecyclerView.setAdapter(parameterGridAdapter);
+        parameterGridAdapter.notifyDataSetChanged();
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -147,17 +156,23 @@ public class DataSensorFragment extends Fragment {
         barChart.animateY(2000);
 
 
-        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
-                new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        List<Value> values = measurementArrayList.get(position).getValues();
-                        BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
-                        barChart.setData(data);
-                        barChart.animateY(2000);
-                    }
-                }
-        );
+        ItemClickSupport.addTo(gridRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                List<Value> values = measurementArrayList.get(position).getValues();
+                BarData data = ChartPainter.paintChart(values, measurementArrayList.get(0).getKey(), getContext(), barChart);
+                barChart.setData(data);
+                barChart.animateY(2000);
+            }
+        });
 
 
         return rootView;

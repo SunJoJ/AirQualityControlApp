@@ -2,6 +2,7 @@ package com.example.airqualitycontrolapp;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
 import androidx.core.content.ContextCompat;
 
@@ -324,6 +325,120 @@ public class ChartPainter {
 
 
         return new BarData(bars);
+    }
+
+
+    public static Integer intervalParameter(String key, Integer val) {
+
+
+        switch (key) {
+            case "SO2":
+                if(isBetween(val, 0, S02_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, S02_VERY_GOOD + 1, S02_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, S02_GOOD + 1, S02_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, S02_MODERATE + 1, S02_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, S02_PASSABLE + 1, S02_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, S02_BAD + 1, S02_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "NO2":
+                if(isBetween(val, 0, N02_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, N02_VERY_GOOD + 1, N02_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, N02_GOOD + 1, N02_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, N02_MODERATE + 1, N02_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, N02_PASSABLE + 1, N02_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, N02_BAD + 1, N02_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "CO":
+                if(isBetween(val, 0, CO_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, CO_VERY_GOOD + 1, CO_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, CO_GOOD + 1, CO_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, CO_MODERATE + 1, CO_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, CO_PASSABLE + 1, CO_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, CO_BAD + 1, CO_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "PM10":
+                if(isBetween(val, 0, PM10_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, PM10_VERY_GOOD + 1, PM10_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, PM10_GOOD + 1, PM10_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, PM10_MODERATE + 1, PM10_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, PM10_PASSABLE + 1, PM10_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, PM10_BAD + 1, PM10_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "PM2.5":
+                if(isBetween(val, 0, PM25_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, PM25_VERY_GOOD + 1, PM25_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, PM25_GOOD + 1, PM25_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, PM25_MODERATE + 1, PM25_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, PM25_PASSABLE + 1, PM25_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, PM25_BAD + 1, PM25_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "O3":
+                if(isBetween(val, 0, O3_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, O3_VERY_GOOD + 1, O3_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, O3_GOOD + 1, O3_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, O3_MODERATE + 1, O3_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, O3_PASSABLE + 1, O3_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, O3_BAD + 1, O3_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+            case "C6H6":
+                if(isBetween(val, 0, C6H6_VERY_GOOD)) {
+                    return R.drawable.rounded_corner_dark_green;
+                } else if(isBetween(val, C6H6_VERY_GOOD + 1, C6H6_GOOD )) {
+                    return R.drawable.rounded_corner_green;
+                } else if(isBetween(val, C6H6_GOOD + 1, C6H6_MODERATE )) {
+                    return R.drawable.rounded_corner_yellow;
+                } else if(isBetween(val, C6H6_MODERATE + 1, C6H6_PASSABLE )) {
+                    return R.drawable.rounded_corner_orange;
+                } else if(isBetween(val, C6H6_PASSABLE + 1, C6H6_BAD )) {
+                    return R.drawable.rounded_corner_red;
+                } else if(isBetween(val, C6H6_BAD + 1, C6H6_VERY_BAD )) {
+                    return R.drawable.rounded_corner_dark_red;
+                }
+                break;
+        }
+        return R.drawable.rounded_corner;
     }
 
 
