@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -159,7 +160,15 @@ public class DataSensorFragment extends Fragment {
         ItemClickSupport.addTo(gridRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                Toast.makeText(getContext(), "Test", Toast.LENGTH_SHORT).show();
+                String key = measurementArrayList.get(position).getKey();
+                ParameterInfoFragment parameterInfoFragment = new ParameterInfoFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("key", key);
+                parameterInfoFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, parameterInfoFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
