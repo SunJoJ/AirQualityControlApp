@@ -12,10 +12,52 @@
     <string name="advice_for_bad_aqi2">Ogranicz swoję przemieszczenie na dworze </string>
 
     <string name="O3">O3 – ozon. Cząsteczki ozonu tworzą się przy powierzchni ziemi podczas reakcji chemicznych innych zanieczyszczeń, najczęściej w okresach o wysokich temperaturach i nasłonecznieniu. Poziom docelowy ozonu w Polsce wynosi 1200 µg/m3 (średnia wartość w ciągu 8 godzin).</string>
-    <string name="CO"> CO – tlenek węgla, potocznie zwany czadem. To bezbarwny i bezwonny trujący gaz. Powstaje na skutek niepełnego spalania różnych paliw, a także w czasie pożarów. Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następnie jest bardzo szybko wchłaniany do krwioobiegu. Dopuszczalne przez WHO stężenie tlenku węgla wynosi 35 ppm (ang. parts per milion, liczba części na milion</string>
+    <string name="CO"><![CDATA[<b>CO</b> – tlenek węgla, potocznie zwany czadem. To bezbarwny i bezwonny trujący gaz.</br>
+Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następnie jest bardzo szybko wchłaniany do krwioobiegu. Dopuszczalne przez WHO stężenie tlenku węgla wynosi 35 ppm (ang. parts per milion, liczba części na milion).</br>
+
+</br><b>Skąd się bierze?</b></br>
+<ul>
+  <li> Niepełne spalanie różnych paliw</li>
+  <li> Pożary</li>
+  <li> Piece węgłowe</li>
+  <li> Kuchnie gazowe</li>
+</ul>
+</br>
+<b>Jakie są objawy zatrucia tlenkiem węgla?</b></br>
+<ul>
+  <li> Lekki ból, mdłości wymioty, ogólne zmęczenie i osłabienie – lekkie zatrucie</li>
+  <li> Nasilający się ból głowy, senność, zaburzenia świadomości i równowagi, trudności z oddychaniem, oddech przyspieszony, zaburzenia rytmu serca – średnie zatrucie</li>
+  <li> Drgawki, utrata przytomności – ciężkie zatrucie</li>
+</ul>
+</br><b>Jak pomóc przy zatruciu tlenkiem węgla?</b></br>
+<ul>
+  <li> Należy natychmiast zapewnić dopływ świeżego, czystego powietrza</li>
+  <li> Jak najszybciej wynieść osobę poszkodowaną w bezpieczne miejsce, na świeże powietrze</li>
+  <li> Wezwać służby ratownicze (Pogotowie Ratunkowe – <b>tel. 999</b>)</li>
+</ul>]]></string>
     <string name="NO2">NO2 – dwutlenek azotu, czyli jeden z najbardziej trujących składników smogu. Jest bardzo szkodliwy dla ludzkiego układu oddechowego. Głównym źródłem tego gazu są spaliny samochodowe oraz toksyny emitowane przez zakłady przemysłowe. Dopuszczalny w Polsce średnioroczny poziom dwutlenku azotu to 40 µg/m3.</string>
     <string name="C6H6">C6H6 – benzen, jeden z najbardziej toksycznych i rakotwórczych związków organicznych. Kilkugodzinna ekspozycja na jego stężenie powyżej 80 mg/m3 może podrażnić nie tylko układ oddechowy człowieka, ale także układ krwiotwórczy, skórę i niektóre organy wewnętrzne. W Polsce jednak takich wartości nigdy nie odnotowano. Benzen jest emitowany do powietrza głównie przez zakłady przemysłowe.</string>
-    <string name="SO2">SO2 – dwutlenek siarki. Gaz ten dostaje się do atmosfery w czasie spalania paliw zawierających siarkę. Po utlenieniu i połączeniu z wodą tworzy kwas siarkowy, który może prowadzić do kwaśnych deszczy. W Polsce obowiązującą normą jest średnie stężenie 125 µg/m3 tlenku siarki na dobę.</string>
+    <string name="SO2"><![CDATA[<b>SO2</b> – dwutlenek siarki. Po utlenieniu i połączeniu z wodą tworzy kwas siarkowy, który może prowadzić do kwaśnych deszczy. W Polsce obowiązującą normą jest średnie stężenie 125 µg/m3 tlenku siarki na dobę</br></br>
+
+<b>Skąd się bierze?</b></br>
+<ul>
+  <li> Spalania paliw zawierających siarkę</li>
+  <li> Spalanie paliw kopalnych przez elektrownie i inne zakłady przemysłowe</li>
+  <li> Procesy przemysłowe takie jak obróbka rud metali</li>
+</ul>
+</br>
+<b>Skutki ekspozycji na wysokie stężenia SO2:</b></br>
+<ul>
+  <li> Krótkoterminowa ekspozycja działa szkodliwie na układ oddechowy człowieka i upośledza funkcje oddechowe; do grup szczególnie narażonych należą dzieci, osoby starsze i chorujące na astmę</li>
+  <li> Produkty przemiany SO2 (aerozole) mogą wnikać głęboko do płuc i wpływać na funkcjonowanie układu oddechowego</li>
+</ul>
+
+</br><b>Skutki środowiskowe: </b></br>
+<ul>
+  <li> Uszkadza liście i stożki wzrostu roślin, ogranicza fotosyntezę</li>
+  <li> W postaci kwasu siarkowego niszczy wrażliwe ekosystemy leśne, osłabia system korzeniowy, niszczy bakterie glebowe</li>
+</ul>
+  ]]></string>
     <string name="PM25">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje).</string>
     <string name="PM10">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje)</string>
 </resources>

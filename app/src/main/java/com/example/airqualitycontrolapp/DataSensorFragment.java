@@ -167,7 +167,7 @@ public class DataSensorFragment extends Fragment {
                 parameterInfoFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, parameterInfoFragment);
-                transaction.addToBackStack(null);
+                transaction.addToBackStack("parameterInfoFragment");
                 transaction.commit();
             }
         });
