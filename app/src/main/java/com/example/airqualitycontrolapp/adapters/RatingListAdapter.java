@@ -1,6 +1,8 @@
 package com.example.airqualitycontrolapp.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.airqualitycontrolapp.R;
+import com.example.airqualitycontrolapp.clients.RequestService;
+import com.example.airqualitycontrolapp.clients.RetrofitAirVisualClient;
+import com.example.airqualitycontrolapp.fragments.NearestCityFragment;
+import com.example.airqualitycontrolapp.fragments.ViewPagerFragment;
+import com.example.airqualitycontrolapp.models.DataAirVisual;
 import com.example.airqualitycontrolapp.models.RatingListDataModel;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
 
@@ -80,6 +95,40 @@ public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
         }   else if (isBetween(index, 201, 500)) {
             viewHolder.colorIndex.setBackgroundResource(R.drawable.rounded_corner_dark_red);
         }
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                RequestService service= RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
+                String url = "city?city="+ ratingListDataModel.getCity() +"&state=" + ratingListDataModel.getState() +"&country=" + ratingListDataModel.getCountry() + "&key=9d1d487e-78d7-45f2-9133-95c6b4d08844";
+                Call<DataAirVisual> call1 = service.getAirVisualSupportedCityData(url);
+                call1.enqueue(new Callback<DataAirVisual>() {
+                    @Override
+                    public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
+                        DataAirVisual dataAirVisual = response.body();
+                        Log.d("resp", response.toString());
+                        NearestCityFragment nearestCityFragment = new NearestCityFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("dataAirVisual", dataAirVisual);
+                        nearestCityFragment.setArguments(bundle);
+
+                        FragmentTransaction trans = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                        trans.add(R.id.fragment_container, nearestCityFragment);
+                        trans.addToBackStack(null);
+                        trans.commit();
+                    }
+
+                    @Override
+                    public void onFailure(Call<DataAirVisual> call, Throwable t) {
+                        Log.d("resp", t.getMessage());
+                    }
+                });
+
+
+
+            }
+        });
 
 
         return convertView;

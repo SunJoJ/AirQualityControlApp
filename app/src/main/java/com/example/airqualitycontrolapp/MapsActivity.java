@@ -70,6 +70,7 @@ public class MapsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        setTheme(R.style.Theme_MyApp);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
@@ -78,8 +79,33 @@ public class MapsActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mContext = getApplicationContext();
         mActivity = MapsActivity.this;
-
         getLastLocation();
+
+        RequestService service1= RetrofitAirVisualClient.getRetrofitInstance().create(RequestService.class);
+        Call<DataAirVisual> call1 = service1.getAirVisualNearestCityData(String.valueOf(latitude), String.valueOf(longitude));
+        call1.enqueue(new Callback<DataAirVisual>() {
+            @Override
+            public void onResponse(Call<DataAirVisual> call, Response<DataAirVisual> response) {
+                dataAirVisual = response.body();
+                Log.d("resp", dataAirVisual.getCityData().getCity());
+
+                ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dataAirVisual", dataAirVisual);
+                viewPagerFragment.setArguments(bundle);
+
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.replace(R.id.fragment_container, viewPagerFragment);
+                trans.addToBackStack(null);
+                trans.commit();
+            }
+
+            @Override
+            public void onFailure(Call<DataAirVisual> call, Throwable t) {
+                Log.d("resp", t.getMessage());
+            }
+        });
+
 
         createNotificationChannel();
         Intent intent = new Intent(MapsActivity.this, QualityNotificationBroadcast.class);
@@ -91,8 +117,8 @@ public class MapsActivity extends AppCompatActivity {
         Calendar firingCal  = Calendar.getInstance();
         Calendar currentCal = Calendar.getInstance();
 
-        firingCal.set(Calendar.HOUR_OF_DAY, 13);
-        firingCal.set(Calendar.MINUTE, 5);
+        firingCal.set(Calendar.HOUR_OF_DAY, 18);
+        firingCal.set(Calendar.MINUTE, 44);
         firingCal.set(Calendar.SECOND, 0);
 
         long intendedTime = firingCal.getTimeInMillis();
@@ -256,8 +282,6 @@ public class MapsActivity extends AppCompatActivity {
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
         );
-
-
 
     }
 

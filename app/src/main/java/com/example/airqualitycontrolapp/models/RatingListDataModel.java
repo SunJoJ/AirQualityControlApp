@@ -16,6 +16,14 @@ public class RatingListDataModel implements Serializable {
         this.aqiIndex = aqiIndex;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public String getState() {
         return state;
     }
@@ -30,14 +38,6 @@ public class RatingListDataModel implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public Integer getAqiIndex() {

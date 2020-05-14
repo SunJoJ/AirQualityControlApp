@@ -41,7 +41,7 @@ public class NearestCityFragment extends Fragment {
         RelativeLayout secondAdviceIcon = rootView.findViewById(R.id.secondAdviceIcon);
         RelativeLayout adviceBackground = rootView.findViewById(R.id.adviceBackground);
 
-        String addressText =  dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
+        String addressText = dataAirVisual.getCityData().getState() + ", " + dataAirVisual.getCityData().getCountry();
         address.setText(addressText);
         cityName.setText(dataAirVisual.getCityData().getCity());
         String qualityIndexStr = dataAirVisual.getCityData().getCurrent().getPollution().getAqius() + " AQI";

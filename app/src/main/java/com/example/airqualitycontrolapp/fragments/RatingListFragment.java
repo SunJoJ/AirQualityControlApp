@@ -68,7 +68,7 @@ public class RatingListFragment extends Fragment {
                         DataAirVisual dataAirVisual = response.body();
                         String city = dataAirVisual.getCityData().getCity();
                         String country = dataAirVisual.getCityData().getCountry();
-                        String state = dataAirVisual.getCityData().getCountry();
+                        String state = dataAirVisual.getCityData().getState();
                         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
                         RatingListDataModel ratingListDataModel = new RatingListDataModel(country, state, city, aqiIndex);
                         ratingListDataModels.add(ratingListDataModel);
@@ -94,7 +94,7 @@ public class RatingListFragment extends Fragment {
                         DataAirVisual dataAirVisual = response.body();
                         String city = dataAirVisual.getCityData().getCity();
                         String country = dataAirVisual.getCityData().getCountry();
-                        String state = dataAirVisual.getCityData().getCountry();
+                        String state = dataAirVisual.getCityData().getState();
                         Integer aqiIndex = dataAirVisual.getCityData().getCurrent().getPollution().getAqius();
                         RatingListDataModel ratingListDataModel = new RatingListDataModel(country, state, city, aqiIndex);
 

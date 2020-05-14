@@ -72,7 +72,7 @@ public class QualityNotificationBroadcast extends BroadcastReceiver {
                 collapsedView.setTextViewText(R.id.notificationTime, dtf.format(now));
 
                 Notification notification = new NotificationCompat.Builder(context, "Air_quality_notification")
-                        .setSmallIcon(R.drawable.wind_icon)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setCustomContentView(collapsedView)
                         //.setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                         .build();
