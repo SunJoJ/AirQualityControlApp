@@ -23,9 +23,19 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.example.airqualitycontrolapp.clients.RequestService;
+import com.example.airqualitycontrolapp.clients.RetrofitAirVisualClient;
+import com.example.airqualitycontrolapp.clients.RetrofitClientGIOS;
+import com.example.airqualitycontrolapp.fragments.RatingListFragment;
+import com.example.airqualitycontrolapp.fragments.ScreenInfoFragment;
+import com.example.airqualitycontrolapp.fragments.ScreenMapFragment;
+import com.example.airqualitycontrolapp.fragments.ViewPagerFragment;
+import com.example.airqualitycontrolapp.models.DataAirVisual;
+import com.example.airqualitycontrolapp.models.StationGIOS;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -42,8 +52,6 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapsActivity extends AppCompatActivity {
 
@@ -188,16 +196,21 @@ public class MapsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        navigationMenu.setVisibility(View.VISIBLE);
+        super.onBackPressed();
+    }
+
     private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Air quality";
-            String description = "Air quality notification";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("Air_quality_notification", name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        CharSequence name = "Air quality";
+        String description = "Air quality notification";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel("Air_quality_notification", name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        assert notificationManager != null;
+        notificationManager.createNotificationChannel(channel);
     }
 
 

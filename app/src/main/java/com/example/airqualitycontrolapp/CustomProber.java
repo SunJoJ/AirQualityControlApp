@@ -4,7 +4,7 @@ import com.hoho.android.usbserial.driver.CdcAcmSerialDriver;
 import com.hoho.android.usbserial.driver.ProbeTable;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 
-class CustomProber {
+public class CustomProber {
 
     static UsbSerialProber getCustomProber() {
         ProbeTable customTable = new ProbeTable();

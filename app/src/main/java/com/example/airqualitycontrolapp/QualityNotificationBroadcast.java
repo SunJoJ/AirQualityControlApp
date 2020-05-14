@@ -1,24 +1,23 @@
 package com.example.airqualitycontrolapp;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.FragmentTransaction;
+
+import com.example.airqualitycontrolapp.clients.RequestService;
+import com.example.airqualitycontrolapp.clients.RetrofitAirVisualClient;
+import com.example.airqualitycontrolapp.models.DataAirVisual;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import io.opencensus.resource.Resource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

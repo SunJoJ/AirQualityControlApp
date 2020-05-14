@@ -4,7 +4,7 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-class ItemClickSupport {
+public class ItemClickSupport {
 
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;

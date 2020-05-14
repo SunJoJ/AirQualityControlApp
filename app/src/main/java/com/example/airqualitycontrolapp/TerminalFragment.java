@@ -29,6 +29,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.airqualitycontrolapp.BuildConfig;
+import com.example.airqualitycontrolapp.CustomProber;
+import com.example.airqualitycontrolapp.HexDump;
+import com.example.airqualitycontrolapp.R;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;

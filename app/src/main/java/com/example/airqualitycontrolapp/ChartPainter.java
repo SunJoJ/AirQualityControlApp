@@ -1,11 +1,10 @@
 package com.example.airqualitycontrolapp;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.airqualitycontrolapp.models.Value;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
