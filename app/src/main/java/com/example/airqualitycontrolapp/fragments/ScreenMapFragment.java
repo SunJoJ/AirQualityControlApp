@@ -1,12 +1,25 @@
 package com.example.airqualitycontrolapp.fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,10 +31,13 @@ import com.example.airqualitycontrolapp.models.ItemMarker;
 import com.example.airqualitycontrolapp.models.QualityIndex;
 import com.example.airqualitycontrolapp.models.Sensor;
 import com.example.airqualitycontrolapp.models.StationGIOS;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
@@ -45,6 +61,14 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
     private ClusterManager<ItemMarker> clusterManager;
 
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
+    private SimpleCursorAdapter mAdapter;
+    private ArrayList<String> suggestions;
+    private MaterialToolbar searchBar;
+
+    private String[] SUGGESTIONS;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,11 +81,84 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
         stationGIOSArrayList = (ArrayList<StationGIOS>) getArguments().getSerializable("listOfStations");
 
+        suggestions = new ArrayList<>();
+        for(int i = 0; i < stationGIOSArrayList.size(); i++) {
+            String suggestion =  stationGIOSArrayList.get(i).getName();
+            suggestions.add(suggestion);
+        }
+
+        SUGGESTIONS = suggestions.toArray(new String[0]);
+        searchBar = rootView.findViewById(R.id.searchNavigationMenu);
+
+        final String[] from = new String[] {"cityName"};
+        final int[] to = new int[] {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_1,
+                null,
+                from,
+                to,
+                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+        SearchView searchView = (SearchView) searchBar.getMenu().findItem(R.id.action_search).getActionView();
+        searchView.setSuggestionsAdapter(mAdapter);
+        searchView.setIconifiedByDefault(false);
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionClick(int position) {
+                Cursor cursor = (Cursor) mAdapter.getItem(position);
+                String txt = cursor.getString(cursor.getColumnIndex("cityName"));
+                searchView.setQuery(txt, true);
+                return true;
+            }
+
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return true;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                stationGIOSArrayList.stream().filter(o -> o.getName().equals(s)).forEach(
+                        o -> {
+                            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())), 14));
+
+                        }
+                );
+
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                populateAdapter(s);
+                return false;
+            }
+        });
 
 
 
         return rootView;
     }
+
+    public boolean containsName(final List<StationGIOS> list, final String name){
+        return list.stream().anyMatch(o -> o.getName().equals(name));
+    }
+
+    private void populateAdapter(String query) {
+        final MatrixCursor c = new MatrixCursor(new String[]{ BaseColumns._ID, "cityName" });
+        for (int i = 0; i < SUGGESTIONS.length; i++) {
+            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
+                c.addRow(new Object[] {i, SUGGESTIONS[i]});
+        }
+        mAdapter.changeCursor(c);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

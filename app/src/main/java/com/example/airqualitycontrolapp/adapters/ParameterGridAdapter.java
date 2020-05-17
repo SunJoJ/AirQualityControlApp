@@ -49,6 +49,9 @@ public class ParameterGridAdapter extends RecyclerView.Adapter<ParameterGridAdap
         String parameter = listOfParameters.get(position);
         String name = parameter.split(":")[0].trim();
         String data = parameter.split(":")[1].trim();
+        if(data.length() > 7){
+            data = data.substring(0, 7);
+        }
         int val = (int) Double.parseDouble(data);
         holder.title.setText(name);
         holder.data.setText(data);

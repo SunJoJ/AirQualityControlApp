@@ -60,4 +60,6 @@ Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następn
   ]]></string>
     <string name="PM25">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje).</string>
     <string name="PM10">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje)</string>
+    <string name="app_label">Search</string>
+    <string name="search_hint">Search</string>
 </resources>
