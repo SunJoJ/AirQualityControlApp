@@ -11,7 +11,20 @@
     <string name="advice_for_bad_aqi1">Lepiej zamknij okno</string>
     <string name="advice_for_bad_aqi2">Ogranicz swoję przemieszczenie na dworze </string>
 
-    <string name="O3">O3 – ozon. Cząsteczki ozonu tworzą się przy powierzchni ziemi podczas reakcji chemicznych innych zanieczyszczeń, najczęściej w okresach o wysokich temperaturach i nasłonecznieniu. Poziom docelowy ozonu w Polsce wynosi 1200 µg/m3 (średnia wartość w ciągu 8 godzin).</string>
+    <string name="O3"><![CDATA[<b>O3</b> – ozon. Cząsteczki ozonu tworzą się przy powierzchni ziemi podczas reakcji chemicznych innych zanieczyszczeń, najczęściej w okresach o wysokich temperaturach i nasłonecznieniu. Poziom docelowy ozonu w Polsce wynosi 1200 µg/m3 (średnia wartość w ciągu 8 godzin).</br></br>
+
+<b>Co sprzyja powstawaniu ozonu przyziemnego i kiedy się go bać?</b></br><lu>
+Najwyższe stężenia ozonu przy powierzchni Ziemi występują wiosną i latem, ponieważ powstawaniu ozonu sprzyja słoneczna pogoda i wysoka temperatura powietrza. Ozon ma zdolność przenoszenia się na duże odległości, dlatego jego stężenia na obszarze Polski w dużej mierze zależą od stężeń ozonu w masach powietrza napływających nad teren naszego kraju – głównie z południowej i południowo-zachodniej Europy.
+<lu>
+W słoneczne, gorące dni najwyższe stężenia ozonu występują najczęściej w godzinach od 10-14, w tym samym czasie przy bezchmurnym niebie ma miejsce również największe promieniowanie UV
+</br>
+<b>Jak powstaje ozon?</b></br>
+<lu>
+<li>Ozon powstający przy powierzchni ziemi jest zanieczyszczeniem wtórnym i powstaje w wyniku reakcji fotochemicznych tlenków azotu i lotnych związków organicznych w atmosferze, reakcje te przyspiesza wysoka temperatura powietrza. Ozon ten nazywany jest  ozonem troposferycznym lub przyziemnym.</li>
+</lu>
+</br>
+<lu><li>Ozon w stratosferze powstaje w wyniku oddziaływania promieniowania słonecznego na cząsteczki tlenu (O2), w wyniku czego cząsteczki te rozpadają się na dwa atomy tlenu (O). Następnie atomy tlenu reagują z tlenem cząsteczkowym i tworzą cząsteczki ozonu (O3). Ozon ten nazywany jest ozonem stratosferycznym lub warstwą ozonową.</li>
+</lu>]]></string>
     <string name="CO"><![CDATA[<b>CO</b> – tlenek węgla, potocznie zwany czadem. To bezbarwny i bezwonny trujący gaz.</br>
 Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następnie jest bardzo szybko wchłaniany do krwioobiegu. Dopuszczalne przez WHO stężenie tlenku węgla wynosi 35 ppm (ang. parts per milion, liczba części na milion).</br>
 
@@ -35,8 +48,35 @@ Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następn
   <li> Jak najszybciej wynieść osobę poszkodowaną w bezpieczne miejsce, na świeże powietrze</li>
   <li> Wezwać służby ratownicze (Pogotowie Ratunkowe – <b>tel. 999</b>)</li>
 </ul>]]></string>
-    <string name="NO2">NO2 – dwutlenek azotu, czyli jeden z najbardziej trujących składników smogu. Jest bardzo szkodliwy dla ludzkiego układu oddechowego. Głównym źródłem tego gazu są spaliny samochodowe oraz toksyny emitowane przez zakłady przemysłowe. Dopuszczalny w Polsce średnioroczny poziom dwutlenku azotu to 40 µg/m3.</string>
-    <string name="C6H6">C6H6 – benzen, jeden z najbardziej toksycznych i rakotwórczych związków organicznych. Kilkugodzinna ekspozycja na jego stężenie powyżej 80 mg/m3 może podrażnić nie tylko układ oddechowy człowieka, ale także układ krwiotwórczy, skórę i niektóre organy wewnętrzne. W Polsce jednak takich wartości nigdy nie odnotowano. Benzen jest emitowany do powietrza głównie przez zakłady przemysłowe.</string>
+    <string name="NO2"><![CDATA[<b>NO2</b> – dwutlenek azotu, czyli jeden z najbardziej trujących składników smogu. Jest bardzo szkodliwy dla ludzkiego układu oddechowego. Głównym źródłem tego gazu są spaliny samochodowe oraz toksyny emitowane przez zakłady przemysłowe. Dopuszczalny w Polsce średnioroczny poziom dwutlenku azotu to 40 µg/m3</br></br>
+
+<b>Czym grozi?</b></br>
+<ul>
+  <li> Działa drażniąco na spojówki oraz śluzówki nosa i gardł</li>
+  <li> Podrażnia także układ oddechowy, może wywołać duszności, kłucie w klatce piersiowej, przyczynić się do skrócenia oddechu i zwiększyć podatność na infekcje dróg oddechowych</li>
+  <li> U osób cierpiących na astmę NO2 może powodować zwiększenie reaktywności oskrzeli</li>
+  <li> U osób zmagających się z przewlekłą chorobą obturacyjną płuc dodatkowo ograniczyć sprawność tego narządu</li>
+</ul>
+</br>
+<b>Skutki długotrwałej ekspozycji na nadmierne stężenie NO2:</b></br>
+<ul>
+  <li> Astma oskrzelowa</li>
+  <li> Przewlekła obturacyjna choroba płuc</li>
+  <li> Choroby układu sercowo-naczyniowego</li>
+  <li> Nowotwory, w szczególności płuc i piersi</li>
+</ul>
+]]></string>
+    <string name="C6H6"><![CDATA[<b>C6H6</b> – benzen, jeden z najbardziej toksycznych i rakotwórczych związków organicznych. Kilkugodzinna ekspozycja na jego stężenie powyżej 80 mg/m3 może podrażnić nie tylko układ oddechowy człowieka, ale także układ krwiotwórczy, skórę i niektóre organy wewnętrzne. W Polsce jednak takich wartości nigdy nie odnotowano. Benzen jest emitowany do powietrza głównie przez zakłady przemysłowe.</br></br>
+
+<b>Skąd się bierzy?</b>
+<lu>
+	<li>Benzen emitowany jest podczas procesów spalania paliw stałych i płynnych</li>
+	<li>W piecach koksowniczych i hutach metali nieżelaznych</li>
+	<li>Innym źródłem są: stacje paliw, pralnie chemiczne, wytwórnie mas bitumicznych, drukarnie foto-grawiurowe, przemysł</li>
+</lu>
+
+</br>
+<b>Poziom dopuszczalny stężenia średniorocznego: 5 µg/m3</b>]]></string>
     <string name="SO2"><![CDATA[<b>SO2</b> – dwutlenek siarki. Po utlenieniu i połączeniu z wodą tworzy kwas siarkowy, który może prowadzić do kwaśnych deszczy. W Polsce obowiązującą normą jest średnie stężenie 125 µg/m3 tlenku siarki na dobę</br></br>
 
 <b>Skąd się bierze?</b></br>
@@ -58,8 +98,53 @@ Czad przedostaje się do ludzkiego organizmu poprzez układ oddechowy a następn
   <li> W postaci kwasu siarkowego niszczy wrażliwe ekosystemy leśne, osłabia system korzeniowy, niszczy bakterie glebowe</li>
 </ul>
   ]]></string>
-    <string name="PM25">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje).</string>
-    <string name="PM10">PM2.5 PM10 – rodzaje pyłów zawieszonych, których ziarenka mają średnicę odpowiednio do 2,5 oraz 10 mikrometrów. To właśnie przez swoją mała wielkość pyły te z łatwością przenikają do płuc człowieka. Głównym ich źródłem jest ruch drogowy oraz spalanie węgla lub śmieci. W Polsce dopuszczalną dobową normą dla PM10 jest 50 µg/m3 (norma dla PM2,5 nie istnieje)</string>
+    <string name="PM25"><![CDATA[<b>PM2.5</b> – to mieszanina stałych i ciekłych cząstek o średnicy mniejszej od 2,5 µm zawieszonych w powietrzu w postaci aerozolu. Dla porównania średniej grubości ludzki włos ma przekrój 70 µm. Stężenie pyłów liczymy w mikrogramach na metr sześcienny [µg/m3]</br></br>
+
+<b>Źródło</b>
+<lu>
+	<li>Spalanie paliw, w tym niska emisja czyli spalanie w piecach węgla słabej jakości oraz śmieci</li>
+	<li>Zakłady przemysłowe</li>
+	<li>ruch drogowy, w szczególności pojazdy z silnikami wysokoprężnymi (diesle)</li>
+	<li>Pył pochodzący z zużycia opon, hamulców, asfaltu</li>
+</lu>
+
+</br>
+<b>Ekspozycja na drobny pył może powodować</b>
+<lu>
+	<li>Przedwczesną śmierć osób z chorobami serca bądź płuc</li>
+	<li>Nieregularną pracę serca, ataki serca</li>
+	<li>Pogorszenie funkcji płuc np. trudności z oddychaniem, zadyszka</li>
+	<li>Podrażnienie dróg oddechowych, kaszel</li>
+	<li>Nasilenie objawów astmy</li>
+</lu>]]></string>
+    <string name="PM10"><![CDATA[<b>PM10</b> – to mieszanina stałych i ciekłych cząstek o średnicy mniejszej od 10 µm zawieszonych w powietrzu w postaci aerozolu. Dla porównania średniej grubości ludzki włos ma przekrój 70 µm. Stężenie pyłów liczymy w mikrogramach na metr sześcienny [µg/m3]</br></br>
+
+<b>Źródło</b>
+<lu>
+	<li>Spalanie paliw, w tym niska emisja czyli spalanie w piecach węgla słabej jakości oraz śmieci</li>
+	<li>Zakłady przemysłowe</li>
+	<li>ruch drogowy, w szczególności pojazdy z silnikami wysokoprężnymi (diesle)</li>
+	<li>Pył pochodzący z zużycia opon, hamulców, asfaltu</li>
+</lu>
+
+</br>
+<b>Ekspozycja na drobny pył może powodować</b>
+<lu>
+	<li>Przedwczesną śmierć osób z chorobami serca bądź płuc</li>
+	<li>Nieregularną pracę serca, ataki serca</li>
+	<li>Pogorszenie funkcji płuc np. trudności z oddychaniem, zadyszka</li>
+	<li>Podrażnienie dróg oddechowych, kaszel</li>
+	<li>Nasilenie objawów astmy</li>
+</lu>
+</br>
+<b>Normy dla pyłu PM10</b>
+
+<lu>
+	<li>Poziom dopuszczalny stężenia średniorocznego: 40 µg/m3</li>
+	<li>Poziom dopuszczalny stężenia średniego 24-godzinnego: 50 µg/m3 (przekroczenie dopuszczalne maksymalnie 35 razy w roku)</li>
+	<li>Poziom informowania stężenia średniego 24-godzinnego: 200 µg/m3</li>
+	<li>Poziom alarmowy stężenia średniego 24-godzinnego: 300 µg/m3</li>
+</lu>]]></string>
     <string name="app_label">Search</string>
     <string name="search_hint">Search</string>
 </resources>

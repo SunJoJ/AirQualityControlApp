@@ -125,11 +125,9 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                 stationGIOSArrayList.stream().filter(o -> o.getName().equals(s)).forEach(
                         o -> {
                             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())), 14));
-
                         }
                 );
-
-
+                searchView.setQuery(" ", false);
 
                 return false;
             }
