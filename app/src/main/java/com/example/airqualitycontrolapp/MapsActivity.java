@@ -95,7 +95,7 @@ public class MapsActivity extends AppCompatActivity {
 
                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                 trans.replace(R.id.fragment_container, viewPagerFragment);
-                trans.addToBackStack(null);
+                trans.addToBackStack("viewPagerFragment");
                 trans.commit();
             }
 
@@ -154,7 +154,7 @@ public class MapsActivity extends AppCompatActivity {
 
                                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                                 trans.replace(R.id.fragment_container, viewPagerFragment);
-                                trans.addToBackStack(null);
+                                trans.addToBackStack("viewPagerFragment");
                                 trans.commit();
                             }
 
@@ -181,7 +181,7 @@ public class MapsActivity extends AppCompatActivity {
                                 FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 
                                 trans.replace(R.id.fragment_container, mapFragment);
-                                trans.addToBackStack(null);
+                                trans.addToBackStack("mapFragment");
                                 trans.commit();
 
                             }
@@ -206,7 +206,7 @@ public class MapsActivity extends AppCompatActivity {
                         RatingListFragment ratingListFragment = new RatingListFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragment_container, ratingListFragment);
-                        transaction.addToBackStack(null);
+                        transaction.addToBackStack("ratingListFragment");
                         transaction.commit();
 
                         return true;

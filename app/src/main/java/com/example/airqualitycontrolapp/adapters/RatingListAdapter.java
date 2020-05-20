@@ -115,7 +115,7 @@ public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
 
                         FragmentTransaction trans = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                         trans.add(R.id.fragment_container, nearestCityFragment);
-                        trans.addToBackStack(null);
+                        trans.addToBackStack("nearestCityFragment");
                         trans.commit();
                     }
 
