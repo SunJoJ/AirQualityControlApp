@@ -162,14 +162,15 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:background="@drawable/rounded_corner"
-            >
+            android:foreground="@drawable/ripple_fade">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/window"
                 android:scaleX="0.7"
-                android:scaleY="0.7"/>
+                android:scaleY="0.7"
+                />
 
         </RelativeLayout>
 
@@ -179,7 +180,8 @@
             android:layout_height="75dp"
             android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/firstAdviceIcon"
-            android:background="@drawable/rounded_corner">
+            android:background="@drawable/rounded_corner"
+            android:foreground="@drawable/ripple_fade">
 
             <ImageView
                 android:layout_width="match_parent"

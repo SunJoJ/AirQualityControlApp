@@ -13,6 +13,7 @@
         android:gravity="center"
         android:textColor="@color/primaryTextColor"
         android:background="@drawable/rounded_corner"
+        android:foreground="@drawable/custom_ripple"
         android:textSize="14sp"
         android:text="test"/>
 
