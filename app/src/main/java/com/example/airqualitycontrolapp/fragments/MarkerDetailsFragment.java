@@ -8,9 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -50,7 +54,6 @@ public class MarkerDetailsFragment extends Fragment {
         qualityIndex = (QualityIndex) getArguments().getSerializable("Index");
         address = getArguments().getString("Address");
         stationId = getArguments().getString("StationId");
-
 
         final String index = qualityIndex.getIndexLevel().getIndexLevelName();
 
@@ -98,31 +101,57 @@ public class MarkerDetailsFragment extends Fragment {
         }
         addressTextView.setText(address);
 
-        Button chooseButton = rootView.findViewById(R.id.chooseButton);
-        chooseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        CheckBox checkBox = rootView.findViewById(R.id.iconChoose);
 
+        Map<String, String> sensorsMap = new HashMap<>();
+        String jsonString = new Gson().toJson(sensorsMap);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
+        if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+            String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+            TypeToken<HashMap<String, String>> token = new TypeToken<HashMap<String, String>>() {};
+            HashMap<String, String> retrievedMap = new Gson().fromJson(mapJson, token.getType());
+            if(retrievedMap.containsKey(stationId)){
+                checkBox.setChecked(true);
+            }
+
+        }
+
+
+
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Map<String, String> sensorsMap = new HashMap<>();
                 String jsonString = new Gson().toJson(sensorsMap);
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                if(sharedPreferences.contains("MAP_OF_SENSORS")) {
-                    String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
 
-                    TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
-                    HashMap<String,String> retrievedMap = new Gson().fromJson(mapJson, token.getType());
-                    retrievedMap.put(stationId, address);
-                    String json = new Gson().toJson(retrievedMap);
-                    editor.putString("MAP_OF_SENSORS", json);
-
+                if(isChecked) {
+                    if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                        String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+                        TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                        HashMap<String,String> retrievedMap = new Gson().fromJson(mapJson, token.getType());
+                        retrievedMap.put(stationId, address);
+                        String json = new Gson().toJson(retrievedMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    } else {
+                        sensorsMap.put(stationId, address);
+                        String json = new Gson().toJson(sensorsMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    }
+                    editor.apply();
                 } else {
-                    sensorsMap.put(stationId, address);
-                    String json = new Gson().toJson(sensorsMap);
-                    editor.putString("MAP_OF_SENSORS", json);
+                    if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                        String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+                        TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                        sensorsMap = new Gson().fromJson(mapJson, token.getType());
+                        sensorsMap.remove(stationId);
+                        String json = new Gson().toJson(sensorsMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    }
+                    editor.apply();
                 }
-                editor.apply();
-
             }
         });
 

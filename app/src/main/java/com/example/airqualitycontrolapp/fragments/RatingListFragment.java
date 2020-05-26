@@ -50,6 +50,10 @@ public class RatingListFragment extends Fragment {
                 R.layout.fragment_rating_list, container, false);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+        if(fragment != null)
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+
         listView = rootView.findViewById(R.id.ratingList);
         ratingListDataModels = new ArrayList<>();
 

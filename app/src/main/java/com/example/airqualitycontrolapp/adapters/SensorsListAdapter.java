@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,7 +53,7 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
         TextView addressTextView;
         TextView detailsTextView;
         RelativeLayout markerDetailsFragmentLayout;
-        Button chooseButton;
+        CheckBox checkBox;
     }
 
 
@@ -71,7 +73,7 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
             viewHolder.addressTextView = convertView.findViewById(R.id.addressTextView);
             viewHolder.detailsTextView = convertView.findViewById(R.id.detailsTextView);
             viewHolder.markerDetailsFragmentLayout = convertView.findViewById(R.id.markerDetailsFragmentLayout);
-            viewHolder.chooseButton = convertView.findViewById(R.id.chooseButton);
+            viewHolder.checkBox = convertView.findViewById(R.id.iconChoose);
 
             result = convertView;
 
@@ -80,6 +82,7 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
+        viewHolder.checkBox.setChecked(true);
         viewHolder.addressTextView.setText(sensorsListDataModel.getAddress());
         String index = sensorsListDataModel.getQualityIndex().getIndexLevel().getIndexLevelName();
         viewHolder.detailsTextView.setText("Indeks jakości - " + index.toLowerCase());
@@ -107,25 +110,44 @@ public class SensorsListAdapter extends ArrayAdapter<SensorsListDataModel> {
                 break;
         }
 
-
-        viewHolder.chooseButton.setOnClickListener(new View.OnClickListener() {
+        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Map<String, String> sensorsMap = new HashMap<>();
                 String jsonString = new Gson().toJson(sensorsMap);
                 SharedPreferences sharedPreferences = ((AppCompatActivity) mContext).getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                if(sharedPreferences.contains("MAP_OF_SENSORS")) {
-                    String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
-                    TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
-                    sensorsMap = new Gson().fromJson(mapJson, token.getType());
-                    sensorsMap.remove(sensorsListDataModel.getStationId());
-                    String json = new Gson().toJson(sensorsMap);
-                    editor.putString("MAP_OF_SENSORS", json);
+
+                if(isChecked) {
+                    if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                        String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+                        TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                        HashMap<String,String> retrievedMap = new Gson().fromJson(mapJson, token.getType());
+                        retrievedMap.put(sensorsListDataModel.getStationId(), sensorsListDataModel.getAddress());
+                        String json = new Gson().toJson(retrievedMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    } else {
+                        sensorsMap.put(sensorsListDataModel.getStationId(), sensorsListDataModel.getAddress());
+                        String json = new Gson().toJson(sensorsMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    }
+                    editor.apply();
+                } else {
+                    if(sharedPreferences.contains("MAP_OF_SENSORS")) {
+                        String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
+                        TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
+                        sensorsMap = new Gson().fromJson(mapJson, token.getType());
+                        sensorsMap.remove(sensorsListDataModel.getStationId());
+                        String json = new Gson().toJson(sensorsMap);
+                        editor.putString("MAP_OF_SENSORS", json);
+                    }
+                    editor.apply();
                 }
-                editor.apply();
+
             }
         });
+
+
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -33,6 +33,10 @@ public class ViewPagerFragment extends Fragment {
                 R.layout.fragment_viewpager, container, false);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        Fragment fragment = getFragmentManager().findFragmentByTag("markerDetailsFragment");
+        if(fragment != null)
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+
         mPager = rootView.findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(pagerAdapter);

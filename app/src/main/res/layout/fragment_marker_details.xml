@@ -40,25 +40,17 @@
         android:includeFontPadding="false"
         />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/chooseButton"
+
+
+    <CheckBox
+        android:id="@+id/iconChoose"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_alignParentEnd="true"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:insetBottom="0dp"
-        android:insetTop="0dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        app:icon="@drawable/ic_grade_24px"
+        android:button="@drawable/sl_choosed_icon"
+        app:buttonTint="@android:color/background_dark"
         android:layout_marginEnd="5dp"
-        app:borderWidth="0dp"
-        android:stateListAnimator="@null"
-        app:iconTint="@color/primaryTextColor"
-        app:backgroundTint="#00FFFFFF"
-        app:itemIconTint="@color/primaryTextColor" />
+        android:layout_alignParentEnd="true"
+        />
 
 
 

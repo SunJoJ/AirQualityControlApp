@@ -121,7 +121,11 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
         TextView sendText = view.findViewById(R.id.send_text);
         View sendBtn = view.findViewById(R.id.send_btn);
+
         sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
+
+
+
         View receiveBtn = view.findViewById(R.id.receive_btn);
         controlLines = new ControlLines(view);
         if(withIoManager) {
@@ -241,6 +245,19 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             return;
         }
         try {
+
+            int[] newData = new int[6];
+            for (int i = 0; i < 6; i++) {
+                newData[i] = i;
+            }
+//            send(construct_command('4', newData));
+
+            //A160: AA B4 06 00 00 00 00 00 00 00 00 00 00 00 00 A1 60 07 AB
+            // 03EA
+
+            str = "AAB40600000000000000000000000003EA07AB";
+                    //construct_command('4', newData);
+
             byte[] data = (str + '\n').getBytes();
             SpannableStringBuilder spn = new SpannableStringBuilder();
             spn.append("send " + data.length + " bytes\n");
@@ -273,12 +290,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private void receive(byte[] data) {
         SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
-        if(data.length > 8) {
-            spn.append(Arrays.toString(data) +"\n");
+
+            spn.append(HexDump.dumpHexString(data) +"\n");
 //            double pm25 = (data[3] * 256 + data[2]) / 10.0;
 //            double pm10 = (data[5] * 256 + data[4]) / 10.0;
 //            spn.append("pm2.5" + pm25 + " pm10" + pm10 + "\n");
-        }
+
 
         //HexDump.dumpHexString(data)
         receiveText.append(spn);
@@ -289,6 +306,28 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         spn.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorStatusText)), 0, spn.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         receiveText.append(spn);
     }
+
+
+    public String construct_command(char cmd, int[] data) {
+        assert data.length <= 12;
+        int[] newData = new int[12];
+        for (int i = 0; i < data.length; i++) {
+            newData[i] = data[i];
+        }
+        data = newData;
+        int tempSum = 0;
+        for (int i = 0; i < 12; i++) {
+            tempSum += data[i];
+        }
+        int checksum = (tempSum + cmd - 2) % 256;
+        String ret = "" + 0xAA + 0xB4 + (char) cmd;
+        for (int i = 0; i < 12; i++) {
+            ret += data[i];
+        }
+        ret += 0xff + 0xff + (char) checksum + 0xab;
+        return ret;
+    }
+
 
     class ControlLines {
         private static final int refreshInterval = 200; // msec

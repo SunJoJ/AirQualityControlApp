@@ -127,7 +127,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())), 14));
                         }
                 );
-                searchView.setQuery(" ", false);
+                searchView.setQuery("", false);
 
                 return false;
             }
@@ -192,7 +192,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
                         markerDetailsFragment.setArguments(bundle);
                         FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
 
-                        trans.add(R.id.marker_details, markerDetailsFragment, "markerDetailsFragment");
+                        trans.replace(R.id.marker_details, markerDetailsFragment, "markerDetailsFragment");
                         trans.addToBackStack("markerDetailsFragment");
                         trans.commit();
                     }

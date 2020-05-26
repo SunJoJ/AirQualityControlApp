@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -81,9 +82,11 @@ public class ParameterInfoFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.closeButton:
+                        navBar.setVisibility(View.VISIBLE);
                         Fragment fragment = getFragmentManager().findFragmentByTag("parameterInfoFragment");
                         if(fragment != null)
                             getFragmentManager().beginTransaction().remove(fragment).commit();
+
                         return true;
                 }
 
