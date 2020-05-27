@@ -307,8 +307,25 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         receiveText.append(spn);
     }
 
+    static int DEBUG = 1;
+    static int CMD_MODE = 2;
+    static int CMD_QUERY_DATA = 4;
+    static int CMD_DEVICE_ID = 5;
+    static int CMD_SLEEP = 6;
+    static int CMD_FIRMWARE = 7;
+    static int CMD_WORKING_PERIOD = 8;
+    static int MODE_ACTIVE = 0;
+    static int MODE_QUERY = 1;
 
-    public String construct_command(char cmd, int[] data) {
+    public static void dump(String cos, String prefix) {
+        System.out.print(prefix);
+        char[] napis = cos.toCharArray();
+        for (char s : napis) {
+            System.out.print(s);
+        }
+    };
+
+    public static String construct_command(char cmd, int[] data) {
         assert data.length <= 12;
         int[] newData = new int[12];
         for (int i = 0; i < data.length; i++) {
@@ -320,13 +337,31 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             tempSum += data[i];
         }
         int checksum = (tempSum + cmd - 2) % 256;
-        String ret = "" + 0xAA + 0xB4 + (char) cmd;
+        String ret = "" + (char) 0xAA + (char) 0xB4 + (char) cmd;
         for (int i = 0; i < 12; i++) {
             ret += data[i];
         }
-        ret += 0xff + 0xff + (char) checksum + 0xab;
+        ret += (char) 0xFF + "" + (char) 0xFF + checksum + (char) 0xAB;
+
+        if (DEBUG == 1) {
+            dump(ret, "construct_command");
+        }
+
         return ret;
     }
+
+    public static String read_response(){
+        char bajt=0;
+        while(bajt!= 0xAA){
+            bajt = ser.read(1);
+        }
+        String d = ser.read(9);
+
+            if (DEBUG==1)
+            dump(d, "<");
+            return bajt+d;
+    }
+
 
 
     class ControlLines {
