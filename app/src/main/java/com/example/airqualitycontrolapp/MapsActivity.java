@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.airqualitycontrolapp.clients.RequestService;
 import com.example.airqualitycontrolapp.clients.RetrofitAirVisualClient;
 import com.example.airqualitycontrolapp.clients.RetrofitClientGIOS;
+import com.example.airqualitycontrolapp.fragments.ProfileFragment;
 import com.example.airqualitycontrolapp.fragments.RatingListFragment;
 import com.example.airqualitycontrolapp.fragments.ScreenInfoFragment;
 import com.example.airqualitycontrolapp.fragments.ScreenMapFragment;
@@ -211,6 +212,12 @@ public class MapsActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.app_bar_settings_button:
+
+                        ProfileFragment profileFragment = new ProfileFragment();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, profileFragment, "profileFragment");
+                        fragmentTransaction.addToBackStack("profileFragment");
+                        fragmentTransaction.commit();
 
                         return true;
                 }
