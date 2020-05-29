@@ -21,6 +21,16 @@
         <item name="android:dropDownListViewStyle">@style/myDropDownListViewStyle</item>
     </style>
 
+    <style name="ContainedButton" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="shapeAppearance">@style/MyShapeAppearance</item>
+    </style>
+    <style name="MyShapeAppearance">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 
     <style name="myDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textColor">@color/secondary_text_default_material_light</item>

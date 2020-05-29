@@ -49,6 +49,15 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private static final String INTENT_ACTION_GRANT_USB = BuildConfig.APPLICATION_ID + ".GRANT_USB";
     private static final int WRITE_WAIT_MILLIS = 2000;
     private static final int READ_WAIT_MILLIS = 2000;
+    static int DEBUG = 1;
+    static int CMD_MODE = 2;
+    static int CMD_QUERY_DATA = 4;
+    static int CMD_DEVICE_ID = 5;
+    static int CMD_SLEEP = 6;
+    static int CMD_FIRMWARE = 7;
+    static int CMD_WORKING_PERIOD = 8;
+    static int MODE_ACTIVE = 0;
+    static int MODE_QUERY = 1;
 
     private int deviceId, portNum, baudRate;
     private boolean withIoManager;
@@ -246,25 +255,30 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
         try {
 
-            int[] newData = new int[6];
-            for (int i = 0; i < 6; i++) {
-                newData[i] = i;
-            }
 //            send(construct_command('4', newData));
-
             //A160: AA B4 06 00 00 00 00 00 00 00 00 00 00 00 00 A1 60 07 AB
-            // 03EA
+            //      AA B4 04 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 04 AB
 
             str = "AAB40600000000000000000000000003EA07AB";
                     //construct_command('4', newData);
 
-            byte[] data = (str + '\n').getBytes();
+            byte[] data = new byte[] { (byte) 0xAA, (byte) 0xB4, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                                                                                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                                                                                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                                                                                (byte) 0xFF, (byte) 0xFF, (byte) 0x02, (byte) 0xAB};
+            //byte[] data = (str + '\n').getBytes();
             SpannableStringBuilder spn = new SpannableStringBuilder();
             spn.append("send " + data.length + " bytes\n");
             spn.append(HexDump.dumpHexString(data)+"\n");
             spn.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorSendText)), 0, spn.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             receiveText.append(spn);
+
             usbSerialPort.write(data, WRITE_WAIT_MILLIS);
+
+            byte[] buffer = new byte[9];
+            int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
+            receive(Arrays.copyOf(buffer, len));
+
         } catch (Exception e) {
             onRunError(e);
         }
@@ -276,7 +290,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             return;
         }
         try {
-            byte[] buffer = new byte[8192];
+            byte[] buffer = new byte[10];
             int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
             receive(Arrays.copyOf(buffer, len));
         } catch (IOException e) {
@@ -307,15 +321,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         receiveText.append(spn);
     }
 
-    static int DEBUG = 1;
-    static int CMD_MODE = 2;
-    static int CMD_QUERY_DATA = 4;
-    static int CMD_DEVICE_ID = 5;
-    static int CMD_SLEEP = 6;
-    static int CMD_FIRMWARE = 7;
-    static int CMD_WORKING_PERIOD = 8;
-    static int MODE_ACTIVE = 0;
-    static int MODE_QUERY = 1;
+
 
     public static void dump(String cos, String prefix) {
         System.out.print(prefix);
@@ -323,7 +329,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         for (char s : napis) {
             System.out.print(s);
         }
-    };
+    }
 
     public static String construct_command(char cmd, int[] data) {
         assert data.length <= 12;
@@ -350,16 +356,40 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         return ret;
     }
 
-    public static String read_response(){
-        char bajt=0;
-        while(bajt!= 0xAA){
-            bajt = ser.read(1);
-        }
-        String d = ser.read(9);
+    public byte[] read_response(){
+        byte bajt=0;
+        while(bajt!= (byte)0xAA){
 
-            if (DEBUG==1)
-            dump(d, "<");
-            return bajt+d;
+            try {
+                byte[] buffer = new byte[8192];
+                int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
+                receive(Arrays.copyOf(buffer, len));
+                if(len == 1) {
+                    bajt = buffer[0];
+                }
+            } catch (IOException e) {
+                status("connection lost: " + e.getMessage());
+                disconnect();
+            }
+
+
+        }
+        byte[] data = new byte[9];
+
+        try {
+            byte[] buffer = new byte[8192];
+            int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
+            receive(Arrays.copyOf(buffer, len));
+            if(len == 9) {
+                data = buffer;
+            }
+        } catch (IOException e) {
+            status("connection lost: " + e.getMessage());
+            disconnect();
+        }
+
+
+        return data;
     }
 
 

@@ -37,8 +37,7 @@
         android:firstBaselineToTopHeight="0dp"
         android:lineSpacingExtra="0dp"
         android:textColor="@color/primaryTextColor"
-        android:includeFontPadding="false"
-        />
+        android:includeFontPadding="false" />
 
 
 
@@ -46,7 +45,7 @@
         android:id="@+id/iconChoose"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:button="@drawable/sl_choosed_icon"
+        android:button="@drawable/sl_chosen_icon"
         app:buttonTint="@android:color/background_dark"
         android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"

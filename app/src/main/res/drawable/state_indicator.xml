@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background"
-        android:gravity="center_horizontal|fill_vertical">
-        <shape android:shape="rectangle"
-            android:tint="?attr/colorControlNormal">
-            <corners android:radius="8dp"/>
-            <size android:height="100dp" android:width="40dp" />
-            <solid android:color="#90caf9" />
+        android:gravity="center_vertical|fill_horizontal">
+        <shape android:shape="rectangle">
+            <corners android:radius="4dp"/>
+            <size android:height="20dp" />
+            <solid android:color="@color/lightGray" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress"
-        android:gravity="center_horizontal|clip_vertical">
-        <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle"
-                android:tint="?attr/colorControlHighlight">
-                <corners android:radius="8dp"/>
-                <size android:height="100dp" android:width="40dp" />
-                <solid android:color="#90caf9" />
-            </shape>
-        </scale>
+        android:gravity="center_vertical|fill_horizontal">
+        <scale android:scaleWidth="100%" android:drawable="@drawable/one_edge_rectangle"/>
+        <corners android:radius="4dp"/>
+        <size android:height="20dp" />
     </item>
     <item android:id="@android:id/progress"
-        android:gravity="center_horizontal|fill_vertical">
+        android:gravity="center_vertical">
         <scale android:scaleWidth="100%">
-            <shape android:shape="rectangle"
-                android:tint="?attr/colorControlActivated">
-                <corners android:radius="8dp"/>
-                <size android:height="100dp" android:width="40dp"/>
-                <gradient
-                    android:startColor="@color/lightGreen"
-                    android:centerColor="@color/yellow"
-                    android:endColor="@color/red"
-                    android:angle="360"
-                    />
+            <shape android:shape="rectangle">
+                <corners android:radius="4dp"/>
+                <size android:height="20dp" />
+                <solid android:color="@color/yellow"/>
             </shape>
         </scale>
     </item>
