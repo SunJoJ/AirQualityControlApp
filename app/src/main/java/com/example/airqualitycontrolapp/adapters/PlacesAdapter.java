@@ -47,8 +47,17 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         PlacesData placesData = placesDataList.get(position);
+        int aqi = Integer.parseInt(placesData.getDataAqi());
+
+        if(0 < aqi && aqi < 50) {
+            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_green);
+        } else if (50 <= aqi && aqi < 100) {
+            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_yellow);
+        } else {
+            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_red);
+        }
+
         switch (placesData.getTitle()) {
             case "Praca":
                 holder.icon.setImageResource(R.drawable.ic_work);

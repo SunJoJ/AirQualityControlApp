@@ -31,9 +31,9 @@ public class PlacesProfileFragment extends Fragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.placesRecyclerView);
 
         List<PlacesData> placesDataList = new ArrayList<>();
-        placesDataList.add(new PlacesData("Praca", "50"));
-        placesDataList.add(new PlacesData("Dom", "30"));
-        placesDataList.add(new PlacesData("Zewnątrz", "60"));
+        placesDataList.add(new PlacesData("Praca", "65"));
+        placesDataList.add(new PlacesData("Dom", "31"));
+        placesDataList.add(new PlacesData("Zewnątrz", "122"));
         PlacesAdapter placesAdapter = new PlacesAdapter(placesDataList);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
