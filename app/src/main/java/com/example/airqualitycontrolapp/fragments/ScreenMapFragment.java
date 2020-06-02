@@ -51,18 +51,10 @@ import retrofit2.Response;
 
 public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
-    private DatabaseReference dbRef;
-    private List<Sensor> sensors;
     private GoogleMap map;
     private SupportMapFragment mapFragment;
     private ArrayList<StationGIOS> stationGIOSArrayList;
-    private ArrayList<Sensor> sensorArrayList;
-    private ArrayList<QualityIndex> qualityIndexArrayList;
-
     private ClusterManager<ItemMarker> clusterManager;
-
-    private SearchView searchView = null;
-    private SearchView.OnQueryTextListener queryTextListener;
     private SimpleCursorAdapter mAdapter;
     private ArrayList<String> suggestions;
     private MaterialToolbar searchBar;

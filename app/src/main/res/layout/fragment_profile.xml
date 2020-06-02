@@ -41,7 +41,6 @@
             android:text="Name"
             android:textSize="18dp" />
 
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

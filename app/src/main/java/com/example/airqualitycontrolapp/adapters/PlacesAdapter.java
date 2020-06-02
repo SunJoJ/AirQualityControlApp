@@ -48,15 +48,39 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PlacesData placesData = placesDataList.get(position);
-        int aqi = Integer.parseInt(placesData.getDataAqi());
+        String aqi = placesData.getDataAqi();
 
-        if(0 < aqi && aqi < 50) {
-            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_green);
-        } else if (50 <= aqi && aqi < 100) {
-            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_yellow);
-        } else {
-            holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_red);
+        switch (aqi) {
+            case "Bardzo dobry":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_dark_green);
+                holder.dataAqi.setText("<25");
+                break;
+            case "Dobry":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_green);
+                holder.dataAqi.setText("<50");
+                break;
+            case "Umiarkowany":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_yellow);
+                holder.dataAqi.setText("<100");
+                break;
+            case "Dostateczny":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_orange);
+                holder.dataAqi.setText("<150");
+                break;
+            case "Zły":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_red);
+                holder.dataAqi.setText("<175");
+                break;
+            case "Bardzo zły":
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_dark_red);
+                holder.dataAqi.setText("<200");
+                break;
+            default:
+                holder.relativeLayout.setBackgroundResource(R.drawable.rounded_corner_unknown);
+                holder.dataAqi.setText("--");
+                break;
         }
+
 
         switch (placesData.getTitle()) {
             case "Praca":
@@ -70,7 +94,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
                 break;
         }
         holder.title.setText(placesData.getTitle());
-        holder.dataAqi.setText(placesData.getDataAqi());
+
     }
 
     @Override
