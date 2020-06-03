@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
                         fragmentPlaceSearch.setArguments(bundle1);
                         FragmentTransaction trans = getFragmentManager().beginTransaction();
 
-                        trans.replace(R.id.fragment_container, fragmentPlaceSearch, "fragmentPlaceSearch");
+                        trans.add(R.id.fragment_container, fragmentPlaceSearch, "fragmentPlaceSearch");
                         trans.addToBackStack("fragmentPlaceSearch");
                         trans.commit();
 

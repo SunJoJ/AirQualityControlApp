@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -20,18 +21,24 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.airqualitycontrolapp.ChartPainter;
 import com.example.airqualitycontrolapp.R;
 import com.example.airqualitycontrolapp.adapters.PlacesAdapter;
 import com.example.airqualitycontrolapp.clients.RequestService;
 import com.example.airqualitycontrolapp.clients.RetrofitClientGIOS;
+import com.example.airqualitycontrolapp.models.Measurement;
 import com.example.airqualitycontrolapp.models.PlacesData;
 import com.example.airqualitycontrolapp.models.QualityIndex;
+import com.example.airqualitycontrolapp.models.Sensor;
 import com.example.airqualitycontrolapp.models.StationGIOS;
+import com.example.airqualitycontrolapp.models.Value;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,20 +64,13 @@ public class PlacesProfileFragment extends Fragment {
         PlacesAdapter placesAdapter = new PlacesAdapter(placesDataList);
         RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
         Call<ArrayList<StationGIOS>> call = service.getAllStations();
+        TextView countAtHome = rootView.findViewById(R.id.countAtHome);
+        TextView countAtStreet = rootView.findViewById(R.id.countAtStreet);
+        TextView countAtWork = rootView.findViewById(R.id.countAtWork);
+        TextView titleHome = rootView.findViewById(R.id.titleHome);
+        TextView titleWork = rootView.findViewById(R.id.titleWork);
+        TextView titleStreet = rootView.findViewById(R.id.titleStreet);
 
-//        SharedPreferences settings = getActivity().getSharedPreferences("placeType", Context.MODE_PRIVATE);
-//        String homeAddress = settings.getString("Dom", "Nie wybrano");
-//        if(!homeAddress.equals("Nie wybrano")) {
-//            homeAddress = homeAddress.split(" ")[0];
-//        }
-//        String workAddress = settings.getString("Praca", "Nie wybrano");
-//        if(!workAddress.equals("Nie wybrano")) {
-//            workAddress = workAddress.split(" ")[0];
-//        }
-//        String streetAddress = settings.getString("Zewnątrz", "Nie wybrano");
-//        if(!streetAddress.equals("Nie wybrano")) {
-//            streetAddress = streetAddress.split(" ")[0];
-//        }
 
 
         call.enqueue(new Callback<ArrayList<StationGIOS>>() {
@@ -198,9 +198,190 @@ public class PlacesProfileFragment extends Fragment {
         Drawable progressBarDrawableStreetDrawable = progressBarDrawableStreet.getDrawable(2);
         progressBarDrawableStreetDrawable.setColorFilter(ContextCompat.getColor(this.getContext(), R.color.primaryTextColor), PorterDuff.Mode.SRC_IN);
 
-        progressBarHome.setProgress(50);
-        progressBarWork.setProgress(30);
-        progressBarStreet.setProgress(70);
+
+
+        SharedPreferences settings = getActivity().getSharedPreferences("placeType", Context.MODE_PRIVATE);
+        String homeId = settings.getString("Dom", "Nie wybrano");
+        if(!homeId.equals("Nie wybrano")) {
+            homeId = homeId.split(" ")[0];
+
+            RequestService requestService = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+            Call<ArrayList<Sensor>> serviceSensorsByStationId = requestService.getSensorsByStationId(Integer.valueOf(homeId));
+            serviceSensorsByStationId.enqueue(new Callback<ArrayList<Sensor>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Sensor>> call, Response<ArrayList<Sensor>> response) {
+                    ArrayList<Sensor> sensorArrayList = response.body();
+                    List<Measurement> measurementArrayList = new ArrayList<>();
+
+                    RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+                    for(int i = 0; i < sensorArrayList.size(); i++) {
+
+                        Call<Measurement> measurementCall = service.getMeasurementsDataBySensorId(sensorArrayList.get(i).getId());
+
+                        if(i == sensorArrayList.size() - 1) {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+
+                                    int count = countPollutedHours(measurementArrayList);
+
+                                    progressBarHome.setProgress(count*100/24);
+                                    countAtHome.setText(count + " / 24");
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        } else {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Sensor>> call, Throwable t) {
+                    Log.d("resp", t.getMessage());
+                }
+            });
+        } else {
+            progressBarHome.setVisibility(View.GONE);
+            titleHome.setVisibility(View.GONE);
+            countAtHome.setVisibility(View.GONE);
+        }
+
+
+        String workId = settings.getString("Praca", "Nie wybrano");
+        if(!workId.equals("Nie wybrano")) {
+            workId = workId.split(" ")[0];
+
+            RequestService requestService = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+            Call<ArrayList<Sensor>> serviceSensorsByStationId = requestService.getSensorsByStationId(Integer.valueOf(workId));
+            serviceSensorsByStationId.enqueue(new Callback<ArrayList<Sensor>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Sensor>> call, Response<ArrayList<Sensor>> response) {
+                    ArrayList<Sensor> sensorArrayList = response.body();
+                    List<Measurement> measurementArrayList = new ArrayList<>();
+
+                    RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+                    for(int i = 0; i < sensorArrayList.size(); i++) {
+
+                        Call<Measurement> measurementCall = service.getMeasurementsDataBySensorId(sensorArrayList.get(i).getId());
+
+                        if(i == sensorArrayList.size() - 1) {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+
+                                    int count = countPollutedHours(measurementArrayList);
+
+                                    progressBarWork.setProgress(count*100/24);
+                                    countAtWork.setText(count + " / 24");
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        } else {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Sensor>> call, Throwable t) {
+                    Log.d("resp", t.getMessage());
+                }
+            });
+        } else {
+            progressBarWork.setVisibility(View.GONE);
+            countAtWork.setVisibility(View.GONE);
+            titleWork.setVisibility(View.GONE);
+        }
+
+        String streetId = settings.getString("Zewnątrz", "Nie wybrano");
+        if(!streetId.equals("Nie wybrano")) {
+            streetId = streetId.split(" ")[0];
+
+            RequestService requestService = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+            Call<ArrayList<Sensor>> serviceSensorsByStationId = requestService.getSensorsByStationId(Integer.valueOf(streetId));
+            serviceSensorsByStationId.enqueue(new Callback<ArrayList<Sensor>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Sensor>> call, Response<ArrayList<Sensor>> response) {
+                    ArrayList<Sensor> sensorArrayList = response.body();
+                    List<Measurement> measurementArrayList = new ArrayList<>();
+
+                    RequestService service = RetrofitClientGIOS.getRetrofitInstance().create(RequestService.class);
+                    for(int i = 0; i < sensorArrayList.size(); i++) {
+
+                        Call<Measurement> measurementCall = service.getMeasurementsDataBySensorId(sensorArrayList.get(i).getId());
+
+                        if(i == sensorArrayList.size() - 1) {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+
+                                    int count = countPollutedHours(measurementArrayList);
+
+                                    progressBarStreet.setProgress(count*100/24);
+                                    countAtStreet.setText(count + " / 24");
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        } else {
+                            measurementCall.enqueue(new Callback<Measurement>() {
+                                @Override
+                                public void onResponse(Call<Measurement> call, Response<Measurement> response) {
+                                    measurementArrayList.add(response.body());
+                                }
+
+                                @Override
+                                public void onFailure(Call<Measurement> call, Throwable t) {
+                                }
+                            });
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Sensor>> call, Throwable t) {
+                    Log.d("resp", t.getMessage());
+                }
+            });
+        } else {
+            progressBarStreet.setVisibility(View.GONE);
+            countAtStreet.setVisibility(View.GONE);
+            titleStreet.setVisibility(View.GONE);
+        }
+
 
 
         connectButton.setOnClickListener(new View.OnClickListener() {
@@ -218,5 +399,33 @@ public class PlacesProfileFragment extends Fragment {
 
         return rootView;
     }
+
+
+    public Integer countPollutedHours(List<Measurement> measurementArrayList) {
+        LocalDateTime now = LocalDateTime.now();
+        List<Boolean> booleans = new ArrayList<>();
+        for(int i = 0; i < now.getHour(); i++) {
+            booleans.add(false);
+        }
+        for(int i = 0; i < measurementArrayList.size(); i++) {
+
+            Measurement measurement = measurementArrayList.get(i);
+            String key = measurement.getKey();
+            List<Value> values = measurement.getValues();
+
+            for(int j = 0; j < now.getHour(); j++) {
+                boolean isExceeded = ChartPainter.isPollutionLevelExceeded(key, (int) values.get(j).getValue());
+                booleans.set(j, isExceeded);
+            }
+
+        }
+        int count = 0;
+        for(int i = 0; i < booleans.size(); i++) {
+            if(booleans.get(i))
+                count++;
+        }
+        return count;
+    }
+
 
 }

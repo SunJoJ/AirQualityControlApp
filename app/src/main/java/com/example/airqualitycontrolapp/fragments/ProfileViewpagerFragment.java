@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,6 +28,7 @@ public class ProfileViewpagerFragment extends Fragment {
                              Bundle savedInstanceState) {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_profile_viewpager, container, false);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         viewPager = rootView.findViewById(R.id.profileViewPager);
         pagerAdapter = new ViewPagerAdapter(getFragmentManager());

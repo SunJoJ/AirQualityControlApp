@@ -327,7 +327,7 @@ public class ChartPainter {
     }
 
 
-    public static Integer intervalParameter(String key, Integer val) {
+    public static Integer intervalParameter(String key, int val) {
 
         switch (key) {
             case "SO2":
@@ -443,6 +443,28 @@ public class ChartPainter {
 
     public static boolean isBetween(int x, int lower, int upper) {
         return lower <= x && x <= upper;
+    }
+
+    public static boolean isPollutionLevelExceeded(String key, int val) {
+
+        switch (key) {
+            case "SO2":
+                return val > S02_GOOD;
+            case "NO2":
+                return val > N02_GOOD;
+            case "CO":
+                return val > CO_GOOD;
+            case "PM10":
+                return val > PM10_GOOD;
+            case "PM2.5":
+                return  val > PM25_GOOD;
+            case "O3":
+                return  val > O3_GOOD;
+            case "C6H6":
+                return val > C6H6_GOOD;
+        }
+
+        return false;
     }
 
 }
