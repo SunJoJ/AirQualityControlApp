@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.airqualitycontrolapp.R;
 import com.google.android.material.tabs.TabLayout;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ProfileViewpagerFragment extends Fragment {
 
     private static final int NUM_PAGES = 3;
@@ -48,21 +50,15 @@ public class ProfileViewpagerFragment extends Fragment {
             super(fm);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             if(position == 0) {
-                PlacesProfileFragment placesProfileFragment = new PlacesProfileFragment();
-
-                return placesProfileFragment;
+                return new PlacesProfileFragment();
             } else if (position == 1){
-                IndicatorsFragment indicatorsFragment = new IndicatorsFragment();
-
-                return indicatorsFragment;
+                return new IndicatorsFragment();
             } else {
-                ProfileFragment profileFragment = new ProfileFragment();
-
-
-                return profileFragment;
+                return new ProfileFragment();
             }
         }
 

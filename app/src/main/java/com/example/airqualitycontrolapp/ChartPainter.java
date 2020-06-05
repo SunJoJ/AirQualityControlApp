@@ -455,9 +455,9 @@ public class ChartPainter {
             case "CO":
                 return val > CO_GOOD;
             case "PM10":
-                return val > PM10_GOOD;
+                return val > PM10_VERY_GOOD;
             case "PM2.5":
-                return  val > PM25_GOOD;
+                return  val > PM25_VERY_GOOD;
             case "O3":
                 return  val > O3_GOOD;
             case "C6H6":

@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -45,6 +46,7 @@ public class FragmentPlaceSearch extends Fragment implements OnMapReadyCallback 
     private MaterialToolbar searchBar;
     private String placeType;
     private MaterialButton selectButton;
+    private BottomNavigationView navBar;
 
     private String[] SUGGESTIONS;
 
@@ -53,6 +55,8 @@ public class FragmentPlaceSearch extends Fragment implements OnMapReadyCallback 
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_map_place_search, container, false);
+        navBar = getActivity().findViewById(R.id.bottomNavigation);
+        navBar.setVisibility(View.GONE);
 
         mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map_fragment_search);
         mapFragment.getMapAsync(this);
@@ -105,9 +109,24 @@ public class FragmentPlaceSearch extends Fragment implements OnMapReadyCallback 
 
                 stationGIOSArrayList.stream().filter(o -> o.getName().equals(s)).forEach(
                         o -> {
-                            map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())))
-                                                                    .title(o.getAddressStreet()).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_green_marker))
-                                                                    .snippet(o.getId() + " " + o.getAddressStreet()));
+                            switch (placeType) {
+                                case "Dom":
+                                    map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())))
+                                            .title(o.getAddressStreet()).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_home))
+                                            .snippet(o.getId() + " " + o.getAddressStreet()));
+                                    break;
+                                case "Praca":
+                                    map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())))
+                                            .title(o.getAddressStreet()).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_work))
+                                            .snippet(o.getId() + " " + o.getAddressStreet()));
+                                    break;
+                                case "Zewnątrz":
+                                    map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())))
+                                            .title(o.getAddressStreet()).icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_street))
+                                            .snippet(o.getId() + " " + o.getAddressStreet()));
+                                    break;
+                            }
+
                             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(o.getLatitude()), Double.parseDouble(o.getLongitude())), 14));
                         }
                 );
@@ -144,6 +163,12 @@ public class FragmentPlaceSearch extends Fragment implements OnMapReadyCallback 
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(placeType, marker.getSnippet());
                         editor.commit();
+
+                        Fragment fragment = getFragmentManager().findFragmentByTag("fragmentPlaceSearch");
+                        if(fragment != null)
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+
+                        navBar.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -151,9 +176,23 @@ public class FragmentPlaceSearch extends Fragment implements OnMapReadyCallback 
             }
         });
 
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                selectButton.setVisibility(View.GONE);
+            }
+        });
 
+        map.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+                selectButton.setVisibility(View.GONE);
+            }
+        });
 
     }
+
+
 
 
     private void populateAdapter(String query) {

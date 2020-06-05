@@ -221,7 +221,7 @@ public class ScreenMapFragment extends Fragment implements OnMapReadyCallback {
         clusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<ItemMarker>() {
             @Override
             public boolean onClusterClick(Cluster<ItemMarker> cluster) {
-                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+
                 return false;
             }
         });
