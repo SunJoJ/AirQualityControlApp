@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mapsActivity">
+
+    <activity
+        android:id="@+id/mapsActivity"
+        android:name="com.example.airqualitycontrolapp.MapsActivity"
+        android:label="MapsActivity"
+        tools:layout="@layout/activity_maps"/>
+
+    <fragment
+        android:id="@+id/ratingListFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.RatingListFragment"
+        android:label="RatingListFragment"
+        tools:layout="@layout/fragment_rating_list">
+        <action
+            android:id="@+id/action_ratingListFragment_to_nearestCityFragment"
+            app:destination="@id/nearestCityFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dataSensorFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.DataSensorFragment"
+        android:label="DataSensorFragment"
+        tools:layout="@layout/fragment_sensor_data"/>
+
+    <fragment
+        android:id="@+id/fragmentPlaceSearch"
+        android:name="com.example.airqualitycontrolapp.fragments.FragmentPlaceSearch"
+        android:label="FragmentPlaceSearch"
+        tools:layout="@layout/fragment_map_place_search"/>
+
+    <fragment
+        android:id="@+id/nearestCityFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.NearestCityFragment"
+        android:label="NearestCityFragment"
+        tools:layout="@layout/fragment_nearest_city"/>
+
+    <fragment
+        android:id="@+id/markerDetailsFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.MarkerDetailsFragment"
+        android:label="MarkerDetailsFragment"
+        tools:layout="@layout/fragment_marker_details"/>
+
+    <fragment
+        android:id="@+id/parameterInfoFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ParameterInfoFragment"
+        android:label="ParameterInfoFragment"
+        tools:layout="@layout/fragment_parameter_info"/>
+
+    <fragment
+        android:id="@+id/profileViewpagerFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ProfileViewpagerFragment"
+        android:label="ProfileViewpagerFragment"
+        tools:layout="@layout/fragment_profile_viewpager"/>
+
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ViewPagerFragment"
+        android:label="ViewPagerFragment"
+        tools:layout="@layout/fragment_viewpager">
+        <action
+            android:id="@+id/action_viewPagerFragment_to_selectedSensorsFragment"
+            app:destination="@id/selectedSensorsFragment" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_nearestCityFragment"
+            app:destination="@id/nearestCityFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/selectedSensorsFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.SelectedSensorsFragment"
+        android:label="SelectedSensorsFragment"
+        tools:layout="@layout/fragment_selected_sensors"/>
+    <fragment
+        android:id="@+id/screenMapFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ScreenMapFragment"
+        android:label="ScreenMapFragment"
+        tools:layout="@layout/fragment_map"/>
+    <fragment
+        android:id="@+id/screenInfoFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ScreenInfoFragment"
+        android:label="ScreenInfoFragment"
+        tools:layout="@layout/fragment_parameter_info"/>
+    <fragment
+        android:id="@+id/indicatorsFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.IndicatorsFragment"
+        android:label="IndicatorsFragment"
+        tools:layout="@layout/fragment_indicators"/>
+    <fragment
+        android:id="@+id/placesProfileFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.PlacesProfileFragment"
+        android:label="PlacesProfileFragment"
+        tools:layout="@layout/fragment_places_profile"/>
+    <fragment
+        android:id="@+id/devicesFragment"
+        android:name="com.example.airqualitycontrolapp.DevicesFragment"
+        android:label="DevicesFragment"
+        />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.airqualitycontrolapp.fragments.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
+    <fragment
+        android:id="@+id/terminalFragment"
+        android:name="com.example.airqualitycontrolapp.TerminalFragment"
+        android:label="TerminalFragment"
+        tools:layout="@layout/fragment_terminal"/>
+</navigation>

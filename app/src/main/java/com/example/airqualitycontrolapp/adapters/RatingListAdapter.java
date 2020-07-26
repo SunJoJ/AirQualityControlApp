@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.example.airqualitycontrolapp.R;
 import com.example.airqualitycontrolapp.clients.RequestService;
@@ -112,6 +113,8 @@ public class RatingListAdapter extends ArrayAdapter<RatingListDataModel> {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("dataAirVisual", dataAirVisual);
                         nearestCityFragment.setArguments(bundle);
+
+                        
 
                         FragmentTransaction trans = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                         trans.add(R.id.fragment_container, nearestCityFragment);

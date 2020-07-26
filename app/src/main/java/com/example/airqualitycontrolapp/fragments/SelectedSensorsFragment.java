@@ -52,7 +52,6 @@ public class SelectedSensorsFragment extends Fragment {
         Map<String, String> sensorsMap = new HashMap<>();
         String jsonString = new Gson().toJson(sensorsMap);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("SELECTED_SENSORS", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         if(sharedPreferences.contains("MAP_OF_SENSORS")) {
             String mapJson = sharedPreferences.getString("MAP_OF_SENSORS", jsonString);
             TypeToken<HashMap<String,String>> token = new TypeToken<HashMap<String, String>>() {};
@@ -82,9 +81,6 @@ public class SelectedSensorsFragment extends Fragment {
                 }
             });
         }
-
-
-
 
 
         sensorsListAdapter = new SensorsListAdapter(sensorsListDataModels, getContext());
